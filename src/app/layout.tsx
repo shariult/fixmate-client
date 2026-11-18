@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import { Archivo, Inter } from "next/font/google";
 import "./globals.css";
+import ToasterProvider from "@/components/ui/common/ToastProvider";
 
 const archivo = Archivo({
   variable: "--font-archivo",
@@ -21,7 +22,10 @@ export const metadata: Metadata = {
 function RootLayout({ children }: LayoutProps<"/">) {
   return (
     <html lang="en" className={`${archivo.variable} ${inter.variable}`}>
-      <body>{children}</body>
+      <body>
+        {children}
+        <ToasterProvider />
+      </body>
     </html>
   );
 }
