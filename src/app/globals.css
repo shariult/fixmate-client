@@ -1,26 +1,114 @@
 @import "tailwindcss";
 
-:root {
-  --background: #ffffff;
-  --foreground: #171717;
+@plugin "daisyui";
+
+@plugin "daisyui/theme" {
+  name: "brand";
+  default: true;
+  color-scheme: light;
+
+  --color-base-50: var(--color-gray-50);
+  --color-base-100: var(--color-gray-100);
+  --color-base-200: var(--color-gray-200);
+  --color-base-300: var(--color-gray-300);
+  --color-base-content: var(--color-gray-900);
+
+  --color-primary: hsl(45, 100%, 54%);
+  --color-primary-content: hsl(0, 0%, 16%);
+  --color-primary-hover: hsl(52, 100%, 50%);
+  --color-muted: var(--color-gray-600);
+
+  --color-secondary: var(--color-indigo-600);
+  --color-secondary-content: var(--color-indigo-50);
+  --color-accent: var(--color-teal-400);
+  --color-accent-content: var(--color-teal-950);
+  --color-neutral: var(--color-slate-900);
+  --color-neutral-content: var(--color-slate-200);
+
+  --color-info: var(--color-sky-400);
+  --color-info-content: var(--color-sky-950);
+  --color-success: var(--color-emerald-400);
+  --color-success-content: var(--color-emerald-950);
+  --color-warning: var(--color-amber-400);
+  --color-warning-content: var(--color-amber-950);
+  --color-error: var(--color-rose-400);
+  --color-error-content: var(--color-rose-950);
 }
 
-@theme inline {
-  --color-background: var(--background);
-  --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
+@plugin "daisyui/theme" {
+  name: "brand-dark";
+  prefersdark: true;
+  color-scheme: dark;
+
+  --color-base-50: var(--color-gray-600);
+  --color-base-100: var(--color-gray-700);
+  --color-base-200: var(--color-gray-800);
+  --color-base-300: var(--color-gray-900);
+  --color-base-content: var(--color-gray-50);
+
+  --color-primary: hsl(45, 100%, 54%);
+  --color-primary-content: hsl(0, 0%, 16%);
+  --color-primary-hover: hsl(52, 100%, 50%);
+  --color-muted: var(--color-gray-600);
+
+  --color-secondary: var(--color-pink-500);
+  --color-secondary-content: var(--color-pink-50);
+  --color-accent: var(--color-teal-400);
+  --color-accent-content: var(--color-teal-950);
+  --color-neutral: var(--color-slate-800);
+  --color-neutral-content: var(--color-slate-200);
+
+  --color-info: var(--color-sky-400);
+  --color-info-content: var(--color-sky-950);
+  --color-success: var(--color-emerald-400);
+  --color-success-content: var(--color-emerald-950);
+  --color-warning: var(--color-amber-400);
+  --color-warning-content: var(--color-amber-950);
+  --color-error: var(--color-rose-400);
+  --color-error-content: var(--color-rose-950);
 }
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
+@custom-variant dark (&:where([data-theme=brand-dark], [data-theme=brand-dark] *));
+
+@theme {
+  --font-title: var(--font-archivo), Arial, Helvetica, sans-serif;
+  --font-text: var(--font-inter), Arial, Helvetica, sans-serif;
+
+  --color-primary-hover: hsl(52, 100%, 50%);
+  --color-base-50: var(--color-gray-50);
+  --color-muted: var(--color-gray-600);
+}
+
+@layer utilities {
+  .heading-1 {
+    @apply text-4xl leading-tight font-bold sm:text-5xl lg:text-6xl;
+  }
+  .heading-2 {
+    @apply text-3xl leading-tight font-medium md:text-4xl;
+  }
+  .heading-3 {
+    @apply text-lg leading-snug font-medium md:text-xl;
+  }
+  .heading-sub {
+    @apply text-xs tracking-[4px] text-muted uppercase;
+  }
+  .btn-box {
+    @apply flex gap-4;
   }
 }
 
+@layer components {
+}
+
 body {
-  background: var(--background);
-  color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+  font-family: var(--font-text);
+}
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+  font-family: var(--font-title);
 }
