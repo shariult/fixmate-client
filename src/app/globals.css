@@ -49,7 +49,7 @@
   --color-primary: hsl(45, 100%, 54%);
   --color-primary-content: hsl(0, 0%, 16%);
   --color-primary-hover: hsl(52, 100%, 50%);
-  --color-muted: var(--color-gray-600);
+  --color-muted: var(--color-gray-300);
 
   --color-secondary: var(--color-pink-500);
   --color-secondary-content: var(--color-pink-50);
