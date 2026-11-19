@@ -80,7 +80,7 @@ function SectionServices(props: SectionServicesProps) {
                   $49
                 </span>
               </p>
-              <Link href="/service/01" className="btn btn-primary btn-sm">
+              <Link href="/services/01" className="btn btn-primary btn-sm">
                 View Details
               </Link>
             </div>
@@ -123,7 +123,7 @@ function SectionServices(props: SectionServicesProps) {
                   $29
                 </span>
               </p>
-              <Link href="/service/01" className="btn btn-primary btn-sm">
+              <Link href="/services/01" className="btn btn-primary btn-sm">
                 View Details
               </Link>
             </div>
@@ -168,7 +168,7 @@ function SectionServices(props: SectionServicesProps) {
                   $35
                 </span>
               </p>
-              <Link href="/service/01" className="btn btn-primary btn-sm">
+              <Link href="/services/01" className="btn btn-primary btn-sm">
                 View Details
               </Link>
             </div>
@@ -213,7 +213,7 @@ function SectionServices(props: SectionServicesProps) {
                   $25
                 </span>
               </p>
-              <Link href="/service/01" className="btn btn-primary btn-sm">
+              <Link href="/services/01" className="btn btn-primary btn-sm">
                 View Details
               </Link>
             </div>
@@ -256,7 +256,7 @@ function SectionServices(props: SectionServicesProps) {
                   $30
                 </span>
               </p>
-              <Link href="/service/01" className="btn btn-primary btn-sm">
+              <Link href="/services/01" className="btn btn-primary btn-sm">
                 View Details
               </Link>
             </div>
@@ -299,7 +299,7 @@ function SectionServices(props: SectionServicesProps) {
                   $55
                 </span>
               </p>
-              <Link href="/service/01" className="btn btn-primary btn-sm">
+              <Link href="/services/01" className="btn btn-primary btn-sm">
                 View Details
               </Link>
             </div>
@@ -344,7 +344,7 @@ function SectionServices(props: SectionServicesProps) {
                   $70
                 </span>
               </p>
-              <Link href="/service/01" className="btn btn-primary btn-sm">
+              <Link href="/services/01" className="btn btn-primary btn-sm">
                 View Details
               </Link>
             </div>
@@ -387,7 +387,7 @@ function SectionServices(props: SectionServicesProps) {
                   $40
                 </span>
               </p>
-              <Link href="/service/01" className="btn btn-primary btn-sm">
+              <Link href="/services/01" className="btn btn-primary btn-sm">
                 View Details
               </Link>
             </div>
@@ -432,7 +432,7 @@ function SectionServices(props: SectionServicesProps) {
                   $45
                 </span>
               </p>
-              <Link href="/service/01" className="btn btn-primary btn-sm">
+              <Link href="/services/01" className="btn btn-primary btn-sm">
                 View Details
               </Link>
             </div>
