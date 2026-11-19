@@ -5,14 +5,18 @@ type FooterItemProps = {
   href: string;
   children: React.ReactNode;
   className?: string;
+  linkClass?: string;
 } & ComponentPropsWithoutRef<"li">;
 
 function FooterItem(props: FooterItemProps) {
-  const { href, className, children, ...rest } = props;
+  const { href, className, linkClass, children, ...rest } = props;
 
   return (
     <li className={`${className ? className : ""}`} {...rest}>
-      <Link className="link link-hover" href={href}>
+      <Link
+        className={`link link-hover ${linkClass ? linkClass : ""}`}
+        href={href}
+      >
         {children}
       </Link>
     </li>

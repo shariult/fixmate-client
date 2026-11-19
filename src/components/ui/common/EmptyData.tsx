@@ -1,5 +1,5 @@
-import Link from "next/link";
 import React, { ComponentPropsWithoutRef } from "react";
+import Link from "next/link";
 
 type EmptyDataProps = {
   message?: string;

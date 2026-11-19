@@ -1,6 +1,6 @@
 import Container from "@/components/ui/common/Container";
 import Link from "next/link";
-import { PiCompass } from "react-icons/pi";
+import { PiWrenchBold } from "react-icons/pi";
 
 function NotFoundPage() {
   return (
@@ -8,8 +8,8 @@ function NotFoundPage() {
       className="flex flex-col items-center justify-center min-h-screen"
       elClassName="bg-base-300"
     >
-      <span className="grid place-items-center rounded-full border-4 border-dashed border-error/40 bg-error/10 p-2 mb-8 text-error">
-        <PiCompass className="text-8xl" />
+      <span className="grid place-items-center rounded-full border-4 border-dashed border-error/40 bg-error/10 p-4 mb-8 text-error">
+        <PiWrenchBold className="text-6xl" />
       </span>
 
       <h1 className="heading-2 mb-3">This page is out for repair</h1>

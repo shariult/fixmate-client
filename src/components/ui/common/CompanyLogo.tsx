@@ -1,6 +1,6 @@
 import React from "react";
 import Link, { LinkProps } from "next/link";
-import { LogoSvg } from "@/components/ui/common/SVGIcons";
+import { PiWrenchBold } from "react-icons/pi";
 
 type CompanyLogoProps = {
   children?: React.ReactNode;
@@ -14,12 +14,10 @@ function CompanyLogo(props: CompanyLogoProps) {
       href={href}
       className={`flex items-center gap-2 text-sm md:text-md font-title ${className ? className : ""}`}
     >
-      <LogoSvg className="w-6 md:w-8 text-primary" />
-      <p className="flex flex-col">
-        <span className="font-extrabold uppercase">NEXT.JS</span>
-        <span className="-mt-1 text-muted uppercase text-xs tracking-[0.2rem] md:tracking-[0.5rem]">
-          DEMO
-        </span>
+      <PiWrenchBold className="text-3xl text-primary" />
+      <p className="flex font-extrabold uppercase text-2xl">
+        <span className="">Fix</span>
+        <span className="text-primary">Mate</span>
       </p>
     </Link>
   );

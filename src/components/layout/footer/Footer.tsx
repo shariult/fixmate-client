@@ -1,75 +1,93 @@
 import React from "react";
-import Link from "next/link";
-import { PiInstagramLogo, PiYoutubeLogo, PiXLogo } from "react-icons/pi";
+import {
+  PiInstagramLogo,
+  PiYoutubeLogo,
+  PiXLogo,
+  PiEnvelope,
+  PiPhone,
+  PiMapPin,
+} from "react-icons/pi";
 import CompanyLogo from "@/components/ui/common/CompanyLogo";
 import FooterItem from "./FooterItem";
 import FooterSocialLink from "./FooterSocialLink";
 
 function Footer() {
   return (
-    <footer className="bg-base-100 border-t border-base-300">
+    <footer className="bg-base-200 border-t border-base-300">
       <div className="max-w-330 mx-auto px-6 py-20 grid gap-10 sm:grid-cols-2 lg:grid-cols-4">
-        <div className="space-y-3">
-          <CompanyLogo href={"/"} />
-          <p className="text-sm text-muted/80">
-            Lorem ipsum dolor sit, amet consectetur adipisicing elit.
-            Voluptatibus, rerum natus. Quae illo pariatur modi praesentium?
+        <div>
+          <CompanyLogo href={"/"} className="mb-2" />
+          <p className="text-sm text-muted/80 mb-6">
+            Verified technicians for your phone, laptop and home appliances.
+            Track every repair and pay only when the job is done.
           </p>
+          <div className="flex gap-2">
+            <FooterSocialLink href={"#"}>
+              <PiXLogo className="text-lg" />
+            </FooterSocialLink>
+
+            <FooterSocialLink href={"#"}>
+              <PiInstagramLogo className="text-lg" />
+            </FooterSocialLink>
+
+            <FooterSocialLink href={"#"}>
+              <PiYoutubeLogo className="text-lg" />
+            </FooterSocialLink>
+          </div>
         </div>
 
         <div>
           <h6 className="footer-title">Quick Links</h6>
           <ul className="space-y-2 text-sm text-muted/80">
             <FooterItem href="/">Home</FooterItem>
-            <FooterItem href="/about-us">About Us</FooterItem>
+            <FooterItem href="/services">Services</FooterItem>
+            <FooterItem href="/about">About</FooterItem>
+            <FooterItem href="/sign-up">Become a Technician</FooterItem>
           </ul>
         </div>
 
         <div>
-          <h6 className="footer-title">Legal</h6>
+          <h6 className="footer-title">Popular Categories</h6>
           <ul className="space-y-2 text-sm text-muted/80">
-            <FooterItem href="/privacy-policy">Privacy Policy</FooterItem>
-            <FooterItem href="/terms-of-use">Terms of Use</FooterItem>
+            <FooterItem href="/services?category=smartphone">
+              Smartphone Repair
+            </FooterItem>
+            <FooterItem href="/services?category=laptop">
+              Laptop &amp; PC
+            </FooterItem>
+            <FooterItem href="/services?category=ac">AC Servicing</FooterItem>
+            <FooterItem href="/services?category=Refrigerator">
+              Refrigerator
+            </FooterItem>
           </ul>
         </div>
 
         <div className="flex flex-col gap-8">
           <div>
-            <h6 className="footer-title">Social Links</h6>
-            <div className="flex gap-2">
-              <FooterSocialLink href={"#"}>
-                <PiXLogo className="text-lg" />
-              </FooterSocialLink>
-
-              <FooterSocialLink href={"#"}>
-                <PiInstagramLogo className="text-lg" />
-              </FooterSocialLink>
-
-              <FooterSocialLink href={"#"}>
-                <PiYoutubeLogo className="text-lg" />
-              </FooterSocialLink>
-            </div>
-          </div>
-
-          <div>
-            <h6 className="footer-title">Newsletter</h6>
-            <form className="flex w-full">
-              <input
-                type="email"
-                required
-                className="input input-bordered w-full rounded-e-none"
-                placeholder="you@email.com"
-              />
-              <button className="btn bg-primary text-primary-content hover:bg-primary-hover rounded-s-none border-none">
-                Join
-              </button>
-            </form>
+            <h6 className="footer-title">Contact</h6>
+            <ul className="space-y-2 text-sm text-muted/80">
+              <FooterItem
+                href="mailto:support@fixmate.com"
+                linkClass="flex gap-2"
+              >
+                <PiEnvelope className="text-lg" />
+                support@fixmate.com
+              </FooterItem>
+              <FooterItem href="tel:+8801700000000" linkClass="flex gap-2">
+                <PiPhone className="text-lg" />
+                +880 1700-000000
+              </FooterItem>
+              <FooterItem href="/services?category=ac" linkClass="flex gap-2">
+                <PiMapPin className="text-lg" />
+                House 12, Road 5, Dhanmondi, Dhaka 1205
+              </FooterItem>
+            </ul>
           </div>
         </div>
       </div>
 
       {/* copyright */}
-      <div className="border-t border-base-300 py-4 text-center text-xs opacity-70">
+      <div className="bg-gray-50 dark:bg-gray-950 border-t border-base-300 py-4 text-center text-xs opacity-70">
         &copy; 2026 Shariul. All rights reserved.
       </div>
     </footer>
