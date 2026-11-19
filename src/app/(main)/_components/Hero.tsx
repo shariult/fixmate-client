@@ -35,7 +35,7 @@ function Hero(props: HeroProps) {
 
         {/* <!-- Search → GET /services?search=... --> */}
         <form
-          action="services.html"
+          action="/services"
           method="get"
           className="mt-8 flex max-w-xl flex-col gap-3 sm:flex-row"
         >

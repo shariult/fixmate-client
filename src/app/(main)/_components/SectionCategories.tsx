@@ -36,7 +36,7 @@ function SectionCategories(props: SectionCategoriesProps) {
       {/* <!-- each links to /services?category=<value>  (encodeURIComponent for "Laptop & PC") --> */}
       <div className="mt-10 grid grid-cols-2 gap-4 md:grid-cols-4">
         <Link
-          href="services.html?category=Smartphone"
+          href="/services?category=Smartphone"
           className="group flex flex-col items-center gap-3 rounded-2xl border border-base-300 bg-base-50 p-6 text-center transition-colors hover:border-primary hover:bg-primary/5"
         >
           <span className="grid size-12 place-items-center rounded-xl bg-primary/10 text-primary">
@@ -45,7 +45,7 @@ function SectionCategories(props: SectionCategoriesProps) {
           <span className="font-title font-medium">Smartphone</span>
         </Link>
         <Link
-          href="services.html?category=Laptop%20%26%20PC"
+          href="/services?category=Laptop%20%26%20PC"
           className="group flex flex-col items-center gap-3 rounded-2xl border border-base-300 bg-base-50 p-6 text-center transition-colors hover:border-primary hover:bg-primary/5"
         >
           <span className="grid size-12 place-items-center rounded-xl bg-primary/10 text-primary">
@@ -54,7 +54,7 @@ function SectionCategories(props: SectionCategoriesProps) {
           <span className="font-title font-medium">Laptop &amp; PC</span>
         </Link>
         <Link
-          href="services.html?category=AC"
+          href="/services?category=AC"
           className="group flex flex-col items-center gap-3 rounded-2xl border border-base-300 bg-base-50 p-6 text-center transition-colors hover:border-primary hover:bg-primary/5"
         >
           <span className="grid size-12 place-items-center rounded-xl bg-primary/10 text-primary">
@@ -63,7 +63,7 @@ function SectionCategories(props: SectionCategoriesProps) {
           <span className="font-title font-medium">AC</span>
         </Link>
         <Link
-          href="services.html?category=Refrigerator"
+          href="/services?category=Refrigerator"
           className="group flex flex-col items-center gap-3 rounded-2xl border border-base-300 bg-base-50 p-6 text-center transition-colors hover:border-primary hover:bg-primary/5"
         >
           <span className="grid size-12 place-items-center rounded-xl bg-primary/10 text-primary">
@@ -72,7 +72,7 @@ function SectionCategories(props: SectionCategoriesProps) {
           <span className="font-title font-medium">Refrigerator</span>
         </Link>
         <Link
-          href="services.html?category=TV"
+          href="/services?category=TV"
           className="group flex flex-col items-center gap-3 rounded-2xl border border-base-300 bg-base-50 p-6 text-center transition-colors hover:border-primary hover:bg-primary/5"
         >
           <span className="grid size-12 place-items-center rounded-xl bg-primary/10 text-primary">
@@ -81,7 +81,7 @@ function SectionCategories(props: SectionCategoriesProps) {
           <span className="font-title font-medium">TV</span>
         </Link>
         <Link
-          href="services.html?category=Washing%20Machine"
+          href="/services?category=Washing%20Machine"
           className="group flex flex-col items-center gap-3 rounded-2xl border border-base-300 bg-base-50 p-6 text-center transition-colors hover:border-primary hover:bg-primary/5"
         >
           <span className="grid size-12 place-items-center rounded-xl bg-primary/10 text-primary">
@@ -90,7 +90,7 @@ function SectionCategories(props: SectionCategoriesProps) {
           <span className="font-title font-medium">Washing Machine</span>
         </Link>
         <Link
-          href="services.html?category=Electrical"
+          href="/services?category=Electrical"
           className="group flex flex-col items-center gap-3 rounded-2xl border border-base-300 bg-base-50 p-6 text-center transition-colors hover:border-primary hover:bg-primary/5"
         >
           <span className="grid size-12 place-items-center rounded-xl bg-primary/10 text-primary">
@@ -99,7 +99,7 @@ function SectionCategories(props: SectionCategoriesProps) {
           <span className="font-title font-medium">Electrical</span>
         </Link>
         <Link
-          href="services.html"
+          href="/services"
           className="flex flex-col items-center justify-center gap-3 rounded-2xl border border-dashed border-base-300 p-6 text-center text-muted transition-colors hover:border-primary hover:text-primary"
         >
           <PiArrowRightBold className="text-3xl" />

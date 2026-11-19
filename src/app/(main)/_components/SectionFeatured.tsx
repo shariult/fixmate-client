@@ -6,6 +6,7 @@ import {
   PiStorefrontBold,
   PiUserBold,
 } from "react-icons/pi";
+import Link from "next/link";
 
 type SectionFeaturedProps = {
   className?: string;
@@ -28,9 +29,9 @@ function SectionFeatured(props: SectionFeaturedProps) {
             Freshly approved listings from verified technicians near you.
           </p>
         </div>
-        <a href="services.html" className="btn btn-outline btn-primary">
+        <Link href="/services" className="btn btn-outline btn-primary">
           View all services
-        </a>
+        </Link>
       </div>
 
       {/* <!-- services.slice(0, 6).map(s => <ServiceCard />) --> */}
@@ -72,9 +73,9 @@ function SectionFeatured(props: SectionFeaturedProps) {
                   $49
                 </span>
               </p>
-              <a href="service-details.html" className="btn btn-primary btn-sm">
+              <Link href="/services/01" className="btn btn-primary btn-sm">
                 View Details
-              </a>
+              </Link>
             </div>
           </div>
         </article>
@@ -115,9 +116,9 @@ function SectionFeatured(props: SectionFeaturedProps) {
                   $29
                 </span>
               </p>
-              <a href="service-details.html" className="btn btn-primary btn-sm">
+              <Link href="/services/01" className="btn btn-primary btn-sm">
                 View Details
-              </a>
+              </Link>
             </div>
           </div>
         </article>
@@ -160,9 +161,9 @@ function SectionFeatured(props: SectionFeaturedProps) {
                   $35
                 </span>
               </p>
-              <a href="service-details.html" className="btn btn-primary btn-sm">
+              <Link href="/services/01" className="btn btn-primary btn-sm">
                 View Details
-              </a>
+              </Link>
             </div>
           </div>
         </article>
@@ -205,9 +206,9 @@ function SectionFeatured(props: SectionFeaturedProps) {
                   $25
                 </span>
               </p>
-              <a href="service-details.html" className="btn btn-primary btn-sm">
+              <Link href="/services/01" className="btn btn-primary btn-sm">
                 View Details
-              </a>
+              </Link>
             </div>
           </div>
         </article>
@@ -248,9 +249,9 @@ function SectionFeatured(props: SectionFeaturedProps) {
                   $30
                 </span>
               </p>
-              <a href="service-details.html" className="btn btn-primary btn-sm">
+              <Link href="/services/01" className="btn btn-primary btn-sm">
                 View Details
-              </a>
+              </Link>
             </div>
           </div>
         </article>
@@ -291,9 +292,9 @@ function SectionFeatured(props: SectionFeaturedProps) {
                   $55
                 </span>
               </p>
-              <a href="service-details.html" className="btn btn-primary btn-sm">
+              <Link href="/services/01" className="btn btn-primary btn-sm">
                 View Details
-              </a>
+              </Link>
             </div>
           </div>
         </article>

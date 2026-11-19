@@ -25,7 +25,7 @@ function ServiceHero(props: ServiceHeroProps) {
 
       {/* <!-- ===== Search + filters + sort ===== --> */}
       <form
-        action="services.html"
+        action="/services"
         method="get"
         className="mt-8 grid gap-3 md:grid-cols-2 lg:grid-cols-12"
       >

@@ -34,7 +34,7 @@ function SectionServices(props: SectionServicesProps) {
         <div className="flex flex-wrap gap-2">
           <span className="badge badge-soft badge-primary gap-1.5 py-3">
             Category: AC
-            <Link href="services.html" aria-label="Remove filter">
+            <Link href="/services" aria-label="Remove filter">
               <PiXBold />
             </Link>
           </span>
@@ -80,10 +80,7 @@ function SectionServices(props: SectionServicesProps) {
                   $49
                 </span>
               </p>
-              <Link
-                href="service-details.html"
-                className="btn btn-primary btn-sm"
-              >
+              <Link href="/service/01" className="btn btn-primary btn-sm">
                 View Details
               </Link>
             </div>
@@ -126,10 +123,7 @@ function SectionServices(props: SectionServicesProps) {
                   $29
                 </span>
               </p>
-              <Link
-                href="service-details.html"
-                className="btn btn-primary btn-sm"
-              >
+              <Link href="/service/01" className="btn btn-primary btn-sm">
                 View Details
               </Link>
             </div>
@@ -174,10 +168,7 @@ function SectionServices(props: SectionServicesProps) {
                   $35
                 </span>
               </p>
-              <Link
-                href="service-details.html"
-                className="btn btn-primary btn-sm"
-              >
+              <Link href="/service/01" className="btn btn-primary btn-sm">
                 View Details
               </Link>
             </div>
@@ -222,10 +213,7 @@ function SectionServices(props: SectionServicesProps) {
                   $25
                 </span>
               </p>
-              <Link
-                href="service-details.html"
-                className="btn btn-primary btn-sm"
-              >
+              <Link href="/service/01" className="btn btn-primary btn-sm">
                 View Details
               </Link>
             </div>
@@ -268,10 +256,7 @@ function SectionServices(props: SectionServicesProps) {
                   $30
                 </span>
               </p>
-              <Link
-                href="service-details.html"
-                className="btn btn-primary btn-sm"
-              >
+              <Link href="/service/01" className="btn btn-primary btn-sm">
                 View Details
               </Link>
             </div>
@@ -314,10 +299,7 @@ function SectionServices(props: SectionServicesProps) {
                   $55
                 </span>
               </p>
-              <Link
-                href="service-details.html"
-                className="btn btn-primary btn-sm"
-              >
+              <Link href="/service/01" className="btn btn-primary btn-sm">
                 View Details
               </Link>
             </div>
@@ -362,10 +344,7 @@ function SectionServices(props: SectionServicesProps) {
                   $70
                 </span>
               </p>
-              <Link
-                href="service-details.html"
-                className="btn btn-primary btn-sm"
-              >
+              <Link href="/service/01" className="btn btn-primary btn-sm">
                 View Details
               </Link>
             </div>
@@ -408,10 +387,7 @@ function SectionServices(props: SectionServicesProps) {
                   $40
                 </span>
               </p>
-              <Link
-                href="service-details.html"
-                className="btn btn-primary btn-sm"
-              >
+              <Link href="/service/01" className="btn btn-primary btn-sm">
                 View Details
               </Link>
             </div>
@@ -456,10 +432,7 @@ function SectionServices(props: SectionServicesProps) {
                   $45
                 </span>
               </p>
-              <Link
-                href="service-details.html"
-                className="btn btn-primary btn-sm"
-              >
+              <Link href="/service/01" className="btn btn-primary btn-sm">
                 View Details
               </Link>
             </div>
@@ -510,7 +483,7 @@ function SectionServices(props: SectionServicesProps) {
           Try a different keyword, or clear the filters to see every available
           repair service.
         </p>
-        <Link href="services.html" className="btn btn-primary mt-6">
+        <Link href="/services" className="btn btn-primary mt-6">
           Clear filters
         </Link>
       </div>

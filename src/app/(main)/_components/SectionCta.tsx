@@ -25,13 +25,10 @@ function SectionCta(props: SectionCtaProps) {
           </p>
         </div>
         <div className="btn-box flex-wrap">
-          <Link href="sign-up.html" className="btn btn-neutral btn-lg">
+          <Link href="/signup" className="btn btn-neutral btn-lg">
             Join as a technician
           </Link>
-          <Link
-            href="services.html"
-            className="btn btn-neutral btn-outline btn-lg"
-          >
+          <Link href="/services" className="btn btn-neutral btn-outline btn-lg">
             Browse services
           </Link>
         </div>
