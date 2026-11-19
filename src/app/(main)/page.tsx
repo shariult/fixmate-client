@@ -1,16 +1,20 @@
-import Container from "@/components/ui/common/Container";
+import Hero from "./_components/Hero";
+import SectionFeatured from "./_components/SectionFeatured";
+import SectionProcess from "./_components/SectionProcess";
+import SectionCategories from "./_components/SectionCategories";
+import SectionWhy from "./_components/SectionWhy";
+import SectionCta from "./_components/SectionCta";
 
 async function Homepage() {
   return (
-    <Container>
-      <h1 className="heading-1">Hello World!</h1>
-      <p className="text-muted">
-        Lorem ipsum dolor sit amet, consectetur adipisicing elit. Dolorem
-        numquam tempore, similique perspiciatis aliquid quisquam officiis, quas
-        totam ad ea earum tenetur doloremque, facere sed officia est. Adipisci,
-        dignissimos id.
-      </p>
-    </Container>
+    <>
+      <Hero />
+      <SectionFeatured elClassName="bg-base-200" />
+      <SectionProcess />
+      <SectionCategories elClassName="bg-base-200" />
+      <SectionWhy />
+      <SectionCta elClassName="bg-base-200" />
+    </>
   );
 }
 export default Homepage;
