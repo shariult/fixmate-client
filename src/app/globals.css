@@ -81,7 +81,7 @@
 
 @layer utilities {
   .heading-1 {
-    @apply text-4xl leading-tight font-bold sm:text-5xl lg:text-6xl;
+    @apply text-4xl leading-24 font-bold sm:text-5xl lg:text-6xl;
   }
   .heading-2 {
     @apply text-3xl leading-tight font-medium md:text-4xl;

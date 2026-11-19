@@ -1,24 +1,12 @@
 import React from "react";
-import Link from "next/link";
+import NavLink from "./NavLink";
 
 function NavLinks() {
   return (
     <>
-      <li>
-        <Link className="text-base-content text-sm" href="/">
-          Home
-        </Link>
-      </li>
-      <li>
-        <Link className="text-base-content text-sm" href="/services">
-          Services
-        </Link>
-      </li>
-      <li>
-        <Link className="text-base-content text-sm" href="/about">
-          How It Works
-        </Link>
-      </li>
+      <NavLink href={"/"}>Home</NavLink>
+      <NavLink href={"/services"}>Services</NavLink>
+      <NavLink href={"/about"}>How It Works</NavLink>
     </>
   );
 }

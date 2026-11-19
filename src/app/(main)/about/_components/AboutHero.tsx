@@ -10,7 +10,12 @@ function AboutHero(props: AboutHeroProps) {
   const { className, elClassName, ...rest } = props;
 
   return (
-    <Container className={className} elClassName={elClassName} {...rest}>
+    <Container
+      el={"header"}
+      className={className}
+      elClassName={elClassName}
+      {...rest}
+    >
       <p className="heading-sub">About FixMate</p>
       <h1 className="heading-1 mt-4 max-w-3xl">
         Repairs you can follow from request to receipt.

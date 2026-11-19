@@ -1,5 +1,6 @@
 import React, { ComponentPropsWithoutRef } from "react";
 import Container from "@/components/ui/common/Container";
+import SectionTitle from "@/components/ui/common/SectionTitle";
 
 type SectionHowProps = {
   className?: string;
@@ -15,10 +16,10 @@ function SectionHow(props: SectionHowProps) {
       elClassName={`${elClassName ? elClassName : ""}`}
       {...rest}
     >
-      <div className="max-w-2xl">
-        <h2 className="heading-2">How a repair works</h2>
-        <p className="mt-3 text-muted">The same six steps, every time.</p>
-      </div>
+      <SectionTitle
+        heading="How a repair works"
+        headingText="The same six steps, every time."
+      />
 
       <ol className="mt-10 grid gap-x-12 gap-y-8 md:grid-cols-2">
         <li className="flex gap-5">

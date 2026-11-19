@@ -10,6 +10,7 @@ import {
 import CompanyLogo from "@/components/ui/common/CompanyLogo";
 import FooterItem from "./FooterItem";
 import FooterSocialLink from "./FooterSocialLink";
+import Link from "next/link";
 
 function Footer() {
   return (
@@ -88,7 +89,14 @@ function Footer() {
 
       {/* copyright */}
       <div className="bg-gray-50 dark:bg-gray-950 border-t border-base-300 py-4 text-center text-xs opacity-70">
-        &copy; 2026 Shariul. All rights reserved.
+        Copyright &copy; 2026{" "}
+        <Link
+          href={"https://shariul.com"}
+          className="link link-hover text-primary"
+        >
+          Shariul
+        </Link>
+        . All rights reserved.
       </div>
     </footer>
   );
