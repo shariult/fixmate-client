@@ -10,8 +10,13 @@ function NavLinks() {
         </Link>
       </li>
       <li>
-        <Link className="text-base-content text-sm" href="/about-us">
-          About Us
+        <Link className="text-base-content text-sm" href="/services">
+          Services
+        </Link>
+      </li>
+      <li>
+        <Link className="text-base-content text-sm" href="/about">
+          How It Works
         </Link>
       </li>
     </>

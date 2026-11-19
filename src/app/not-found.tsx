@@ -1,32 +1,38 @@
+import Footer from "@/components/layout/footer/Footer";
+import Navbar from "@/components/layout/navbar/Navbar";
 import Container from "@/components/ui/common/Container";
 import Link from "next/link";
 import { PiWrenchBold } from "react-icons/pi";
 
 function NotFoundPage() {
   return (
-    <Container
-      className="flex flex-col items-center justify-center min-h-screen"
-      elClassName="bg-base-300"
-    >
-      <span className="grid place-items-center rounded-full border-4 border-dashed border-error/40 bg-error/10 p-4 mb-8 text-error">
-        <PiWrenchBold className="text-6xl" />
-      </span>
+    <>
+      <Navbar />
+      <Container
+        className="flex flex-col items-center justify-center min-h-[90vh]"
+        elClassName="bg-base-300"
+      >
+        <span className="grid place-items-center rounded-full border-4 border-dashed border-error/40 bg-error/10 p-4 mb-8 text-error">
+          <PiWrenchBold className="text-6xl" />
+        </span>
 
-      <h1 className="heading-2 mb-3">This page is out for repair</h1>
-      <p className="max-w-[40ch] mb-8 text-muted text-center">
-        We couldn&apos;t find the page you asked for. It may have moved, or the
-        link might be mistyped.
-      </p>
+        <h1 className="heading-2 mb-3">This page is out for repair</h1>
+        <p className="max-w-[40ch] mb-8 text-muted text-center">
+          We couldn&apos;t find the page you asked for. It may have moved, or
+          the link might be mistyped.
+        </p>
 
-      <div className="btn-box justify-center">
-        <Link href="/" className="btn btn-primary btn-lg">
-          Back to Home
-        </Link>
-        <Link href="/services" className="btn btn-outline btn-lg">
-          Browse services
-        </Link>
-      </div>
-    </Container>
+        <div className="btn-box justify-center">
+          <Link href="/" className="btn btn-primary btn-lg">
+            Back to Home
+          </Link>
+          <Link href="/services" className="btn btn-outline btn-lg">
+            Browse services
+          </Link>
+        </div>
+      </Container>
+      <Footer />
+    </>
   );
 }
 
