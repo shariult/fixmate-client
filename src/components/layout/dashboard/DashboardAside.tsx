@@ -4,6 +4,7 @@ import { PiHouseBold, PiSignOutBold, PiUserBold } from "react-icons/pi";
 import CompanyLogo from "@/components/ui/common/CompanyLogo";
 import { TSidebar } from "@/data/dashboardSidebar";
 import DashboardAsideLink from "./DashboardAsideLink";
+import UserSignOut from "@/components/ui/user/UserSignOut";
 
 type DashboardAsideProps = {
   sidebarConfig: TSidebar;
@@ -46,6 +47,7 @@ function DashboardAside(props: DashboardAsideProps) {
             })}
 
             {children}
+
             {/* common */}
             <DashboardAsideLink
               href={"/dashboard/profile"}
@@ -63,10 +65,7 @@ function DashboardAside(props: DashboardAsideProps) {
               </Link>
             </li>
             <li>
-              <button type="button" className="text-error">
-                <PiSignOutBold className="text-xl" />
-                Sign Out
-              </button>
+              <UserSignOut />
             </li>
           </ul>
         </div>

@@ -3,12 +3,12 @@
 import React, { ComponentPropsWithoutRef } from "react";
 import Link from "next/link";
 import Image from "next/image";
-import { PiUserCircle, PiSignOut, PiChartBar } from "react-icons/pi";
+import { PiUserCircle, PiChartBar } from "react-icons/pi";
 import UserDemoImg from "@/components/ui/user/UserDemoImg";
 import ThemeToggle from "@/components/ui/common/ThemeToggle";
 import Loading from "@/components/ui/common/Loading";
+import UserSignOut from "@/components/ui/user/UserSignOut";
 import authClient from "@/lib/authClient";
-import { useRouter } from "next/navigation";
 
 type NavEndProps = {
   className?: string;
@@ -17,13 +17,6 @@ type NavEndProps = {
 function NavEnd(props: NavEndProps) {
   const { className, ...rest } = props;
   const { data, isPending, error } = authClient.useSession();
-  const router = useRouter();
-
-  async function signOutHandler() {
-    await authClient.signOut();
-    router.push("/");
-    router.refresh();
-  }
 
   if (isPending) {
     return (
@@ -61,19 +54,16 @@ function NavEnd(props: NavEndProps) {
           <div className="dropdown dropdown-end">
             <div tabIndex={0} role="button" className="btn btn-ghost avatar">
               <div className="w-10 rounded-full">
-                {(!data?.user.image ||
-                  !data?.user.image.startsWith("https://")) && (
+                {data?.user.image ? (
+                  <Image
+                    alt={data?.user.name.slice(0, 15)}
+                    src={data?.user.image}
+                    width="40"
+                    height="40"
+                  />
+                ) : (
                   <UserDemoImg name={data?.user.name ?? "U"} />
                 )}
-                {data?.user.image &&
-                  data?.user.image.startsWith("https://") && (
-                    <Image
-                      alt="Tailwind CSS Navbar component"
-                      src={data?.user.image}
-                      width="40"
-                      height="40"
-                    />
-                  )}
               </div>
             </div>
             <ul
@@ -84,8 +74,8 @@ function NavEnd(props: NavEndProps) {
                 <span className="text-xl py-0 hover:bg-base-200 hover:cursor-auto">
                   {data?.user.name}
                 </span>
-                <span className="-mt-1 text-muted text-right hover:bg-base-200 hover:cursor-auto">
-                  {data?.user.email}
+                <span className="-mt-1 text-muted text-right hover:bg-base-200 hover:cursor-auto capitalize">
+                  {data?.user.role}
                 </span>
               </li>
 
@@ -100,12 +90,7 @@ function NavEnd(props: NavEndProps) {
                 </Link>
               </li>
               <li>
-                <button
-                  className="text-base text-red-500"
-                  onClick={signOutHandler}
-                >
-                  <PiSignOut /> Sign Out
-                </button>
+                <UserSignOut />
               </li>
             </ul>
           </div>

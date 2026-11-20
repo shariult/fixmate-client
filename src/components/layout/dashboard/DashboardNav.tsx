@@ -1,17 +1,21 @@
-import ThemeToggle from "@/components/ui/common/ThemeToggle";
-import Link from "next/link";
 import React, { ComponentPropsWithoutRef } from "react";
-import { PiListBold, PiSignOutBold, PiUserBold } from "react-icons/pi";
+import Link from "next/link";
+import Image from "next/image";
+import { PiListBold, PiUserBold } from "react-icons/pi";
+import ThemeToggle from "@/components/ui/common/ThemeToggle";
+import UserDemoImg from "@/components/ui/user/UserDemoImg";
+import UserSignOut from "@/components/ui/user/UserSignOut";
+import { getCurrentUser } from "@/lib/authActions";
 import DashboardHeaderTitle from "./DashboardHeaderTitle";
-import { TSidebar } from "@/data/dashboardSidebar";
 
 type DashboardNavProps = {
   className?: string;
   children?: React.ReactNode;
-} & ComponentPropsWithoutRef<"div">;
+} & ComponentPropsWithoutRef<"header">;
 
-function DashboardNav(props: DashboardNavProps) {
+async function DashboardNav(props: DashboardNavProps) {
   const { className, children, ...rest } = props;
+  const userData = await getCurrentUser();
 
   return (
     <header
@@ -29,15 +33,6 @@ function DashboardNav(props: DashboardNavProps) {
       <DashboardHeaderTitle />
 
       <div className="ml-auto flex items-center gap-2 sm:gap-4">
-        {/* <Link
-          href="index.html"
-          className="btn btn-ghost btn-sm hidden sm:inline-flex"
-        >
-          <svg className="size-4">
-            <use href="#i-home" />
-          </svg>
-          Back to Home
-        </Link> */}
         <ThemeToggle />
 
         <div className="dropdown dropdown-end">
@@ -48,16 +43,26 @@ function DashboardNav(props: DashboardNavProps) {
           >
             <div className="avatar">
               <div className="w-9 rounded-full ring-2 ring-primary/30">
-                <img
-                  src="https://placehold.co/72x72/4f46e5/ffffff?text=RH"
-                  alt="Rafiq Hasan"
-                />
+                {userData?.user.image ? (
+                  <Image
+                    alt={userData?.user.name}
+                    src={userData?.user.image}
+                    width="40"
+                    height="40"
+                  />
+                ) : (
+                  <UserDemoImg name={userData?.user.name ?? "U"} />
+                )}
               </div>
             </div>
 
             <div className="hidden text-left leading-tight sm:block">
-              <p className="text-sm font-medium">Rafiq Hasan</p>
-              <p className="text-xs text-muted">Technician</p>
+              <p className="text-sm font-medium">
+                {userData?.user.name.slice(0, 15)}
+              </p>
+              <p className="text-xs text-muted capitalize">
+                {userData?.user.role}
+              </p>
             </div>
           </button>
           <ul
@@ -71,10 +76,7 @@ function DashboardNav(props: DashboardNavProps) {
               </Link>
             </li>
             <li>
-              <button type="button" className="text-error">
-                <PiSignOutBold />
-                Sign Out
-              </button>
+              <UserSignOut />
             </li>
           </ul>
         </div>

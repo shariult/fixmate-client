@@ -1,12 +1,12 @@
 import React from "react";
 import DashboardAside from "@/components/layout/dashboard/DashboardAside";
 import DashboardNav from "@/components/layout/dashboard/DashboardNav";
+import { getCurrentUser } from "@/lib/authActions";
 import {
   adminSidebarConfig,
   technicianSidebarConfig,
   customerSidebarConfig,
 } from "@/data/dashboardSidebar";
-import { getCurrentUser } from "@/lib/authActions";
 
 async function DashboardLayout({ children }: LayoutProps<"/">) {
   const session = await getCurrentUser();
@@ -20,7 +20,6 @@ async function DashboardLayout({ children }: LayoutProps<"/">) {
     sidebarConfig = adminSidebarConfig;
   }
 
-  console.log(session?.user);
   return (
     <div className="drawer lg:drawer-open">
       <input id="dash-drawer" type="checkbox" className="drawer-toggle" />
