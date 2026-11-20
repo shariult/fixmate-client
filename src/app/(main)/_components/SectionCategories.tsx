@@ -11,6 +11,7 @@ import {
   PiWashingMachineBold,
 } from "react-icons/pi";
 import Link from "next/link";
+import { categories } from "@/data/appData";
 
 type SectionCategoriesProps = {
   className?: string;
@@ -33,71 +34,23 @@ function SectionCategories(props: SectionCategoriesProps) {
         </p>
       </div>
 
-      {/* <!-- each links to /services?category=<value>  (encodeURIComponent for "Laptop & PC") --> */}
       <div className="mt-10 grid grid-cols-2 gap-4 md:grid-cols-4">
-        <Link
-          href="/services?category=Smartphone"
-          className="group flex flex-col items-center gap-3 rounded-2xl border border-base-300 bg-base-50 p-6 text-center transition-colors hover:border-primary hover:bg-primary/5"
-        >
-          <span className="grid size-12 place-items-center rounded-xl bg-primary/10 text-primary">
-            <PiDeviceMobileBold className="text-3xl" />
-          </span>
-          <span className="font-title font-medium">Smartphone</span>
-        </Link>
-        <Link
-          href="/services?category=Laptop%20%26%20PC"
-          className="group flex flex-col items-center gap-3 rounded-2xl border border-base-300 bg-base-50 p-6 text-center transition-colors hover:border-primary hover:bg-primary/5"
-        >
-          <span className="grid size-12 place-items-center rounded-xl bg-primary/10 text-primary">
-            <PiLaptopBold className="text-3xl" />
-          </span>
-          <span className="font-title font-medium">Laptop &amp; PC</span>
-        </Link>
-        <Link
-          href="/services?category=AC"
-          className="group flex flex-col items-center gap-3 rounded-2xl border border-base-300 bg-base-50 p-6 text-center transition-colors hover:border-primary hover:bg-primary/5"
-        >
-          <span className="grid size-12 place-items-center rounded-xl bg-primary/10 text-primary">
-            <PiFanBold className="text-3xl" />
-          </span>
-          <span className="font-title font-medium">AC</span>
-        </Link>
-        <Link
-          href="/services?category=Refrigerator"
-          className="group flex flex-col items-center gap-3 rounded-2xl border border-base-300 bg-base-50 p-6 text-center transition-colors hover:border-primary hover:bg-primary/5"
-        >
-          <span className="grid size-12 place-items-center rounded-xl bg-primary/10 text-primary">
-            <PiThermometerColdBold className="text-3xl" />
-          </span>
-          <span className="font-title font-medium">Refrigerator</span>
-        </Link>
-        <Link
-          href="/services?category=TV"
-          className="group flex flex-col items-center gap-3 rounded-2xl border border-base-300 bg-base-50 p-6 text-center transition-colors hover:border-primary hover:bg-primary/5"
-        >
-          <span className="grid size-12 place-items-center rounded-xl bg-primary/10 text-primary">
-            <PiTelevisionBold className="text-3xl" />
-          </span>
-          <span className="font-title font-medium">TV</span>
-        </Link>
-        <Link
-          href="/services?category=Washing%20Machine"
-          className="group flex flex-col items-center gap-3 rounded-2xl border border-base-300 bg-base-50 p-6 text-center transition-colors hover:border-primary hover:bg-primary/5"
-        >
-          <span className="grid size-12 place-items-center rounded-xl bg-primary/10 text-primary">
-            <PiWashingMachineBold className="text-3xl" />
-          </span>
-          <span className="font-title font-medium">Washing Machine</span>
-        </Link>
-        <Link
-          href="/services?category=Electrical"
-          className="group flex flex-col items-center gap-3 rounded-2xl border border-base-300 bg-base-50 p-6 text-center transition-colors hover:border-primary hover:bg-primary/5"
-        >
-          <span className="grid size-12 place-items-center rounded-xl bg-primary/10 text-primary">
-            <PiLightningBold className="text-3xl" />
-          </span>
-          <span className="font-title font-medium">Electrical</span>
-        </Link>
+        {categories.map((category) => {
+          const Icon = category.icon;
+          return (
+            <Link
+              href={`/services?category=${category.slug}`}
+              className="group flex flex-col items-center gap-3 rounded-2xl border border-base-300 bg-base-50 p-6 text-center transition-colors hover:border-primary hover:bg-primary/5"
+              key={category.id}
+            >
+              <span className="grid size-12 place-items-center rounded-xl bg-primary/10 text-primary">
+                <Icon className="text-3xl" />
+              </span>
+              <span className="font-title font-medium">{category.title}</span>
+            </Link>
+          );
+        })}
+
         <Link
           href="/services"
           className="flex flex-col items-center justify-center gap-3 rounded-2xl border border-dashed border-base-300 p-6 text-center text-muted transition-colors hover:border-primary hover:text-primary"
