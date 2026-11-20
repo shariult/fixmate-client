@@ -1,14 +1,138 @@
-import React, { ComponentPropsWithoutRef } from "react";
+"use client";
+
+import React, { ComponentPropsWithoutRef, useState } from "react";
+import { useRouter } from "next/navigation";
+import toast from "react-hot-toast";
+import { isValidStr } from "@/lib/utils";
+import FormGroup from "@/components/ui/form/FormGroup";
+import authClient from "@/lib/authClient";
+import Loading from "@/components/ui/common/Loading";
+import EmptyData from "@/components/ui/common/EmptyData";
+import LoadingSpinner from "@/components/ui/common/LoadingSpinner";
 
 type BookingModalProps = {
+  service: { id: string };
   modalRef?: React.RefObject<HTMLDialogElement | null>;
   className?: string;
   children?: React.ReactNode;
 } & ComponentPropsWithoutRef<"dialog">;
 
+type BookingFormFieldErrors = {
+  customerPhone?: string;
+  preferredDate?: string;
+  address?: string;
+  problemDescription?: string;
+};
+
 function BookingModal(props: BookingModalProps) {
-  const { modalRef, className, children, ...rest } = props;
+  const { data, isPending, error } = authClient.useSession();
+
+  if (isPending) {
+    return <Loading />;
+  }
+
+  if (error || !data) {
+    return <EmptyData message="No user found!" />;
+  }
+
+  const user = data.user;
+
+  const { service, modalRef, className, children, ...rest } = props;
+  const router = useRouter();
   const today = new Date().toISOString().split("T")[0];
+
+  const initialFormValues = {
+    customerPhone: user.phone ?? "",
+    preferredDate: "",
+    address: "",
+    problemDescription: "",
+  };
+
+  const [formValues, setFormValues] = useState(initialFormValues);
+  const [isLoading, setIsLoading] = useState(false);
+  const [fieldErrors, setFieldErrors] = useState<BookingFormFieldErrors>({});
+
+  function handleInputChange(
+    e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>,
+  ) {
+    const { name, value } = e.target;
+    setFormValues((prev) => ({ ...prev, [name]: value }));
+  }
+
+  function resetForm() {
+    setFormValues(initialFormValues);
+    setFieldErrors({});
+  }
+
+  function handleCancel() {
+    resetForm();
+    modalRef?.current?.close();
+  }
+
+  async function handleSubmit(e: React.SubmitEvent<HTMLFormElement>) {
+    e.preventDefault();
+    setIsLoading(true);
+
+    const payload = {
+      customerPhone: formValues.customerPhone.replace(/[\s-]/g, ""),
+      preferredDate: formValues.preferredDate,
+      address: formValues.address.trim(),
+      problemDescription: formValues.problemDescription.trim(),
+    };
+
+    const validationErrors: BookingFormFieldErrors = {
+      customerPhone: /^01\d{9}$/.test(payload.customerPhone)
+        ? undefined
+        : "Enter a valid phone number, e.g. 01XXXXXXXXX.",
+      preferredDate:
+        payload.preferredDate === ""
+          ? "Please choose a date."
+          : payload.preferredDate < today
+            ? "Date can't be in the past."
+            : undefined,
+      address: isValidStr(payload.address, 1)
+        ? undefined
+        : "Please enter your address.",
+      problemDescription: isValidStr(payload.problemDescription, 20)
+        ? undefined
+        : "Describe the problem in at least 20 characters.",
+    };
+
+    const hasValidationErrors = Object.values(validationErrors).some(Boolean);
+    setFieldErrors(validationErrors);
+    if (hasValidationErrors) {
+      setIsLoading(false);
+      return;
+    }
+
+    try {
+      const res = await fetch("/api/bookings", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          ...payload,
+          serviceId: service.id,
+          customerName: user.name,
+          customerEmail: user.email,
+        }),
+      });
+
+      if (!res.ok) {
+        const data = await res.json().catch(() => null);
+        throw new Error(data?.message ?? "Something went wrong!");
+      }
+    } catch (err) {
+      setIsLoading(false);
+      toast.error(err instanceof Error ? err.message : "Something went wrong!");
+      return;
+    }
+
+    setIsLoading(false);
+    toast.success("Repair request sent!");
+    resetForm();
+    modalRef?.current?.close();
+    router.refresh();
+  }
 
   return (
     <dialog
@@ -33,82 +157,97 @@ function BookingModal(props: BookingModalProps) {
           iPhone Screen Replacement · from $49
         </p>
 
-        <form className="mt-6 space-y-4" action="#" method="post">
+        <form className="mt-6 space-y-4" onSubmit={handleSubmit} noValidate>
           <div className="grid gap-4 sm:grid-cols-2">
-            <fieldset className="fieldset">
-              <legend className="fieldset-legend">Name</legend>
+            <FormGroup labelText="Name">
               <input
                 type="text"
                 className="input w-full bg-base-200"
-                defaultValue="Rahim Uddin"
+                value={user.name}
                 readOnly
               />
-            </fieldset>
-            <fieldset className="fieldset">
-              <legend className="fieldset-legend">Email</legend>
+            </FormGroup>
+            <FormGroup labelText="Email">
               <input
                 type="email"
                 className="input w-full bg-base-200"
-                defaultValue="rahim@example.com"
+                value={user.email}
                 readOnly
               />
-            </fieldset>
+            </FormGroup>
           </div>
 
           <div className="grid gap-4 sm:grid-cols-2">
-            <fieldset className="fieldset">
-              <legend className="fieldset-legend">Phone</legend>
+            <FormGroup labelText="Phone" errorText={fieldErrors.customerPhone}>
               <input
                 type="tel"
                 name="customerPhone"
                 className="input w-full"
                 placeholder="01XXXXXXXXX"
-                required
+                autoComplete="tel"
+                value={formValues.customerPhone}
+                onChange={handleInputChange}
+                disabled={isLoading}
               />
-            </fieldset>
-            <fieldset className="fieldset">
-              <legend className="fieldset-legend">Preferred date</legend>
+            </FormGroup>
+            <FormGroup
+              labelText="Preferred date"
+              errorText={fieldErrors.preferredDate}
+            >
               <input
                 type="date"
                 name="preferredDate"
                 className="input w-full"
                 min={today}
-                required
+                value={formValues.preferredDate}
+                onChange={handleInputChange}
+                disabled={isLoading}
               />
-            </fieldset>
+            </FormGroup>
           </div>
 
-          <fieldset className="fieldset">
-            <legend className="fieldset-legend">Address</legend>
+          <FormGroup labelText="Address" errorText={fieldErrors.address}>
             <input
               type="text"
               name="address"
               className="input w-full"
               placeholder="House, road, area"
-              required
+              autoComplete="street-address"
+              value={formValues.address}
+              onChange={handleInputChange}
+              disabled={isLoading}
             />
-          </fieldset>
+          </FormGroup>
 
-          <fieldset className="fieldset">
-            <legend className="fieldset-legend">Problem description</legend>
+          <FormGroup
+            labelText="Problem description"
+            errorText={fieldErrors.problemDescription}
+          >
             <textarea
               name="problemDescription"
               className="textarea h-28 w-full"
-              minLength={20}
               placeholder="What is wrong with the device? (at least 20 characters)"
-              required
-            ></textarea>
-          </fieldset>
+              value={formValues.problemDescription}
+              onChange={handleInputChange}
+              disabled={isLoading}
+            />
+          </FormGroup>
 
           <div className="modal-action mt-6">
             <button
               type="button"
               className="btn btn-ghost"
-              onClick={() => modalRef?.current?.close()}
+              onClick={handleCancel}
+              disabled={isLoading}
             >
               Cancel
             </button>
-            <button type="submit" className="btn btn-primary">
+            <button
+              type="submit"
+              className="btn bg-primary text-primary-content hover:bg-primary-hover"
+              disabled={isLoading}
+            >
+              {isLoading && <LoadingSpinner />}
               Send request
             </button>
           </div>

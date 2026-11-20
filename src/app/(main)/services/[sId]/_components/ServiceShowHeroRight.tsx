@@ -72,7 +72,7 @@ function ServiceShowHeroRight(props: ServiceShowHeroRightProps) {
           </div>
         </div>
       </aside>
-      <BookingModal modalRef={modalRef} />
+      <BookingModal modalRef={modalRef} service={{ id: "10" }} />
     </>
   );
 }

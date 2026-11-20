@@ -3,7 +3,7 @@
 import React, { ComponentPropsWithoutRef, useState } from "react";
 import { useRouter } from "next/navigation";
 import toast from "react-hot-toast";
-import FormGroup from "../../ui/form/FormGroup";
+import FormGroup from "@/components/ui/form/FormGroup";
 import { isValidStr } from "@/lib/utils";
 import { PiUploadSimpleBold } from "react-icons/pi";
 import { TUserInput } from "@/types";

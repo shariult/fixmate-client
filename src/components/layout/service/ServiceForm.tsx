@@ -4,7 +4,7 @@ import React, { ComponentPropsWithoutRef, useEffect, useState } from "react";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
 import toast from "react-hot-toast";
-import FormGroup from "../../ui/form/FormGroup";
+import FormGroup from "@/components/ui/form/FormGroup";
 import { isValidStr } from "@/lib/utils";
 import { PiUploadSimpleBold } from "react-icons/pi";
 import Image from "next/image";

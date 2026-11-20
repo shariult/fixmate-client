@@ -4,7 +4,7 @@ import React, { ComponentPropsWithoutRef, useState } from "react";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
 import toast from "react-hot-toast";
-import FormGroup from "../form/FormGroup";
+import FormGroup from "@/components/ui/form/FormGroup";
 import {
   isValidEmail,
   isValidHttpsUrl,
@@ -26,6 +26,7 @@ type UserFormFieldErrors = {
   email?: string;
   role?: string;
   address?: string;
+  phone?: string;
   bio?: string;
   password?: string;
   confirmPassword?: string;
@@ -38,6 +39,7 @@ const INITIAL_FORM_VALUES = {
   email: "",
   role: "customer",
   address: "",
+  phone: "",
   bio: "",
   password: "",
   confirmPassword: "",
@@ -88,6 +90,7 @@ function UserForm({ type, className, ...rest }: UserFormProps) {
       role: formValues.role as "technician" | "customer",
       bio: formValues.bio,
       address: formValues.address,
+      phone: formValues.phone,
       password: formValues.password,
       confirmPassword: formValues.confirmPassword,
     };
@@ -129,6 +132,7 @@ function UserForm({ type, className, ...rest }: UserFormProps) {
       image: payload.image || undefined,
       role: payload.role,
       address: payload.address,
+      phone: payload.phone,
       bio: payload.bio,
     });
     setIsLoading(false);
