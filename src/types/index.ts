@@ -22,4 +22,14 @@ type TServiceMode = {
   icon: IconType;
 };
 
-export { type TBreadCrumbs, type TCategory, type TServiceMode };
+type TUserInput = {
+  name: string;
+  phone?: string | null;
+  email: string;
+  role: string;
+  address?: string | null;
+  bio?: string | null;
+  image?: string | null;
+};
+
+export type { TBreadCrumbs, TCategory, TServiceMode, TUserInput };

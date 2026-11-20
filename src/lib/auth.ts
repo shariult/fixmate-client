@@ -18,6 +18,10 @@ const auth = betterAuth({
         input: true,
         defaultValue: "customer",
       },
+      phone: {
+        type: "string",
+        input: true,
+      },
       address: {
         type: "string",
         input: true,
