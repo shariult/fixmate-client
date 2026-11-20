@@ -19,7 +19,7 @@ function FormGroup(props: FormGroupProps) {
       {...rest}
     >
       {labelText && labelText.length > 0 && (
-        <label className="label flex justify-between">
+        <label className="text-xs text-base-content font-semibold flex justify-between">
           {labelText}
           {LabelExtraEl}
         </label>

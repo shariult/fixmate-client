@@ -7,6 +7,8 @@ import { PiUserCircle, PiSignOut, PiChartBar } from "react-icons/pi";
 import UserDemoImg from "@/components/ui/user/UserDemoImg";
 import ThemeToggle from "@/components/ui/common/ThemeToggle";
 import Loading from "@/components/ui/common/Loading";
+import authClient from "@/lib/authClient";
+import { useRouter } from "next/navigation";
 
 type NavEndProps = {
   className?: string;
@@ -14,10 +16,14 @@ type NavEndProps = {
 
 function NavEnd(props: NavEndProps) {
   const { className, ...rest } = props;
-  const isPending = false;
-  const data = {
-    user: { name: "Demo", image: "/next.svg", email: "demo@demo.com" },
-  };
+  const { data, isPending, error } = authClient.useSession();
+  const router = useRouter();
+
+  async function signOutHandler() {
+    await authClient.signOut();
+    router.push("/");
+    router.refresh();
+  }
 
   if (isPending) {
     return (
@@ -84,17 +90,20 @@ function NavEnd(props: NavEndProps) {
               </li>
 
               <li>
-                <Link href="#" className="text-base">
+                <Link href="/dashboard" className="text-base">
                   <PiChartBar /> Dashboard
                 </Link>
               </li>
               <li>
-                <Link href="/profile" className="text-base">
+                <Link href="/dashboard/profile" className="text-base">
                   <PiUserCircle /> My Profile
                 </Link>
               </li>
               <li>
-                <button className="text-base text-red-500">
+                <button
+                  className="text-base text-red-500"
+                  onClick={signOutHandler}
+                >
                   <PiSignOut /> Sign Out
                 </button>
               </li>

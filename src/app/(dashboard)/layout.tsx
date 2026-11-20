@@ -6,9 +6,21 @@ import {
   technicianSidebarConfig,
   customerSidebarConfig,
 } from "@/data/dashboardSidebar";
+import { getCurrentUser } from "@/lib/authActions";
 
-function DashboardLayout({ children }: LayoutProps<"/">) {
-  let sidebarConfig = technicianSidebarConfig;
+async function DashboardLayout({ children }: LayoutProps<"/">) {
+  const session = await getCurrentUser();
+  let sidebarConfig = customerSidebarConfig;
+
+  if (session?.user.role === "technician") {
+    sidebarConfig = technicianSidebarConfig;
+  }
+
+  if (session?.user.role === "admin") {
+    sidebarConfig = adminSidebarConfig;
+  }
+
+  console.log(session?.user);
   return (
     <div className="drawer lg:drawer-open">
       <input id="dash-drawer" type="checkbox" className="drawer-toggle" />

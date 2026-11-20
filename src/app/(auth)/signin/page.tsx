@@ -1,4 +1,6 @@
 import CompanyLogo from "@/components/ui/common/CompanyLogo";
+import SocialSignIn from "@/components/ui/user/SocialSignIn";
+import UserForm from "@/components/ui/user/UserForm";
 import Link from "next/link";
 import React from "react";
 import {
@@ -67,12 +69,7 @@ function SignInPage() {
 
           <div className="mt-8">
             {/* <!-- OPTIONAL: Google login (BetterAuth social provider; Google users get role "customer") --> */}
-            <button type="button" className="btn btn-outline btn-block">
-              <span className="grid size-5 place-items-center rounded-full border border-base-300 text-xs font-semibold">
-                G
-              </span>
-              Continue with Google
-            </button>
+            <SocialSignIn className="w-full" />
             <div className="divider my-6 text-xs text-muted">
               or use your email
             </div>
@@ -87,50 +84,7 @@ function SignInPage() {
             <span>Incorrect email or password. Please try again.</span>
           </div>
 
-          <form className="space-y-5" action="#" method="post">
-            <fieldset className="fieldset">
-              <legend className="fieldset-legend">Email</legend>
-              <input
-                type="email"
-                name="email"
-                className="input w-full"
-                placeholder="you@example.com"
-                autoComplete="email"
-                required
-              />
-              <p className="mt-1 hidden text-xs text-error">
-                Please enter a valid email address.
-              </p>
-            </fieldset>
-
-            <fieldset className="fieldset">
-              <legend className="fieldset-legend">Password</legend>
-              <label className="input w-full">
-                <input
-                  type="password"
-                  id="password"
-                  name="password"
-                  placeholder="Your password"
-                  autoComplete="current-password"
-                  required
-                />
-                <button
-                  type="button"
-                  className="text-muted hover:text-base-content p-2"
-                  aria-label="Show password"
-                >
-                  <PiEyeBold className="text-base" />
-                </button>
-              </label>
-              <p className="mt-1 hidden text-xs text-error">
-                Please enter your password.
-              </p>
-            </fieldset>
-
-            <button type="submit" className="btn btn-primary btn-lg btn-block">
-              Sign in
-            </button>
-          </form>
+          <UserForm type="signin" />
         </div>
       </main>
     </div>

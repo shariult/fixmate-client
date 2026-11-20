@@ -84,7 +84,7 @@
     @apply text-4xl leading-16 font-bold sm:text-5xl lg:text-6xl;
   }
   .heading-2 {
-    @apply text-3xl leading-24 font-medium md:text-4xl;
+    @apply text-3xl leading-snug font-medium md:text-4xl;
   }
   .heading-3 {
     @apply text-lg leading-snug font-medium md:text-xl;
