@@ -9,7 +9,7 @@ import {
   PiXBold,
 } from "react-icons/pi";
 import Link from "next/link";
-import { serviceIndexAction } from "@/lib/service/serviceActions";
+import { getServicesAction } from "@/lib/service/serviceActions";
 import EmptyData from "@/components/ui/common/EmptyData";
 import ServiceCard from "@/components/layout/service/ServiceCard";
 
@@ -20,7 +20,7 @@ type SectionServicesProps = {
 
 async function SectionServices(props: SectionServicesProps) {
   const { className, elClassName, ...rest } = props;
-  const resData = await serviceIndexAction();
+  const resData = await getServicesAction();
 
   if (!resData.isSuccess || resData.data.length <= 0) {
     return (

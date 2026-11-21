@@ -12,12 +12,19 @@ import { categories, serviceModes } from "@/data/appData";
 import authClient from "@/lib/authClient";
 import Loading from "@/components/ui/common/Loading";
 import LoadingSpinner from "@/components/ui/common/LoadingSpinner";
-import { serviceStoreAction } from "@/lib/service/serviceActions";
+import {
+  storeServiceAction,
+  updateServiceAction,
+} from "@/lib/service/serviceActions";
+import { TService } from "@/types";
 
 const MAX_IMAGE_SIZE = 5 * 1024 * 1024; // 5 MB
 const MY_SERVICES_PATH = "/dashboard/technician/my-services"; // TODO: adjust to your route
 
 type ServiceFormProps = {
+  submitType: "create" | "update";
+  service?: TService;
+  onSuccess?: () => void;
   className?: string;
 } & ComponentPropsWithoutRef<"form">;
 
@@ -33,26 +40,26 @@ type ServiceFormFieldErrors = {
   imageDeleteUrl?: string;
 };
 
-const INITIAL_FORM_VALUES = {
-  title: "",
-  category: "",
-  basePrice: "",
-  description: "",
-  serviceMode: "home-visit",
-  serviceArea: "",
-  estimatedDuration: "",
-  image: "",
-  imageDeleteUrl: "",
-};
-
 function ServiceForm(props: ServiceFormProps) {
-  const { className, ...rest } = props;
+  const { submitType, service, onSuccess, className, ...rest } = props;
   const router = useRouter();
 
   const { data, error, isPending } = authClient.useSession();
 
-  const [formValues, setFormValues] = useState(INITIAL_FORM_VALUES);
-  const [pickedImage, setPickedImage] = useState<string | null>(null);
+  const [formValues, setFormValues] = useState({
+    title: service?.title ?? "",
+    category: service?.category ?? "",
+    basePrice: service?.basePrice ?? "",
+    description: service?.description ?? "",
+    serviceMode: service?.serviceMode ?? "home-visit",
+    serviceArea: service?.serviceArea ?? "",
+    estimatedDuration: service?.estimatedDuration ?? "",
+    image: service?.image ?? "",
+    imageDeleteUrl: service?.imageDeleteUrl ?? "",
+  });
+  const [pickedImage, setPickedImage] = useState<string | null>(
+    service?.image ?? null,
+  );
   const [imageFile, setImageFile] = useState<File | null>(null);
   const [isLoading, setIsLoading] = useState(false);
   const [fieldErrors, setFieldErrors] = useState<ServiceFormFieldErrors>({});
@@ -128,35 +135,54 @@ function ServiceForm(props: ServiceFormProps) {
             ? "Image must be 5 MB or smaller."
             : undefined,
     };
+    if (validationErrors.image && service?.image && !imageFile) {
+      payload.image = service.image;
+      validationErrors.image = undefined;
+    }
 
     const hasValidationErrors = Object.values(validationErrors).some(Boolean);
     setFieldErrors(validationErrors);
-    if (hasValidationErrors || !imageFile) {
+    if (hasValidationErrors) {
       setIsLoading(false);
       return;
     }
 
-    const imageData = await uploadImageToImgBB(imageFile as File);
-    if (imageData.isSuccess) {
-      payload.image = imageData.data.data.url;
-      payload.imageDeleteUrl = imageData.data.data.delete_url;
-    } else {
-      setIsLoading(false);
-      toast.error("Image upload failed. Please try again!");
-      return;
+    if (imageFile) {
+      const imageData = await uploadImageToImgBB(imageFile as File);
+      if (imageData.isSuccess) {
+        payload.image = imageData.data.data.url;
+        payload.imageDeleteUrl = imageData.data.data.delete_url;
+      } else {
+        setIsLoading(false);
+        toast.error("Image upload failed. Please try again!");
+        return;
+      }
     }
 
-    const res = await serviceStoreAction(payload);
+    if (submitType === "create") {
+      const res = await storeServiceAction(payload);
 
-    if (!res.isSuccess) {
+      if (!res.isSuccess) {
+        setIsLoading(false);
+        toast.error(res.error.message || "Could not create Service!");
+        return;
+      }
+
       setIsLoading(false);
-      toast.error(res.error.message || "Could not create Service!");
-      return;
+      toast.success("Service submitted. It's waiting for admin approval.");
+      router.push(MY_SERVICES_PATH);
     }
 
-    setIsLoading(false);
-    toast.success("Service submitted. It's waiting for admin approval.");
-    router.push(MY_SERVICES_PATH);
+    if (submitType === "update") {
+      const res = await updateServiceAction(service?._id!, payload);
+      if (!res.isSuccess) {
+        setIsLoading(false);
+        toast.error(res.error.message || "Could not update Service!");
+        return;
+      }
+      setIsLoading(false);
+      onSuccess && onSuccess();
+    }
     router.refresh();
   }
 
@@ -345,9 +371,16 @@ function ServiceForm(props: ServiceFormProps) {
       </div>
 
       <div className="flex flex-wrap justify-end gap-3 border-t border-base-300 pt-6">
-        <Link href={MY_SERVICES_PATH} className="btn btn-ghost">
-          Cancel
-        </Link>
+        {submitType === "create" && (
+          <Link href={MY_SERVICES_PATH} className="btn btn-ghost">
+            Cancel
+          </Link>
+        )}
+        {submitType === "update" && (
+          <button type="button" className="btn btn-neutral" onClick={onSuccess}>
+            Cancel
+          </button>
+        )}
         <button
           type="submit"
           className="btn bg-primary text-primary-content hover:bg-primary-hover"

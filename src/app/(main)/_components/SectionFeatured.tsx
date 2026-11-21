@@ -7,7 +7,7 @@ import {
   PiUserBold,
 } from "react-icons/pi";
 import Link from "next/link";
-import { serviceIndexAction } from "@/lib/service/serviceActions";
+import { getServicesAction } from "@/lib/service/serviceActions";
 import EmptyData from "@/components/ui/common/EmptyData";
 import ServiceCard from "@/components/layout/service/ServiceCard";
 
@@ -18,7 +18,7 @@ type SectionFeaturedProps = {
 
 async function SectionFeatured(props: SectionFeaturedProps) {
   const { className, elClassName, ...rest } = props;
-  const resData = await serviceIndexAction("?type=featured");
+  const resData = await getServicesAction("?type=featured");
 
   if (!resData.isSuccess || resData.data.length <= 0) {
     return (

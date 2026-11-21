@@ -87,7 +87,7 @@ function ServiceShowRight(props: ServiceShowRightProps) {
         </div>
       </aside>
       {data?.user && (
-        <BookingModal modalRef={modalRef} service={service} user={data?.user} />
+        <BookingModal modalRef={modalRef} service={service} user={data.user} />
       )}
     </>
   );

@@ -1,7 +1,7 @@
 import Container from "@/components/ui/common/Container";
 import ServiceShowLeft from "./_components/ServiceShowLeft";
 import ServiceShowRight from "./_components/ServiceShowRight";
-import { serviceShowAction } from "@/lib/service/serviceActions";
+import { showServiceAction } from "@/lib/service/serviceActions";
 import EmptyData from "@/components/ui/common/EmptyData";
 
 type ServiceDetailsPageProps = {
@@ -10,11 +10,10 @@ type ServiceDetailsPageProps = {
 
 async function ServiceDetailsPage(props: ServiceDetailsPageProps) {
   const { sId } = await props.params;
-  const resData = await serviceShowAction(sId);
+  const resData = await showServiceAction(sId);
   if (!resData.isSuccess) {
     return (
       <Container>
-        {" "}
         <EmptyData message="No service found!" />
       </Container>
     );

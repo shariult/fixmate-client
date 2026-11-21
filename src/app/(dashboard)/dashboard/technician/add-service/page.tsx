@@ -15,7 +15,7 @@ function AddServicePage() {
       </div>
 
       <div className="mt-8 grid gap-6 xl:grid-cols-3">
-        <ServiceForm />
+        <ServiceForm submitType="create" />
 
         <AddServiceAside />
       </div>
