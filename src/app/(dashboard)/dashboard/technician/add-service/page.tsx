@@ -15,7 +15,7 @@ function AddServicePage() {
       </div>
 
       <div className="mt-8 grid gap-6 xl:grid-cols-3">
-        <ServiceForm technician={{ name: "", email: "" }} />
+        <ServiceForm />
 
         <AddServiceAside />
       </div>

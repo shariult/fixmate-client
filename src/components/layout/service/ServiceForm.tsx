@@ -5,13 +5,14 @@ import Link from "next/link";
 import { useRouter } from "next/navigation";
 import toast from "react-hot-toast";
 import FormGroup from "@/components/ui/form/FormGroup";
-import { isValidStr } from "@/lib/utils";
+import { isValidStr, uploadImageToImgBB } from "@/lib/utils";
 import { PiUploadSimpleBold } from "react-icons/pi";
 import Image from "next/image";
 import { categories, serviceModes } from "@/data/appData";
 import authClient from "@/lib/authClient";
 import Loading from "@/components/ui/common/Loading";
 import LoadingSpinner from "@/components/ui/common/LoadingSpinner";
+import { serviceStoreAction } from "@/lib/service/serviceActions";
 
 const MAX_IMAGE_SIZE = 5 * 1024 * 1024; // 5 MB
 const MY_SERVICES_PATH = "/dashboard/technician/my-services"; // TODO: adjust to your route
@@ -29,6 +30,7 @@ type ServiceFormFieldErrors = {
   serviceArea?: string;
   estimatedDuration?: string;
   image?: string;
+  imageDeleteUrl?: string;
 };
 
 const INITIAL_FORM_VALUES = {
@@ -39,6 +41,8 @@ const INITIAL_FORM_VALUES = {
   serviceMode: "home-visit",
   serviceArea: "",
   estimatedDuration: "",
+  image: "",
+  imageDeleteUrl: "",
 };
 
 function ServiceForm(props: ServiceFormProps) {
@@ -48,8 +52,8 @@ function ServiceForm(props: ServiceFormProps) {
   const { data, error, isPending } = authClient.useSession();
 
   const [formValues, setFormValues] = useState(INITIAL_FORM_VALUES);
-  const [pickedImage, setPickedImage] = useState<string | null>(null); // preview (data URL)
-  const [imageFile, setImageFile] = useState<File | null>(null); // what gets uploaded
+  const [pickedImage, setPickedImage] = useState<string | null>(null);
+  const [imageFile, setImageFile] = useState<File | null>(null);
   const [isLoading, setIsLoading] = useState(false);
   const [fieldErrors, setFieldErrors] = useState<ServiceFormFieldErrors>({});
 
@@ -64,15 +68,12 @@ function ServiceForm(props: ServiceFormProps) {
 
   function handleImageChange(e: React.ChangeEvent<HTMLInputElement>) {
     const file = e.target.files?.[0];
-
     if (!file) {
       setImageFile(null);
       setPickedImage(null);
       return;
     }
-
     setImageFile(file);
-
     const fileReader = new FileReader();
     fileReader.onload = () => {
       setPickedImage(fileReader.result as string);
@@ -80,7 +81,7 @@ function ServiceForm(props: ServiceFormProps) {
     fileReader.readAsDataURL(file);
   }
 
-  async function handleSubmit(e: React.FormEvent<HTMLFormElement>) {
+  async function handleSubmit(e: React.SubmitEvent<HTMLFormElement>) {
     e.preventDefault();
     setIsLoading(true);
 
@@ -92,11 +93,14 @@ function ServiceForm(props: ServiceFormProps) {
       serviceMode: formValues.serviceMode,
       serviceArea: formValues.serviceArea.trim(),
       estimatedDuration: formValues.estimatedDuration.trim(),
+      image: "",
+      imageDeleteUrl: "",
     };
+    console.log(payload);
 
     const validationErrors: ServiceFormFieldErrors = {
       title: isValidStr(payload.title, 1) ? undefined : "Please enter a title.",
-      category: !categories.some((item) => item.slug === payload.category)
+      category: categories.some((item) => item.slug === payload.category)
         ? undefined
         : "Please choose a category.",
       basePrice:
@@ -106,7 +110,7 @@ function ServiceForm(props: ServiceFormProps) {
       description: isValidStr(payload.description, 1)
         ? undefined
         : "Please describe the service.",
-      serviceMode: !serviceModes.some(
+      serviceMode: serviceModes.some(
         (item) => item.slug === payload.serviceMode,
       )
         ? undefined
@@ -130,6 +134,24 @@ function ServiceForm(props: ServiceFormProps) {
     setFieldErrors(validationErrors);
     if (hasValidationErrors || !imageFile) {
       setIsLoading(false);
+      return;
+    }
+
+    const imageData = await uploadImageToImgBB(imageFile as File);
+    if (imageData.isSuccess) {
+      payload.image = imageData.data.data.url;
+      payload.imageDeleteUrl = imageData.data.data.delete_url;
+    } else {
+      setIsLoading(false);
+      toast.error("Image upload failed. Please try again!");
+      return;
+    }
+
+    const res = await serviceStoreAction(payload);
+
+    if (!res.isSuccess) {
+      setIsLoading(false);
+      toast.error(res.error.message || "Could not create Service!");
       return;
     }
 
@@ -277,7 +299,6 @@ function ServiceForm(props: ServiceFormProps) {
           />
         </label>
         {pickedImage && (
-          // eslint-disable-next-line @next/next/no-img-element
           <Image
             src={pickedImage}
             alt="Image preview"

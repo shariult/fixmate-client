@@ -33,9 +33,36 @@ type TUserInput = {
   image?: string | null;
 };
 
-type TCategoryTitle = (typeof categories)[number]["title"];
+type TImgbbImage = {
+  filename: string;
+  name: string;
+  mime: string;
+  extension: string;
+  url: string;
+};
+
+type TImgbbResponse = {
+  data: {
+    id: string;
+    title: string;
+    url_viewer: string;
+    url: string;
+    display_url: string;
+    width: number;
+    height: number;
+    size: number;
+    time: number;
+    expiration: number;
+    image: TImgbbImage;
+    thumb: TImgbbImage;
+    medium?: TImgbbImage; // only present for larger images
+    delete_url: string;
+  };
+  success: boolean;
+  status: number;
+};
+
 type TCategorySlug = (typeof categories)[number]["slug"];
-type TServiceModeTitle = (typeof serviceModes)[number]["title"];
 type TServiceModeSlug = (typeof serviceModes)[number]["slug"];
 type TServiceStatus = "approved" | "pending" | "rejected";
 type TServiceApproval = "approved" | "pending" | "rejected";
@@ -44,14 +71,13 @@ type TService = {
   _id: string;
   title: string;
   slug: string;
-  category: TCategoryTitle;
-  categorySlug: TCategorySlug;
+  category: TCategorySlug;
   description: string;
   image: string;
+  imageDeleteUrl: string;
   basePrice: number;
   estimatedDuration: string;
-  serviceMode: TServiceModeTitle;
-  serviceModeSlug: TServiceModeSlug;
+  serviceMode: TServiceModeSlug;
   serviceArea: string;
   userId: string;
   approval: TServiceApproval;
@@ -69,6 +95,8 @@ export type {
   TCategory,
   TServiceMode,
   TUserInput,
+  TImgbbImage,
+  TImgbbResponse,
   TServiceStatus,
   TServiceApproval,
   TService,

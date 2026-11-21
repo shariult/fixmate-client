@@ -1,3 +1,5 @@
+import { TImgbbImage, TImgbbResponse } from "@/types";
+
 type TSendRequest<T> =
   | {
       isSuccess: true;
@@ -16,10 +18,7 @@ async function sendRequest<T>(
   options: RequestInit = {},
 ): Promise<TSendRequest<T>> {
   try {
-    const res = await fetch(
-      `${process.env.NEXT_PUBLIC_API_URL}${urlPath}`,
-      options,
-    );
+    const res = await fetch(`${urlPath}`, options);
 
     if (!res.ok) {
       let message = `Request failed (${res.status})`;
@@ -48,6 +47,24 @@ async function sendRequest<T>(
       },
     };
   }
+}
+
+async function uploadImageToImgBB(file: File) {
+  const body = new FormData();
+  body.append("image", file);
+
+  const res = await sendRequest<TImgbbResponse>(
+    `https://api.imgbb.com/1/upload?key=${process.env.NEXT_PUBLIC_IMGBB_API_KEY}`,
+    { method: "POST", body },
+  );
+  return res;
+}
+
+async function deleteFromImgBB(url: string) {
+  const res = await sendRequest(
+    `${url}?key=${process.env.NEXT_PUBLIC_IMGBB_API_KEY}`,
+  );
+  return res;
 }
 
 function delay(ms: number) {
@@ -135,6 +152,8 @@ function toBanglaNum(num: number | string) {
 
 export {
   sendRequest,
+  uploadImageToImgBB,
+  deleteFromImgBB,
   delay,
   isValidStr,
   isValidNum,
