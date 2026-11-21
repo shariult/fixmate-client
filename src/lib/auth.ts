@@ -30,6 +30,16 @@ const auth = betterAuth({
         type: "string",
         input: true,
       },
+      approval: {
+        type: ["approved", "pending", "rejected"],
+        input: false,
+        defaultValue: "pending",
+      },
+      status: {
+        type: ["approved", "pending", "rejected"],
+        input: false,
+        defaultValue: "approved",
+      },
     },
   },
   socialProviders: {

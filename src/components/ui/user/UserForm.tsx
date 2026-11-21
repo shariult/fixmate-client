@@ -13,6 +13,7 @@ import {
 } from "@/lib/utils";
 import authClient from "@/lib/authClient";
 import { PiDeviceMobileBold, PiWrenchBold } from "react-icons/pi";
+import { updateNewUserAction } from "@/lib/user/userActions";
 
 type UserFormProps = {
   type: "signin" | "signup";
@@ -124,7 +125,7 @@ function UserForm({ type, className, ...rest }: UserFormProps) {
       return;
     }
 
-    const { error } = await authClient.signUp.email({
+    const { data, error } = await authClient.signUp.email({
       name: payload.name,
       username: payload.username,
       email: payload.email,
@@ -141,6 +142,8 @@ function UserForm({ type, className, ...rest }: UserFormProps) {
       toast.error(error.message ?? "Something went wrong!");
       return;
     }
+
+    await updateNewUserAction();
 
     toast.success("Account created!");
     router.push("/");

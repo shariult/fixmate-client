@@ -1,4 +1,5 @@
 import { categories, serviceModes } from "@/data/appData";
+import { AuthUser } from "@/lib/authClient";
 import { IconType } from "react-icons";
 
 type TBreadCrumbs = {
@@ -80,6 +81,7 @@ type TService = {
   serviceMode: TServiceModeSlug;
   serviceArea: string;
   userId: string;
+  userDetails?: AuthUser;
   approval: TServiceApproval;
   status: TServiceStatus;
   createdAt: string;
