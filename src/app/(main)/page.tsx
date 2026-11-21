@@ -4,11 +4,8 @@ import SectionProcess from "./_components/SectionProcess";
 import SectionCategories from "./_components/SectionCategories";
 import SectionWhy from "./_components/SectionWhy";
 import SectionCta from "./_components/SectionCta";
-import { getTokenFromClient, getTokenFromServer } from "@/lib/authActions";
 
 async function Homepage() {
-  const token = await getTokenFromServer();
-  console.log(token);
   return (
     <>
       <Hero />

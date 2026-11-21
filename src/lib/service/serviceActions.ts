@@ -1,8 +1,13 @@
-import { TServiceInput } from "@/types";
+import { TService, TServiceInput } from "@/types";
 import { sendRequest } from "../utils";
 import { getTokenFromClient } from "../authActionsClient";
 
 const API_URL = process.env.NEXT_PUBLIC_API_URL as string;
+
+async function serviceIndexAction() {
+  const res = await sendRequest<TService[]>(`${API_URL}/service`);
+  return res;
+}
 
 async function serviceStoreAction(data: TServiceInput) {
   const token = await getTokenFromClient();
@@ -19,4 +24,4 @@ async function serviceStoreAction(data: TServiceInput) {
   return res;
 }
 
-export { serviceStoreAction };
+export { serviceIndexAction, serviceStoreAction };

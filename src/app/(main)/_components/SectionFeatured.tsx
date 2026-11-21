@@ -7,14 +7,23 @@ import {
   PiUserBold,
 } from "react-icons/pi";
 import Link from "next/link";
+import { serviceIndexAction } from "@/lib/service/serviceActions";
+import EmptyData from "@/components/ui/common/EmptyData";
 
 type SectionFeaturedProps = {
   className?: string;
   elClassName?: string;
 } & ComponentPropsWithoutRef<"section">;
 
-function SectionFeatured(props: SectionFeaturedProps) {
+async function SectionFeatured(props: SectionFeaturedProps) {
   const { className, elClassName, ...rest } = props;
+  const resData = await serviceIndexAction();
+
+  if (!resData.isSuccess || resData.data.length <= 0) {
+    return <EmptyData message="No Services found!" hideBtn />;
+  }
+
+  console.log(resData.data);
 
   return (
     <Container
