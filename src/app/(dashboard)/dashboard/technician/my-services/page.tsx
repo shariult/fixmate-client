@@ -1,6 +1,5 @@
 import React from "react";
 import MyServicesTable from "./_components/MyServiceTable";
-import MyServicesMobileCards from "./_components/MyServiceMobileCards";
 import { PiPlusBold } from "react-icons/pi";
 import Link from "next/link";
 import { getMyServicesAction } from "@/lib/service/serviceActions";
@@ -17,8 +16,8 @@ async function MyServicesPage() {
       </Container>
     );
   }
-  const myServices = resData.data;
 
+  const myServices = resData.data;
   return (
     <main className="flex-1 p-4 md:p-8">
       <div className="flex flex-wrap items-end justify-between gap-3">
@@ -37,13 +36,9 @@ async function MyServicesPage() {
         </Link>
       </div>
 
-      {/* <!-- Desktop / tablet: table --> */}
       <div className="mt-8 overflow-x-auto rounded-2xl border border-base-300 bg-base-50">
         <MyServicesTable myServices={myServices} />
       </div>
-
-      {/* <!-- Mobile: cards --> */}
-      {/* <MyServicesMobileCards /> */}
     </main>
   );
 }

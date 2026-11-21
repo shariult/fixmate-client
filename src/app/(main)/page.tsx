@@ -7,8 +7,6 @@ import SectionCta from "./_components/SectionCta";
 import { getTokenFromServer } from "@/lib/authActions";
 
 async function Homepage() {
-  const token = await getTokenFromServer();
-  console.log(token);
   return (
     <>
       <Hero />
