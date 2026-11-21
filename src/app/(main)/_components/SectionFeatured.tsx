@@ -18,7 +18,7 @@ type SectionFeaturedProps = {
 
 async function SectionFeatured(props: SectionFeaturedProps) {
   const { className, elClassName, ...rest } = props;
-  const resData = await serviceIndexAction();
+  const resData = await serviceIndexAction("?type=featured");
 
   if (!resData.isSuccess || resData.data.length <= 0) {
     return (
@@ -27,8 +27,6 @@ async function SectionFeatured(props: SectionFeaturedProps) {
       </Container>
     );
   }
-
-  console.log(resData.data);
 
   return (
     <Container

@@ -96,7 +96,6 @@ function ServiceForm(props: ServiceFormProps) {
       image: "",
       imageDeleteUrl: "",
     };
-    console.log(payload);
 
     const validationErrors: ServiceFormFieldErrors = {
       title: isValidStr(payload.title, 1) ? undefined : "Please enter a title.",

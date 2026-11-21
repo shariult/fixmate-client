@@ -4,8 +4,9 @@ import { getTokenFromClient } from "../authActionsClient";
 
 const API_URL = process.env.NEXT_PUBLIC_API_URL as string;
 
-async function serviceIndexAction() {
-  const res = await sendRequest<TService[]>(`${API_URL}/service`);
+async function serviceIndexAction(urlQuery?: string) {
+  let url = urlQuery ? `${API_URL}/service${urlQuery}` : `${API_URL}/service`;
+  const res = await sendRequest<TService[]>(url);
   return res;
 }
 
