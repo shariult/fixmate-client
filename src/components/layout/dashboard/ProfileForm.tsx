@@ -4,9 +4,10 @@ import React, { ComponentPropsWithoutRef, useState } from "react";
 import { useRouter } from "next/navigation";
 import toast from "react-hot-toast";
 import FormGroup from "@/components/ui/form/FormGroup";
-import { isValidStr } from "@/lib/utils";
+import { isValidStr, uploadImageToImgBB } from "@/lib/utils";
 import { PiUploadSimpleBold } from "react-icons/pi";
 import { TUserInput } from "@/types";
+import authClient from "@/lib/authClient";
 
 const MAX_IMAGE_SIZE = 5 * 1024 * 1024; // 5 MB
 
@@ -23,38 +24,22 @@ type ProfileFormFieldErrors = {
   image?: string;
 };
 
-async function uploadImageToImgBB(dataUrl: string): Promise<string> {
-  const body = new FormData();
-  body.append("image", dataUrl.split(",")[1]); // strip "data:image/...;base64,"
-
-  const res = await fetch(
-    `https://api.imgbb.com/1/upload?key=${process.env.NEXT_PUBLIC_IMGBB_API_KEY}`,
-    { method: "POST", body },
-  );
-  const json = await res.json();
-
-  if (!res.ok || !json?.data?.url) {
-    throw new Error(json?.error?.message ?? "Image upload failed");
-  }
-  return json.data.url as string;
-}
-
 function ProfileForm({ user, className, ...rest }: ProfileFormProps) {
   const router = useRouter();
-
   const initialFormValues = {
     name: user.name ?? "",
     phone: user.phone ?? "",
     address: user.address ?? "",
     bio: user.bio ?? "",
   };
-
   const [formValues, setFormValues] = useState(initialFormValues);
-  const [pickedImage, setPickedImage] = useState<string | null>(null); // new photo preview (data URL)
+  const [imageFile, setImageFile] = useState<File | null>(null);
+  const [pickedImage, setPickedImage] = useState<string | null>(
+    user.image ?? null,
+  );
   const [isLoading, setIsLoading] = useState(false);
   const [fieldErrors, setFieldErrors] = useState<ProfileFormFieldErrors>({});
-
-  const displayedImage = pickedImage ?? user.image ?? null;
+  const displayedImage = pickedImage ?? null;
 
   function handleInputChange(
     e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>,
@@ -65,38 +50,22 @@ function ProfileForm({ user, className, ...rest }: ProfileFormProps) {
 
   function handleImageChange(e: React.ChangeEvent<HTMLInputElement>) {
     const file = e.target.files?.[0];
-    setFieldErrors((prev) => ({ ...prev, image: undefined }));
-
     if (!file) {
+      setImageFile(null);
       setPickedImage(null);
       return;
     }
-
-    if (!file.type.startsWith("image/")) {
-      setPickedImage(null);
-      setFieldErrors((prev) => ({ ...prev, image: "File must be an image." }));
-      e.target.value = "";
-      return;
-    }
-
-    if (file.size > MAX_IMAGE_SIZE) {
-      setPickedImage(null);
-      setFieldErrors((prev) => ({
-        ...prev,
-        image: "Image must be 5 MB or smaller.",
-      }));
-      e.target.value = "";
-      return;
-    }
-
+    setImageFile(file);
     const fileReader = new FileReader();
-    fileReader.onload = () => setPickedImage(fileReader.result as string);
+    fileReader.onload = () => {
+      setPickedImage(fileReader.result as string);
+    };
     fileReader.readAsDataURL(file);
   }
 
   function handleReset() {
     setFormValues(initialFormValues);
-    setPickedImage(null);
+    setImageFile(null);
     setFieldErrors({});
   }
 
@@ -109,13 +78,13 @@ function ProfileForm({ user, className, ...rest }: ProfileFormProps) {
       phone: formValues.phone.trim(),
       address: formValues.address.trim(),
       bio: formValues.bio.trim(),
+      image: pickedImage ?? "",
     };
 
     const validationErrors: ProfileFormFieldErrors = {
       name: isValidStr(payload.name, 1) ? undefined : "Please enter your name.",
       phone:
-        payload.phone === "" ||
-        /^01\d{9}$/.test(payload.phone.replace(/[\s-]/g, ""))
+        payload.phone === "" || isValidStr(payload.phone, 10)
           ? undefined
           : "Enter a valid phone number, e.g. 01XXXXXXXXX.",
       image: fieldErrors.image, // set by handleImageChange
@@ -128,34 +97,33 @@ function ProfileForm({ user, className, ...rest }: ProfileFormProps) {
       return;
     }
 
-    try {
-      // Upload only when a new photo was picked; otherwise keep the current one
-      const image = pickedImage
-        ? await uploadImageToImgBB(pickedImage)
-        : (user.image ?? undefined);
-
-      const res = await fetch("/api/profile", {
-        method: "PATCH",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({
-          ...payload,
-          phone: payload.phone.replace(/[\s-]/g, ""),
-          image,
-        }),
-      });
-
-      if (!res.ok) {
-        const data = await res.json().catch(() => null);
-        throw new Error(data?.message ?? "Something went wrong!");
+    if (imageFile) {
+      const imageData = await uploadImageToImgBB(imageFile as File);
+      if (imageData.isSuccess) {
+        payload.image = imageData.data.data.url;
+      } else {
+        setIsLoading(false);
+        toast.error("Image upload failed. Please try again!");
+        return;
       }
-    } catch (err) {
-      setIsLoading(false);
-      toast.error(err instanceof Error ? err.message : "Something went wrong!");
+    }
+
+    const { error } = await authClient.updateUser({
+      name: payload.name,
+      image: payload.image,
+      phone: payload.phone,
+      address: payload.address,
+      bio: payload.bio,
+    });
+    setIsLoading(false);
+
+    if (error) {
+      toast.error(error?.message ?? "Something went wrong!");
       return;
     }
 
     setIsLoading(false);
-    setPickedImage(null);
+    setImageFile(null);
     toast.success("Profile updated!");
     router.refresh();
   }

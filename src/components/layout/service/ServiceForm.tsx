@@ -42,9 +42,8 @@ type ServiceFormFieldErrors = {
 
 function ServiceForm(props: ServiceFormProps) {
   const { submitType, service, onSuccess, className, ...rest } = props;
-  const router = useRouter();
-
   const { data, error, isPending } = authClient.useSession();
+  const router = useRouter();
 
   const [formValues, setFormValues] = useState({
     title: service?.title ?? "",
