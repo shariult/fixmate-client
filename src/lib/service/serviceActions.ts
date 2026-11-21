@@ -25,4 +25,9 @@ async function serviceStoreAction(data: TServiceInput) {
   return res;
 }
 
-export { serviceIndexAction, serviceStoreAction };
+async function serviceShowAction(sId: string) {
+  const res = await sendRequest<TService>(`${API_URL}/service/${sId}`);
+  return res;
+}
+
+export { serviceIndexAction, serviceStoreAction, serviceShowAction };

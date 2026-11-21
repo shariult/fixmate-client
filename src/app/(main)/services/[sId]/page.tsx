@@ -1,14 +1,30 @@
-"use client";
-
 import Container from "@/components/ui/common/Container";
-import ServiceShowHeroLeft from "./_components/ServiceShowHeroLeft";
-import ServiceShowHeroRight from "./_components/ServiceShowHeroRight";
+import ServiceShowLeft from "./_components/ServiceShowLeft";
+import ServiceShowRight from "./_components/ServiceShowRight";
+import { serviceShowAction } from "@/lib/service/serviceActions";
+import EmptyData from "@/components/ui/common/EmptyData";
 
-function ServiceDetailsPage() {
+type ServiceDetailsPageProps = {
+  params: Promise<{ sId: string }>;
+};
+
+async function ServiceDetailsPage(props: ServiceDetailsPageProps) {
+  const { sId } = await props.params;
+  const resData = await serviceShowAction(sId);
+  if (!resData.isSuccess) {
+    return (
+      <Container>
+        {" "}
+        <EmptyData message="No service found!" />
+      </Container>
+    );
+  }
+  const service = resData.data;
+
   return (
     <Container className="mt-4 grid gap-8 lg:grid-cols-3 lg:gap-12">
-      <ServiceShowHeroLeft />
-      <ServiceShowHeroRight />
+      <ServiceShowLeft service={service} />
+      <ServiceShowRight service={service} />
     </Container>
   );
 }

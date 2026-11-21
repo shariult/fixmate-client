@@ -1,3 +1,4 @@
+import { categories, serviceModes } from "@/data/appData";
 import { TImgbbImage, TImgbbResponse } from "@/types";
 
 type TSendRequest<T> =
@@ -150,6 +151,14 @@ function toBanglaNum(num: number | string) {
   return bnNumber.format(toNum);
 }
 
+function getCategoryFromSlug(slug: string) {
+  return categories.filter((item) => item.slug === slug)[0];
+}
+
+function getServiceModeFromSlug(slug: string) {
+  return serviceModes.filter((item) => item.slug === slug)[0];
+}
+
 export {
   sendRequest,
   uploadImageToImgBB,
@@ -163,4 +172,6 @@ export {
   formatDate,
   isValidHttpsUrl,
   toBanglaNum,
+  getCategoryFromSlug,
+  getServiceModeFromSlug,
 };

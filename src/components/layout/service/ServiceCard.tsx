@@ -1,4 +1,5 @@
 import { categories, serviceModes } from "@/data/appData";
+import { getCategoryFromSlug, getServiceModeFromSlug } from "@/lib/utils";
 import { TService } from "@/types";
 import Link from "next/link";
 import React, { ComponentPropsWithoutRef } from "react";
@@ -13,11 +14,9 @@ type ServiceCardProps = {
 function ServiceCard(props: ServiceCardProps) {
   const { service, className, children, ...rest } = props;
 
-  const category = categories.filter(
-    (item) => service.category === item.slug,
-  )[0];
+  const category = getCategoryFromSlug(service.category);
   const { title: serviceModeTitle, icon: ServiceModeIcon } =
-    serviceModes.filter((item) => service.serviceMode === item.slug)[0];
+    getServiceModeFromSlug(service.serviceMode);
 
   return (
     <article

@@ -5,13 +5,14 @@ import { useRouter } from "next/navigation";
 import toast from "react-hot-toast";
 import { isValidStr } from "@/lib/utils";
 import FormGroup from "@/components/ui/form/FormGroup";
-import authClient from "@/lib/authClient";
-import Loading from "@/components/ui/common/Loading";
-import EmptyData from "@/components/ui/common/EmptyData";
+import { type AuthUser } from "@/lib/authClient";
 import LoadingSpinner from "@/components/ui/common/LoadingSpinner";
+import { TService } from "@/types";
+import { PiXBold } from "react-icons/pi";
 
 type BookingModalProps = {
-  service: { id: string };
+  user: AuthUser;
+  service: TService;
   modalRef?: React.RefObject<HTMLDialogElement | null>;
   className?: string;
   children?: React.ReactNode;
@@ -25,24 +26,12 @@ type BookingFormFieldErrors = {
 };
 
 function BookingModal(props: BookingModalProps) {
-  const { data, isPending, error } = authClient.useSession();
-
-  if (isPending) {
-    return <Loading />;
-  }
-
-  if (error || !data) {
-    return <EmptyData message="No user found!" />;
-  }
-
-  const user = data.user;
-
-  const { service, modalRef, className, children, ...rest } = props;
+  const { service, user, modalRef, className, children, ...rest } = props;
   const router = useRouter();
   const today = new Date().toISOString().split("T")[0];
 
   const initialFormValues = {
-    customerPhone: user.phone ?? "",
+    customerPhone: service.userDetails?.phone ?? "",
     preferredDate: "",
     address: "",
     problemDescription: "",
@@ -105,28 +94,6 @@ function BookingModal(props: BookingModalProps) {
       return;
     }
 
-    try {
-      const res = await fetch("/api/bookings", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({
-          ...payload,
-          serviceId: service.id,
-          customerName: user.name,
-          customerEmail: user.email,
-        }),
-      });
-
-      if (!res.ok) {
-        const data = await res.json().catch(() => null);
-        throw new Error(data?.message ?? "Something went wrong!");
-      }
-    } catch (err) {
-      setIsLoading(false);
-      toast.error(err instanceof Error ? err.message : "Something went wrong!");
-      return;
-    }
-
     setIsLoading(false);
     toast.success("Repair request sent!");
     resetForm();
@@ -146,9 +113,7 @@ function BookingModal(props: BookingModalProps) {
             className="btn btn-ghost btn-sm btn-circle absolute right-3 top-3"
             aria-label="Close"
           >
-            <svg className="size-4">
-              <use href="#i-close" />
-            </svg>
+            <PiXBold className="text-xl" />
           </button>
         </form>
 

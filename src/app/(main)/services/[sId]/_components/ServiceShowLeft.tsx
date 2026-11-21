@@ -1,19 +1,26 @@
 import React, { ComponentPropsWithoutRef } from "react";
 import Container from "@/components/ui/common/Container";
 import {
+  PiCheckBold,
   PiClockBold,
   PiCreditCardBold,
   PiHouseBold,
   PiMapPinBold,
 } from "react-icons/pi";
+import { TService } from "@/types";
+import { getCategoryFromSlug, getServiceModeFromSlug } from "@/lib/utils";
 
-type ServiceShowHeroLeftProps = {
+type ServiceShowLeftProps = {
+  service: TService;
   className?: string;
   elClassName?: string;
 } & ComponentPropsWithoutRef<"article">;
 
-function ServiceShowHeroLeft(props: ServiceShowHeroLeftProps) {
-  const { className, elClassName, ...rest } = props;
+function ServiceShowLeft(props: ServiceShowLeftProps) {
+  const { service, className, elClassName, ...rest } = props;
+  const category = getCategoryFromSlug(service.category);
+  const { title: serviceModeTitle, icon: ServiceModeIcon } =
+    getServiceModeFromSlug(service.serviceMode);
 
   return (
     <Container
@@ -24,29 +31,26 @@ function ServiceShowHeroLeft(props: ServiceShowHeroLeftProps) {
       spaceY="py-0"
       {...rest}
     >
-      <div className="aspect-[16/9] overflow-hidden rounded-2xl bg-base-200">
+      <div className="aspect-video overflow-hidden rounded-2xl bg-base-200">
         <img
-          src="https://placehold.co/1280x720/dcfce7/166534?text=iPhone+Screen+Replacement"
-          alt="iPhone Screen Replacement"
+          src={service.image}
+          alt={service.title}
           className="size-full object-cover"
         />
       </div>
 
       <div className="mt-8 flex flex-wrap items-center gap-2">
-        <span className="badge badge-soft badge-primary">Smartphone</span>
+        <span className="badge badge-soft badge-primary">{category.title}</span>
         <span className="badge badge-outline gap-1.5">
-          <PiHouseBold />
-          Home Visit
+          <ServiceModeIcon />
+          {serviceModeTitle}
         </span>
       </div>
 
-      <h1 className="heading-2 mt-4">iPhone Screen Replacement</h1>
+      <h1 className="heading-2 mt-4">{service.title}</h1>
 
       <p className="mt-5 max-w-3xl text-base/8 text-muted">
-        Cracked or unresponsive display? Rafiq replaces the screen at your door
-        using tested parts, checks Face ID, True Tone and touch response before
-        leaving, and cleans up after the job. Pricing starts at the base price
-        shown and is confirmed by the technician once the model is known.
+        {service.description}
       </p>
 
       {/* Quick facts */}
@@ -56,21 +60,27 @@ function ServiceShowHeroLeft(props: ServiceShowHeroLeftProps) {
             <PiCreditCardBold className="text-base" />
             Starting price
           </dt>
-          <dd className="mt-2 font-title text-lg font-semibold">$49</dd>
+          <dd className="mt-2 font-title text-lg font-semibold">
+            ${service.basePrice}
+          </dd>
         </div>
         <div className="rounded-xl border border-base-300 bg-base-50 p-4">
           <dt className="flex items-center gap-2 text-xs text-muted">
             <PiClockBold className="text-base" />
             Duration
           </dt>
-          <dd className="mt-2 font-title text-lg font-semibold">2-3 hours</dd>
+          <dd className="mt-2 font-title text-lg font-semibold">
+            {service.basePrice}
+          </dd>
         </div>
         <div className="rounded-xl border border-base-300 bg-base-50 p-4">
           <dt className="flex items-center gap-2 text-xs text-muted">
             <PiHouseBold className="text-base" />
             Service mode
           </dt>
-          <dd className="mt-2 font-title text-lg font-semibold">Home Visit</dd>
+          <dd className="mt-2 font-title text-lg font-semibold">
+            {serviceModeTitle}
+          </dd>
         </div>
         <div className="rounded-xl border border-base-300 bg-base-50 p-4">
           <dt className="flex items-center gap-2 text-xs text-muted">
@@ -78,7 +88,7 @@ function ServiceShowHeroLeft(props: ServiceShowHeroLeftProps) {
             Service area
           </dt>
           <dd className="mt-2 font-title text-lg font-semibold">
-            Dhanmondi, Dhaka
+            {service.serviceArea}
           </dd>
         </div>
       </dl>
@@ -88,22 +98,16 @@ function ServiceShowHeroLeft(props: ServiceShowHeroLeftProps) {
         <h2 className="heading-3">What happens after you request</h2>
         <ul className="mt-4 space-y-3 text-sm/6 text-muted">
           <li className="flex gap-3">
-            <svg className="mt-1 size-4 shrink-0 text-primary">
-              <use href="#i-check" />
-            </svg>
+            <PiCheckBold className="text-lg text-primary mt-1" />
             The technician accepts or declines your request. You can cancel
             while it is still requested.
           </li>
           <li className="flex gap-3">
-            <svg className="mt-1 size-4 shrink-0 text-primary">
-              <use href="#i-check" />
-            </svg>
+            <PiCheckBold className="text-lg text-primary mt-1" />
             You follow the job as it moves to in progress and then completed.
           </li>
           <li className="flex gap-3">
-            <svg className="mt-1 size-4 shrink-0 text-primary">
-              <use href="#i-check" />
-            </svg>
+            <PiCheckBold className="text-lg text-primary mt-1" />
             After completion you pay the final amount securely with Stripe.
           </li>
         </ul>
@@ -112,4 +116,4 @@ function ServiceShowHeroLeft(props: ServiceShowHeroLeftProps) {
   );
 }
 
-export default ServiceShowHeroLeft;
+export default ServiceShowLeft;
