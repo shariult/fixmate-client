@@ -73,6 +73,23 @@ async function getMyServicesAction() {
   return res;
 }
 
+async function changeServiceStatusAction(
+  sId: string,
+  data: { status: "approved" | "rejected" },
+) {
+  const token = await getTokenFromClient();
+  const res = await sendRequest(`${API_URL}/service/${sId}/status`, {
+    method: "PUT",
+    headers: {
+      "Content-Type": "application/json",
+      authorization: `bearer ${token}`,
+    },
+    body: JSON.stringify(data),
+  });
+
+  return res;
+}
+
 export {
   getServicesAction,
   storeServiceAction,
@@ -80,4 +97,5 @@ export {
   updateServiceAction,
   destroyServiceAction,
   getMyServicesAction,
+  changeServiceStatusAction,
 };

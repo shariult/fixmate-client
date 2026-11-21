@@ -1,11 +1,15 @@
 "use client";
 
-import React, { ComponentPropsWithoutRef, useState } from "react";
+import React, { ChangeEvent, ComponentPropsWithoutRef, useState } from "react";
 import { PiPencilSimpleBold, PiTrashBold } from "react-icons/pi";
 import { TService } from "@/types";
 import ServicesEditModal from "./ServicesEditModal";
 import EmptyData from "@/components/ui/common/EmptyData";
 import { getCategoryFromSlug, getServiceModeFromSlug } from "@/lib/utils";
+import ServiceDeleteModal from "./ServiceDeleteModal";
+import { changeServiceStatusAction } from "@/lib/service/serviceActions";
+import toast from "react-hot-toast";
+import { useRouter } from "next/navigation";
 
 type MyServicesTableProps = {
   myServices: TService[];
@@ -20,18 +24,26 @@ const approvalBadge: Record<string, string> = {
 function MyServicesTable(props: MyServicesTableProps) {
   const { myServices, className = "", ...rest } = props;
   const [editService, setEditService] = useState<TService | null>(null);
+  const [deleteService, setDeleteService] = useState<string | null>(null);
+  const router = useRouter();
 
-  function statusChangeHandler(serviceId: string) {
-    // TODO: call your server action to toggle availability
-    console.log(serviceId);
+  async function statusChangeHandler(
+    e: ChangeEvent<HTMLInputElement>,
+    sId: string,
+  ) {
+    const resData = await changeServiceStatusAction(sId, {
+      status: e.target.checked ? "approved" : "rejected",
+    });
+    if (!resData.isSuccess) {
+      toast.error("Could not update service status!");
+    }
+    toast.success("Service status updated successfully!");
+    router.refresh();
   }
 
-  function deleteHandler(serviceId: string) {
-    // TODO: confirm, then call your server action to delete
-    console.log(serviceId);
+  if (myServices.length === 0) {
+    return <EmptyData />;
   }
-
-  if (myServices.length === 0) return <EmptyData />;
 
   return (
     <>
@@ -84,7 +96,7 @@ function MyServicesTable(props: MyServicesTableProps) {
                       className="toggle toggle-primary toggle-sm"
                       aria-label="Toggle availability"
                       defaultChecked={item.status === "approved"}
-                      onChange={() => statusChangeHandler(item._id)}
+                      onChange={(e) => statusChangeHandler(e, item._id)}
                     />
                     <span className="text-muted">
                       {item.status === "approved" ? "Available" : "Hidden"}
@@ -105,7 +117,7 @@ function MyServicesTable(props: MyServicesTableProps) {
                       type="button"
                       className="btn btn-sm btn-ghost btn-square text-error"
                       aria-label="Delete service"
-                      onClick={() => deleteHandler(item._id)}
+                      onClick={() => setDeleteService(item._id)}
                     >
                       <PiTrashBold className="text-lg" />
                     </button>
@@ -116,6 +128,14 @@ function MyServicesTable(props: MyServicesTableProps) {
           </tbody>
         </table>
       </div>
+
+      {deleteService && (
+        <ServiceDeleteModal
+          key={deleteService}
+          sId={deleteService}
+          onClose={() => setDeleteService(null)}
+        />
+      )}
 
       {editService && (
         <ServicesEditModal

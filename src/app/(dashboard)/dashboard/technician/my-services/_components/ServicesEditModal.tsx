@@ -14,7 +14,6 @@ function ServicesEditModal(props: ServicesEditModalProps) {
   const { service, onClose, className = "", ...rest } = props;
   const dialogRef = useRef<HTMLDialogElement>(null);
 
-  // Open on mount. The parent only renders this while a service is selected.
   useEffect(() => {
     const dialog = dialogRef.current;
     if (dialog && !dialog.open) dialog.showModal();
