@@ -1,7 +1,7 @@
 import Container from "@/components/ui/common/Container";
 import ServiceShowLeft from "./_components/ServiceShowLeft";
 import ServiceShowRight from "./_components/ServiceShowRight";
-import { showServiceAction } from "@/lib/serviceActions";
+import { getServiceAction } from "@/lib/serviceActions";
 import EmptyData from "@/components/ui/common/EmptyData";
 
 type ServiceDetailsPageProps = {
@@ -10,16 +10,17 @@ type ServiceDetailsPageProps = {
 
 async function ServiceDetailsPage(props: ServiceDetailsPageProps) {
   const { sId } = await props.params;
-  const resData = await showServiceAction(sId);
+  const resData = await getServiceAction(sId);
+
   if (!resData.isSuccess) {
     return (
       <Container>
-        <EmptyData message="No service found!" />
+        <EmptyData message="Something went wrong!" isError />
       </Container>
     );
   }
-  const service = resData.data;
 
+  const service = resData.data;
   return (
     <Container className="mt-4 grid gap-8 lg:grid-cols-3 lg:gap-12">
       <ServiceShowLeft service={service} />

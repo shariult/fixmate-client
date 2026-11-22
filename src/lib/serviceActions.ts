@@ -1,25 +1,25 @@
-import {
-  TService,
-  TServiceApproval,
-  TServiceInput,
-  TServiceStatus,
-} from "@/types";
+import { TService, TServiceApproval, TServiceInput } from "@/types";
 import { sendRequest } from "./utils";
 import { getTokenFromClient } from "./authActionsClient";
 import { getTokenFromServer } from "./authActions";
 
 const API_URL = process.env.NEXT_PUBLIC_API_URL as string;
 
-async function getServicesAction(urlQuery?: string) {
-  let url = urlQuery ? `${API_URL}/service${urlQuery}` : `${API_URL}/service`;
-  const res = await sendRequest<TService[]>(url);
+async function listFeaturedServicesAction() {
+  const res = await sendRequest<TService[]>(`${API_URL}/services/featured`);
   return res;
 }
 
-async function getServicesAdminAction() {
-  const token = await getTokenFromServer();
+async function listServicesAction(urlQuery?: string) {
+  const res = await sendRequest<TService[]>(
+    `${API_URL}/services?${urlQuery ?? ""}`,
+  );
+  return res;
+}
 
-  const res = await sendRequest<TService[]>(`${API_URL}/service/admin`, {
+async function listTechnicianServicesAction() {
+  const token = await getTokenFromServer();
+  const res = await sendRequest<TService[]>(`${API_URL}/services/technician`, {
     method: "GET",
     headers: {
       "Content-Type": "application/json",
@@ -29,10 +29,15 @@ async function getServicesAdminAction() {
   return res;
 }
 
-async function storeServiceAction(data: TServiceInput) {
+async function getServiceAction(sId: string) {
+  const res = await sendRequest<TService>(`${API_URL}/services/${sId}`);
+  return res;
+}
+
+async function createServiceAction(data: TServiceInput) {
   const token = await getTokenFromClient();
 
-  const res = await sendRequest(`${API_URL}/service`, {
+  const res = await sendRequest(`${API_URL}/services`, {
     method: "POST",
     headers: {
       "Content-Type": "application/json",
@@ -44,15 +49,10 @@ async function storeServiceAction(data: TServiceInput) {
   return res;
 }
 
-async function showServiceAction(sId: string) {
-  const res = await sendRequest<TService>(`${API_URL}/service/${sId}`);
-  return res;
-}
-
 async function updateServiceAction(sId: string, data: TServiceInput) {
   const token = await getTokenFromClient();
 
-  const res = await sendRequest(`${API_URL}/service/${sId}`, {
+  const res = await sendRequest(`${API_URL}/services/${sId}`, {
     method: "PUT",
     headers: {
       "Content-Type": "application/json",
@@ -67,7 +67,7 @@ async function updateServiceAction(sId: string, data: TServiceInput) {
 async function destroyServiceAction(sId: string) {
   const token = await getTokenFromClient();
 
-  const res = await sendRequest(`${API_URL}/service/${sId}`, {
+  const res = await sendRequest(`${API_URL}/services/${sId}`, {
     method: "DELETE",
     headers: {
       "Content-Type": "application/json",
@@ -78,24 +78,12 @@ async function destroyServiceAction(sId: string) {
   return res;
 }
 
-async function getMyServicesAction() {
-  const token = await getTokenFromServer();
-  const res = await sendRequest<TService[]>(`${API_URL}/my-services`, {
-    method: "GET",
-    headers: {
-      "Content-Type": "application/json",
-      authorization: `bearer ${token}`,
-    },
-  });
-  return res;
-}
-
-async function changeServiceStatusAction(
+async function updateServiceAvailabilityAction(
   sId: string,
-  data: { status: TServiceStatus },
+  data: { isAvailable: boolean },
 ) {
   const token = await getTokenFromClient();
-  const res = await sendRequest(`${API_URL}/service/${sId}/status`, {
+  const res = await sendRequest(`${API_URL}/services/${sId}/availability`, {
     method: "PUT",
     headers: {
       "Content-Type": "application/json",
@@ -104,6 +92,19 @@ async function changeServiceStatusAction(
     body: JSON.stringify(data),
   });
 
+  return res;
+}
+
+async function getServicesAdminAction() {
+  const token = await getTokenFromServer();
+
+  const res = await sendRequest<TService[]>(`${API_URL}/service/admin`, {
+    method: "GET",
+    headers: {
+      "Content-Type": "application/json",
+      authorization: `bearer ${token}`,
+    },
+  });
   return res;
 }
 
@@ -126,13 +127,14 @@ async function updateServiceApprovalAction(
 }
 
 export {
-  getServicesAction,
+  listServicesAction,
+  listFeaturedServicesAction,
+  listTechnicianServicesAction,
+  getServiceAction,
+  createServiceAction,
   getServicesAdminAction,
-  storeServiceAction,
-  showServiceAction,
   updateServiceAction,
   destroyServiceAction,
-  getMyServicesAction,
-  changeServiceStatusAction,
+  updateServiceAvailabilityAction,
   updateServiceApprovalAction,
 };

@@ -12,11 +12,11 @@ import { categories, serviceModes } from "@/data/appData";
 import authClient from "@/lib/authClient";
 import Loading from "@/components/ui/common/Loading";
 import LoadingSpinner from "@/components/ui/common/LoadingSpinner";
-import { storeServiceAction, updateServiceAction } from "@/lib/serviceActions";
+import { createServiceAction, updateServiceAction } from "@/lib/serviceActions";
 import { TService } from "@/types";
 
 const MAX_IMAGE_SIZE = 5 * 1024 * 1024; // 5 MB
-const MY_SERVICES_PATH = "/dashboard/technician/services"; // TODO: adjust to your route
+const MY_SERVICES_PATH = "/dashboard/technician/my-services"; // TODO: adjust to your route
 
 type ServiceFormProps = {
   submitType: "create" | "update";
@@ -156,7 +156,7 @@ function ServiceForm(props: ServiceFormProps) {
     }
 
     if (submitType === "create") {
-      const res = await storeServiceAction(payload);
+      const res = await createServiceAction(payload);
 
       if (!res.isSuccess) {
         setIsLoading(false);

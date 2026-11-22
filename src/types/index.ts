@@ -65,7 +65,6 @@ type TImgbbResponse = {
 
 type TCategorySlug = (typeof categories)[number]["slug"];
 type TServiceModeSlug = (typeof serviceModes)[number]["slug"];
-type TServiceStatus = "active" | "inactive";
 type TServiceApproval = "approved" | "pending" | "rejected";
 
 type TService = {
@@ -82,14 +81,20 @@ type TService = {
   serviceArea: string;
   userId: string;
   userDetails?: AuthUser;
-  approval: TServiceApproval;
-  status: TServiceStatus;
+  approvalStatus: TServiceApproval;
+  isAvailable: boolean;
   createdAt: string;
   updatedAt: string;
 };
 type TServiceInput = Omit<
   TService,
-  "_id" | "slug" | "userId" | "approval" | "status" | "createdAt" | "updatedAt"
+  | "_id"
+  | "slug"
+  | "userId"
+  | "approvalStatus"
+  | "isAvailable"
+  | "createdAt"
+  | "updatedAt"
 >;
 
 type TBookingStatus =
@@ -155,7 +160,6 @@ export type {
   TUserInput,
   TImgbbImage,
   TImgbbResponse,
-  TServiceStatus,
   TServiceApproval,
   TService,
   TServiceInput,

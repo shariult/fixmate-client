@@ -1,20 +1,23 @@
 import React, { ComponentPropsWithoutRef } from "react";
-import Container from "@/components/ui/common/Container";
+import Form from "next/form";
 import Link from "next/link";
-import { PiMagnifyingGlass, PiMagnifyingGlassBold } from "react-icons/pi";
+import Container from "@/components/ui/common/Container";
+import { PiMagnifyingGlassBold } from "react-icons/pi";
 
 type ServiceHeroProps = {
+  urlQuery: URLSearchParams;
   className?: string;
   elClassName?: string;
 } & ComponentPropsWithoutRef<"section">;
 
 function ServiceHero(props: ServiceHeroProps) {
-  const { className, elClassName, ...rest } = props;
+  const { urlQuery, className, elClassName, ...rest } = props;
 
   return (
     <Container
       className={`${className ? className : ""}`}
       elClassName={`${elClassName ? elClassName : ""}`}
+      spaceY="pt-30 pb-6"
       {...rest}
     >
       <h1 className="heading-2">Browse repair services</h1>
@@ -24,9 +27,9 @@ function ServiceHero(props: ServiceHeroProps) {
       </p>
 
       {/* <!-- ===== Search + filters + sort ===== --> */}
-      <form
+      <Form
         action="/services"
-        method="get"
+        role="search"
         className="mt-8 grid gap-3 md:grid-cols-2 lg:grid-cols-12"
       >
         <label className="input w-full lg:col-span-4">
@@ -35,6 +38,7 @@ function ServiceHero(props: ServiceHeroProps) {
             type="search"
             name="search"
             placeholder="Search by title or category"
+            defaultValue={urlQuery.get("search") ?? ""}
           />
         </label>
 
@@ -42,31 +46,34 @@ function ServiceHero(props: ServiceHeroProps) {
           name="category"
           className="select w-full lg:col-span-2"
           aria-label="Category"
+          defaultValue={urlQuery.get("category") ?? ""}
         >
           <option value="">All categories</option>
-          <option>Smartphone</option>
-          <option>Laptop &amp; PC</option>
-          <option>AC</option>
-          <option>Refrigerator</option>
-          <option>TV</option>
-          <option>Washing Machine</option>
-          <option>Electrical</option>
+          <option value={"smartphone"}>Smartphone</option>
+          <option value={"laptop-and-pc"}>Laptop &amp; PC</option>
+          <option value={"ac"}>AC</option>
+          <option value={"refrigerator"}>Refrigerator</option>
+          <option value={"tv"}>TV</option>
+          <option value={"washing-machine"}>Washing Machine</option>
+          <option value={"electrical"}>Electrical</option>
         </select>
 
         <select
           name="mode"
           className="select w-full lg:col-span-2"
           aria-label="Service mode"
+          defaultValue={urlQuery.get("mode") ?? ""}
         >
           <option value="">Any service mode</option>
-          <option>Home Visit</option>
-          <option>Shop Drop-off</option>
+          <option value={"home-visit"}>Home Visit</option>
+          <option value={"shop-drop-off"}>Shop Drop-off</option>
         </select>
 
         <select
           name="sort"
           className="select w-full lg:col-span-2"
           aria-label="Sort"
+          defaultValue={urlQuery.get("sort") ?? ""}
         >
           <option value="newest">Newest</option>
           <option value="price_asc">Price: Low to High</option>
@@ -81,7 +88,7 @@ function ServiceHero(props: ServiceHeroProps) {
             Reset
           </Link>
         </div>
-      </form>
+      </Form>
     </Container>
   );
 }

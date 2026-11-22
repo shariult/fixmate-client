@@ -4,7 +4,6 @@ import SectionProcess from "./_components/SectionProcess";
 import SectionCategories from "./_components/SectionCategories";
 import SectionWhy from "./_components/SectionWhy";
 import SectionCta from "./_components/SectionCta";
-import { getTokenFromServer } from "@/lib/authActions";
 
 async function Homepage() {
   return (
