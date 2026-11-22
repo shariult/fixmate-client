@@ -47,6 +47,13 @@ function TechnicianRequestsTable(props: TechnicianRequestsTableProps) {
           </tr>
         </thead>
         <tbody>
+          {requests.length === 0 && (
+            <tr>
+              <td colSpan={7} className="text-center text-xl py-6">
+                No Data found!
+              </td>
+            </tr>
+          )}
           {requests.map((item) => {
             return (
               <tr key={item._id}>

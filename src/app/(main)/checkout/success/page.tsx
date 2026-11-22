@@ -6,6 +6,7 @@ import {
   showBookingAction,
   updateBookingAction,
 } from "@/lib/booking/bookingActions";
+import { storePaymentAction } from "@/lib/payment/paymentActions";
 // import { markBookingPaidAction } from "@/lib/booking/bookingActions"; // see TODO below
 
 const BOOKINGS_URL = "/dashboard/customer/my-bookings"; // adjust to your route
@@ -20,32 +21,48 @@ async function verifyPayment(sessionId: string) {
     const paymentIntentId = session.payment_intent as string;
 
     let booking = null;
+    let paymentData = null;
     if (bookingId) {
       const res = await showBookingAction(bookingId);
       booking = res.isSuccess ? res.data : null;
+
+      paymentData = {
+        service: booking?.serviceDetails?.title ?? "Repair service",
+        technician: booking?.technicianDetails?.name ?? "-",
+        amount: (session.amount_total ?? 0) / 100,
+        currency: (session.currency ?? "usd").toUpperCase(),
+        transactionId: paymentIntentId,
+        paidOn: new Date(session.created * 1000).toLocaleString("en-GB", {
+          day: "2-digit",
+          month: "short",
+          year: "numeric",
+          hour: "2-digit",
+          minute: "2-digit",
+        }),
+      };
 
       if (booking && !booking.paymentId) {
         await updateBookingAction(bookingId, {
           paymentId: paymentIntentId,
           paymentDate: new Date(),
         });
+
+        await storePaymentAction({
+          bookingId: bookingId,
+          customerId: booking.customerId,
+          technicianId: booking.technicianId,
+          serviceId: booking.serviceId,
+          amount: paymentData.amount,
+          currency: paymentData.currency,
+          transactionId: paymentData.transactionId,
+          stripeSessionId: sessionId,
+          paymentStatus: "paid",
+          paidAt: paymentData.paidOn,
+        });
       }
     }
 
-    return {
-      service: booking?.serviceDetails?.title ?? "Repair service",
-      technician: booking?.technicianDetails?.name ?? "-",
-      amount: (session.amount_total ?? 0) / 100,
-      currency: (session.currency ?? "usd").toUpperCase(),
-      transactionId: paymentIntentId,
-      paidOn: new Date(session.created * 1000).toLocaleString("en-GB", {
-        day: "2-digit",
-        month: "short",
-        year: "numeric",
-        hour: "2-digit",
-        minute: "2-digit",
-      }),
-    };
+    return paymentData;
   } catch (err) {
     console.error("Payment verification failed:", err);
     return null;

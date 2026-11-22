@@ -102,6 +102,7 @@ type TBookingStatus =
 type TBooking = {
   _id: string;
   price: number;
+  finalAmount?: number;
   customerPhone: string;
   preferredDate: string;
   address: string;
@@ -129,6 +130,24 @@ type TBookingInput = Omit<
   | "updatedAt"
 >;
 
+type TPayment = {
+  _id?: string;
+  bookingId: string;
+  bookingDetails?: string;
+  customerId: string;
+  customerDetails?: AuthUser;
+  technicianId: string;
+  technicianDetails?: AuthUser;
+  serviceId: string;
+  serviceDetails?: TService;
+  amount: number;
+  currency: string;
+  transactionId: string;
+  stripeSessionId: string;
+  paymentStatus: string;
+  paidAt: string;
+};
+
 export type {
   TBreadCrumbs,
   TCategory,
@@ -143,4 +162,5 @@ export type {
   TBookingStatus,
   TBooking,
   TBookingInput,
+  TPayment,
 };

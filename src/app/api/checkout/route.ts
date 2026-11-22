@@ -36,7 +36,7 @@ export async function POST(req: Request) {
             product_data: {
               name: booking?.serviceDetails?.title ?? "Test product",
             },
-            unit_amount: Math.round(booking.price * 100), // cents
+            unit_amount: Math.round(booking.finalAmount! * 100), // cents
           },
           quantity: 1,
         },

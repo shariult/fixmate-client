@@ -50,6 +50,13 @@ function CustomerBookingTable(props: CustomerBookingTableProps) {
           </tr>
         </thead>
         <tbody>
+          {bookings.length === 0 && (
+            <tr>
+              <td colSpan={7} className="text-center text-xl py-6">
+                No Data found!
+              </td>
+            </tr>
+          )}
           {bookings.map((item) => {
             const bookingStatus = getBookingStatusFromSlug(item.status);
             return (

@@ -1,12 +1,13 @@
 import Container from "@/components/ui/common/Container";
 import EmptyData from "@/components/ui/common/EmptyData";
 import { getUserPayments } from "@/lib/booking/bookingActions";
+import { getPaymentIndexAction } from "@/lib/payment/paymentActions";
 import { formatDate } from "@/lib/utils";
 import React from "react";
 import { PiCheckBold, PiCreditCardBold } from "react-icons/pi";
 
 async function CustomerPaymentsPage() {
-  const resData = await getUserPayments();
+  const resData = await getPaymentIndexAction();
   if (!resData.isSuccess) {
     return (
       <Container>
@@ -31,7 +32,7 @@ async function CustomerPaymentsPage() {
             <div>
               <p className="text-sm text-muted">Total paid</p>
               <p className="mt-2 font-title text-3xl font-semibold">
-                ${payments.reduce((sum, p) => sum + p.price, 0)}
+                ${payments.reduce((sum, p) => sum + p.amount, 0)}
               </p>
             </div>
             <span className="grid size-11 place-items-center rounded-xl bg-primary/10 text-primary">
@@ -75,15 +76,14 @@ async function CustomerPaymentsPage() {
                 <tr key={item._id}>
                   <td className="font-medium">{item.serviceDetails?.title}</td>
                   <td>{item.customerDetails?.name}</td>
-                  <td className="font-medium">${item.price}</td>
+                  <td className="font-medium">${item.amount}</td>
                   <td>
                     <span className="font-mono text-xs text-muted">
-                      {item.paymentId}
+                      {item.transactionId}
                     </span>
                   </td>
                   <td className="whitespace-nowrap">
-                    {new Date(item.paymentDate).toLocaleString() ??
-                      new Date(item.updatedAt).toLocaleString()}
+                    {new Date(item.paidAt).toLocaleString()}
                   </td>
                 </tr>
               );

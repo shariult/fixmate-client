@@ -39,7 +39,7 @@ function TechnicianMarkCompletedModal(
   async function changeRequestStatusHandler() {
     const resData = await updateRequestStatusAction(booking._id, {
       status: "completed",
-      price: newPrice,
+      finalAmount: newPrice,
     });
     if (!resData.isSuccess) {
       toast.error("Could not update request!");
@@ -85,7 +85,7 @@ function TechnicianMarkCompletedModal(
             </p>
           </fieldset>
           <div className="modal-action">
-            <button type="button" className="btn btn-ghost">
+            <button type="button" className="btn btn-ghost" onClick={onClose}>
               Cancel
             </button>
             <button

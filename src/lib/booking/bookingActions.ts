@@ -91,7 +91,7 @@ async function getMyRequestsAction() {
 
 async function updateRequestStatusAction(
   bId: string,
-  data: { status: TBookingStatus; price?: number },
+  data: { status: TBookingStatus; finalAmount?: number },
 ) {
   const token = await getTokenFromClient();
   const res = await sendRequest<TBooking[]>(

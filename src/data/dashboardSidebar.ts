@@ -74,7 +74,7 @@ const technicianSidebarConfig: TSidebar = {
     },
     {
       id: 3,
-      href: "/dashboard/technician/my-services",
+      href: "/dashboard/technician/services",
       label: "My Services",
       icon: PiWrenchBold,
     },

@@ -1,4 +1,9 @@
-import { TService, TServiceInput, TServiceStatus } from "@/types";
+import {
+  TService,
+  TServiceApproval,
+  TServiceInput,
+  TServiceStatus,
+} from "@/types";
 import { sendRequest } from "../utils";
 import { getTokenFromClient } from "../authActionsClient";
 import { getTokenFromServer } from "../authActions";
@@ -8,6 +13,19 @@ const API_URL = process.env.NEXT_PUBLIC_API_URL as string;
 async function getServicesAction(urlQuery?: string) {
   let url = urlQuery ? `${API_URL}/service${urlQuery}` : `${API_URL}/service`;
   const res = await sendRequest<TService[]>(url);
+  return res;
+}
+
+async function getServicesAdminAction() {
+  const token = await getTokenFromServer();
+
+  const res = await sendRequest<TService[]>(`${API_URL}/service/admin`, {
+    method: "GET",
+    headers: {
+      "Content-Type": "application/json",
+      authorization: `bearer ${token}`,
+    },
+  });
   return res;
 }
 
@@ -89,12 +107,32 @@ async function changeServiceStatusAction(
   return res;
 }
 
+async function updateServiceApprovalAction(
+  sId: string,
+  data: TServiceApproval,
+) {
+  const token = await getTokenFromClient();
+
+  const res = await sendRequest(`${API_URL}/service/${sId}`, {
+    method: "PUT",
+    headers: {
+      "Content-Type": "application/json",
+      authorization: `bearer ${token}`,
+    },
+    body: JSON.stringify({ approval: data }),
+  });
+
+  return res;
+}
+
 export {
   getServicesAction,
+  getServicesAdminAction,
   storeServiceAction,
   showServiceAction,
   updateServiceAction,
   destroyServiceAction,
   getMyServicesAction,
   changeServiceStatusAction,
+  updateServiceApprovalAction,
 };
