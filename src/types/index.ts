@@ -107,8 +107,11 @@ type TBooking = {
   address: string;
   problemDescription: string;
   customerId: string;
+  customerDetails?: AuthUser;
   serviceId: string;
+  serviceDetails?: TService;
   technicianId: string;
+  technicianDetails?: AuthUser;
   paymentId: string;
   status: TBookingStatus;
   createdAt: string;

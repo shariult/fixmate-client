@@ -1,4 +1,4 @@
-import { categories, serviceModes } from "@/data/appData";
+import { bookingStatusData, categories, serviceModes } from "@/data/appData";
 import { TImgbbImage, TImgbbResponse } from "@/types";
 
 type TSendRequest<T> =
@@ -159,6 +159,10 @@ function getServiceModeFromSlug(slug: string) {
   return serviceModes.filter((item) => item.slug === slug)[0];
 }
 
+function getBookingStatusFromSlug(slug: string) {
+  return bookingStatusData.filter((item) => item.slug === slug)[0];
+}
+
 export {
   sendRequest,
   uploadImageToImgBB,
@@ -174,4 +178,5 @@ export {
   toBanglaNum,
   getCategoryFromSlug,
   getServiceModeFromSlug,
+  getBookingStatusFromSlug,
 };

@@ -1,27 +1,42 @@
 import React from "react";
 import CustomerBookingTable from "./_components/CustomerBookingTable";
 import CustomerCancelBookingModal from "./_components/CustomerCancelBookingModal";
+import { getMyBookingsAction } from "@/lib/booking/bookingActions";
+import Container from "@/components/ui/common/Container";
+import EmptyData from "@/components/ui/common/EmptyData";
+import { PiMagnifyingGlass, PiMagnifyingGlassBold } from "react-icons/pi";
+import Link from "next/link";
 
 async function CustomerMyBookingsPage() {
+  const resData = await getMyBookingsAction();
+  if (!resData.isSuccess) {
+    return (
+      <Container>
+        <EmptyData message="Something went wrong!" />
+      </Container>
+    );
+  }
+
+  const bookings = resData.data;
+
   return (
     <main className="flex-1 p-4 md:p-8">
       <div className="flex flex-wrap items-end justify-between gap-3">
         <div>
           <h1 className="heading-2">My Bookings</h1>
           <p className="mt-1 text-muted">
-            9 repair requests. Pay Now appears once a job is completed.
+            {bookings.length} repair requests. Pay Now appears once a job is
+            completed.
           </p>
         </div>
-        <a href="services.html" className="btn btn-primary">
-          <svg className="size-4">
-            <use href="#i-search" />
-          </svg>
+        <Link href="/services" className="btn btn-primary">
+          <PiMagnifyingGlassBold className="text-2xl" />
           Find a service
-        </a>
+        </Link>
       </div>
 
       <div className="mt-8 overflow-x-auto rounded-2xl border border-base-300 bg-base-50">
-        <CustomerBookingTable />
+        <CustomerBookingTable bookings={bookings} />
       </div>
 
       <CustomerCancelBookingModal />
