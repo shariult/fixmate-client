@@ -108,18 +108,15 @@ async function updateRequestStatusAction(
   return res;
 }
 
-async function getUserPayments() {
+async function getAllBookingsAdmin() {
   const token = await getTokenFromServer();
-  const res = await sendRequest<TBooking[]>(
-    `${API_URL}/booking/payments?filter=paid`,
-    {
-      method: "GET",
-      headers: {
-        "Content-Type": "application/json",
-        authorization: `bearer ${token}`,
-      },
+  const res = await sendRequest<TBooking[]>(`${API_URL}/booking/admin`, {
+    method: "GET",
+    headers: {
+      "Content-Type": "application/json",
+      authorization: `bearer ${token}`,
     },
-  );
+  });
   return res;
 }
 
@@ -131,5 +128,5 @@ export {
   cancelMyBookingAction,
   getMyRequestsAction,
   updateRequestStatusAction,
-  getUserPayments,
+  getAllBookingsAdmin,
 };

@@ -1,13 +1,12 @@
 import Container from "@/components/ui/common/Container";
 import EmptyData from "@/components/ui/common/EmptyData";
-import { getUserPayments } from "@/lib/booking/bookingActions";
-import { getPaymentIndexAction } from "@/lib/payment/paymentActions";
+import { getUserPayments } from "@/lib/payment/paymentActions";
 import { formatDate } from "@/lib/utils";
 import React from "react";
 import { PiCheckBold, PiCreditCardBold } from "react-icons/pi";
 
 async function CustomerPaymentsPage() {
-  const resData = await getPaymentIndexAction();
+  const resData = await getUserPayments();
   if (!resData.isSuccess) {
     return (
       <Container>
@@ -75,7 +74,7 @@ async function CustomerPaymentsPage() {
               return (
                 <tr key={item._id}>
                   <td className="font-medium">{item.serviceDetails?.title}</td>
-                  <td>{item.customerDetails?.name}</td>
+                  <td>{item.technicianDetails?.name}</td>
                   <td className="font-medium">${item.amount}</td>
                   <td>
                     <span className="font-mono text-xs text-muted">

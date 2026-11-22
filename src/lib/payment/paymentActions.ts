@@ -4,6 +4,19 @@ import { getTokenFromServer } from "../authActions";
 
 const API_URL = process.env.NEXT_PUBLIC_API_URL as string;
 
+async function getPaymentIndexAction() {
+  const token = await getTokenFromServer();
+
+  const res = await sendRequest<TPayment[]>(`${API_URL}/payment/`, {
+    method: "GET",
+    headers: {
+      "Content-Type": "application/json",
+      authorization: `bearer ${token}`,
+    },
+  });
+  return res;
+}
+
 async function storePaymentAction(data: TPayment) {
   const token = await getTokenFromServer();
   const resData = await sendRequest<TPayment>(`${API_URL}/payment`, {
@@ -17,10 +30,10 @@ async function storePaymentAction(data: TPayment) {
   return resData;
 }
 
-async function getPaymentIndexAction() {
+async function getUserPayments() {
   const token = await getTokenFromServer();
 
-  const res = await sendRequest<TPayment[]>(`${API_URL}/payment`, {
+  const res = await sendRequest<TPayment[]>(`${API_URL}/payment/user`, {
     method: "GET",
     headers: {
       "Content-Type": "application/json",
@@ -29,4 +42,4 @@ async function getPaymentIndexAction() {
   });
   return res;
 }
-export { storePaymentAction, getPaymentIndexAction };
+export { getPaymentIndexAction, storePaymentAction, getUserPayments };
