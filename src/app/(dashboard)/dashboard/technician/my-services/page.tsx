@@ -24,7 +24,8 @@ async function MyServicesPage() {
         <div>
           <h1 className="heading-2">My Services</h1>
           <p className="mt-1 text-muted">
-            6 services. Only approved and available ones appear publicly.
+            {myServices.length} services. Only approved and available ones
+            appear publicly.
           </p>
         </div>
         <Link
