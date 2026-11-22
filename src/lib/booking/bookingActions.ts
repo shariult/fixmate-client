@@ -1,4 +1,4 @@
-import { TBooking, TBookingInput } from "@/types";
+import { TBooking, TBookingInput, TBookingStatus } from "@/types";
 import { sendRequest } from "../utils";
 import { getTokenFromClient } from "../authActionsClient";
 import { getTokenFromServer } from "../authActions";
@@ -46,4 +46,41 @@ async function cancelMyBookingAction(bId: string) {
   return res;
 }
 
-export { storeBookingAction, getMyBookingsAction, cancelMyBookingAction };
+async function getMyRequestsAction() {
+  const token = await getTokenFromServer();
+  const res = await sendRequest<TBooking[]>(`${API_URL}/my-requests`, {
+    method: "GET",
+    headers: {
+      "Content-Type": "application/json",
+      authorization: `bearer ${token}`,
+    },
+  });
+  return res;
+}
+
+async function updateRequestStatusAction(
+  bId: string,
+  data: { status: TBookingStatus; price?: number },
+) {
+  const token = await getTokenFromClient();
+  const res = await sendRequest<TBooking[]>(
+    `${API_URL}/booking/${bId}/status`,
+    {
+      method: "PUT",
+      headers: {
+        "Content-Type": "application/json",
+        authorization: `bearer ${token}`,
+      },
+      body: JSON.stringify(data),
+    },
+  );
+  return res;
+}
+
+export {
+  storeBookingAction,
+  getMyBookingsAction,
+  cancelMyBookingAction,
+  getMyRequestsAction,
+  updateRequestStatusAction,
+};
