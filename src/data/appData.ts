@@ -81,4 +81,43 @@ const serviceModes: TServiceMode[] = [
   },
 ];
 
-export { categories, serviceModes };
+const bookingStatusData = [
+  {
+    id: 1,
+    title: "Requested",
+    slug: "requested",
+    className: "badge-info",
+  },
+  {
+    id: 2,
+    title: "Accepted",
+    slug: "accepted",
+    className: "badge-secondary",
+  },
+  {
+    id: 3,
+    title: "In Progress",
+    slug: "in-progress",
+    className: "badge-warning",
+  },
+  {
+    id: 4,
+    title: "Completed",
+    slug: "completed",
+    className: "badge-success",
+  },
+  {
+    id: 5,
+    title: "Rejected",
+    slug: "rejected",
+    className: "badge-error",
+  },
+  {
+    id: 6,
+    title: "Cancelled",
+    slug: "cancelled",
+    className: "badge-neutral",
+  },
+];
+
+export { categories, serviceModes, bookingStatusData };

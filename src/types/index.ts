@@ -92,6 +92,39 @@ type TServiceInput = Omit<
   "_id" | "slug" | "userId" | "approval" | "status" | "createdAt" | "updatedAt"
 >;
 
+type TBookingStatus =
+  | "requested"
+  | "accepted"
+  | "in-progress"
+  | "completed"
+  | "cancelled"
+  | "rejected";
+type TBooking = {
+  _id: string;
+  price: number;
+  customerPhone: string;
+  preferredDate: string;
+  address: string;
+  problemDescription: string;
+  customerId: string;
+  serviceId: string;
+  technicianId: string;
+  paymentId: string;
+  status: TBookingStatus;
+  createdAt: string;
+  updatedAt: string;
+};
+type TBookingInput = Omit<
+  TBooking,
+  | "_id"
+  | "customerId"
+  | "technicianId"
+  | "paymentId"
+  | "status"
+  | "createdAt"
+  | "updatedAt"
+>;
+
 export type {
   TBreadCrumbs,
   TCategory,
@@ -103,4 +136,7 @@ export type {
   TServiceApproval,
   TService,
   TServiceInput,
+  TBookingStatus,
+  TBooking,
+  TBookingInput,
 };

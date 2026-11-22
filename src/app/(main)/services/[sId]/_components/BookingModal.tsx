@@ -9,6 +9,7 @@ import { type AuthUser } from "@/lib/authClient";
 import LoadingSpinner from "@/components/ui/common/LoadingSpinner";
 import { TService } from "@/types";
 import { PiXBold } from "react-icons/pi";
+import { storeBookingAction } from "@/lib/booking/bookingActions";
 
 type BookingModalProps = {
   user: AuthUser;
@@ -31,10 +32,11 @@ function BookingModal(props: BookingModalProps) {
   const today = new Date().toISOString().split("T")[0];
 
   const initialFormValues = {
-    customerPhone: service.userDetails?.phone ?? "",
+    customerPhone: user?.phone ?? "",
     preferredDate: "",
-    address: "",
+    address: user.address,
     problemDescription: "",
+    serviceId: service._id,
   };
 
   const [formValues, setFormValues] = useState(initialFormValues);
@@ -67,12 +69,15 @@ function BookingModal(props: BookingModalProps) {
       preferredDate: formValues.preferredDate,
       address: formValues.address.trim(),
       problemDescription: formValues.problemDescription.trim(),
+      serviceId: service._id,
+      price: service.basePrice,
     };
 
     const validationErrors: BookingFormFieldErrors = {
-      customerPhone: /^01\d{9}$/.test(payload.customerPhone)
-        ? undefined
-        : "Enter a valid phone number, e.g. 01XXXXXXXXX.",
+      customerPhone:
+        payload.customerPhone === "" || isValidStr(payload.customerPhone, 10)
+          ? undefined
+          : "Enter a valid phone number, e.g. 01XXXXXXXXX.",
       preferredDate:
         payload.preferredDate === ""
           ? "Please choose a date."
@@ -94,10 +99,19 @@ function BookingModal(props: BookingModalProps) {
       return;
     }
 
+    const resData = await storeBookingAction(payload);
+    console.log(resData);
+    if (!resData.isSuccess) {
+      setIsLoading(false);
+      toast.error(resData.error.message || "Could not book Service!");
+      return;
+    }
+
     setIsLoading(false);
     toast.success("Repair request sent!");
     resetForm();
     modalRef?.current?.close();
+    router.push("/dashboard/customer/my-bookings");
     router.refresh();
   }
 
