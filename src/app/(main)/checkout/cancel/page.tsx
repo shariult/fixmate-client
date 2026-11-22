@@ -17,7 +17,10 @@ function CheckoutCancelPage() {
           </p>
 
           <div className="btn-box mt-8 flex-col sm:flex-row sm:justify-center">
-            <Link href="#" className="btn btn-primary btn-lg">
+            <Link
+              href="/dashboard/customer/my-bookings"
+              className="btn btn-primary btn-lg"
+            >
               Try again
             </Link>
             <Link href="/" className="btn btn-outline btn-lg">

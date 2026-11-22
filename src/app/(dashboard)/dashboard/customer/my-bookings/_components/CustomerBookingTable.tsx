@@ -15,7 +15,26 @@ type CustomerBookingTableProps = {
 function CustomerBookingTable(props: CustomerBookingTableProps) {
   const { bookings, className, ...rest } = props;
   const [bookingId, setBooking] = useState<string | null>(null);
+  const [payingId, setPayingId] = useState<string | null>(null);
 
+  async function handlePay(id: string) {
+    try {
+      setPayingId(id);
+      const res = await fetch("/api/checkout", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ bookingId: id }), // only send the ID
+      });
+      const data = await res.json();
+      if (!res.ok) throw new Error(data.error || "Could not start payment");
+
+      window.location.href = data.url; // go to Stripe Checkout
+    } catch (err) {
+      console.error(err);
+      alert(err instanceof Error ? err.message : "Payment failed");
+      setPayingId(null);
+    }
+  }
   return (
     <>
       <table className={`table ${className}`} {...rest}>
@@ -60,7 +79,7 @@ function CustomerBookingTable(props: CustomerBookingTableProps) {
                 <td className="whitespace-nowrap">{item.preferredDate}</td>
                 <td className="whitespace-nowrap">
                   <span className="font-medium">${item.price}</span>
-                  <span className="block text-xs text-muted">Base price</span>
+                  <span className="block text-xs text-muted">Price to Pay</span>
                 </td>
                 <td>
                   <span
@@ -87,11 +106,24 @@ function CustomerBookingTable(props: CustomerBookingTableProps) {
                     </button>
                   )}
 
-                  {bookingStatus.slug === "completed" && (
-                    <button type="button" className="btn btn-sm btn-success">
-                      <PiCheckBold />
+                  {bookingStatus.slug === "completed" && !item.paymentId && (
+                    <button
+                      type="button"
+                      className="btn btn-sm btn-success"
+                      disabled={payingId === item._id}
+                      onClick={() => handlePay(item._id)}
+                    >
+                      {payingId === item._id ? (
+                        <span className="loading loading-spinner loading-xs" />
+                      ) : (
+                        <PiCheckBold />
+                      )}
                       Pay Now
                     </button>
+                  )}
+
+                  {bookingStatus.slug === "completed" && item.paymentId && (
+                    <p>Paid</p>
                   )}
 
                   {bookingStatus.slug !== "completed" &&

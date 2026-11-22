@@ -19,6 +19,37 @@ async function storeBookingAction(data: TBookingInput) {
   return res;
 }
 
+async function showBookingAction(bId: string) {
+  const token = await getTokenFromServer();
+
+  const res = await sendRequest<TBooking>(`${API_URL}/booking/${bId}`, {
+    method: "GET",
+    headers: {
+      "Content-Type": "application/json",
+      authorization: `bearer ${token}`,
+    },
+  });
+  return res;
+}
+
+async function updateBookingAction(
+  bId: string,
+  data: { paymentId?: string | null },
+) {
+  const token = await getTokenFromServer();
+
+  const res = await sendRequest(`${API_URL}/booking/${bId}`, {
+    method: "PUT",
+    headers: {
+      "Content-Type": "application/json",
+      authorization: `bearer ${token}`,
+    },
+    body: JSON.stringify(data),
+  });
+
+  return res;
+}
+
 async function getMyBookingsAction() {
   const token = await getTokenFromServer();
   const res = await sendRequest<TBooking[]>(`${API_URL}/my-bookings`, {
@@ -79,6 +110,8 @@ async function updateRequestStatusAction(
 
 export {
   storeBookingAction,
+  showBookingAction,
+  updateBookingAction,
   getMyBookingsAction,
   cancelMyBookingAction,
   getMyRequestsAction,
