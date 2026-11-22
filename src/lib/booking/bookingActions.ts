@@ -31,4 +31,19 @@ async function getMyBookingsAction() {
   return res;
 }
 
-export { storeBookingAction, getMyBookingsAction };
+async function cancelMyBookingAction(bId: string) {
+  const token = await getTokenFromClient();
+  const res = await sendRequest<TBooking[]>(
+    `${API_URL}/booking/${bId}/cancel`,
+    {
+      method: "GET",
+      headers: {
+        "Content-Type": "application/json",
+        authorization: `bearer ${token}`,
+      },
+    },
+  );
+  return res;
+}
+
+export { storeBookingAction, getMyBookingsAction, cancelMyBookingAction };

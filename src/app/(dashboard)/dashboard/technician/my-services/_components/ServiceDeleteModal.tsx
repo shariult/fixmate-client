@@ -27,6 +27,7 @@ function ServiceDeleteModal(props: ServiceDeleteModalProps) {
     const res = await destroyServiceAction(sId);
     if (!res.isSuccess) {
       toast.error("Could not delete service!");
+      return;
     }
     onClose();
     toast.success("Service deleted successfully!");

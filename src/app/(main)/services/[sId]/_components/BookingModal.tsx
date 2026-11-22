@@ -100,7 +100,6 @@ function BookingModal(props: BookingModalProps) {
     }
 
     const resData = await storeBookingAction(payload);
-    console.log(resData);
     if (!resData.isSuccess) {
       setIsLoading(false);
       toast.error(resData.error.message || "Could not book Service!");

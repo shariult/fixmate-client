@@ -38,8 +38,6 @@ async function CustomerMyBookingsPage() {
       <div className="mt-8 overflow-x-auto rounded-2xl border border-base-300 bg-base-50">
         <CustomerBookingTable bookings={bookings} />
       </div>
-
-      <CustomerCancelBookingModal />
     </main>
   );
 }
