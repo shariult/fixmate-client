@@ -1,6 +1,6 @@
 import Container from "@/components/ui/common/Container";
 import EmptyData from "@/components/ui/common/EmptyData";
-import { getUserPayments } from "@/lib/payment/paymentActions";
+import { getUserPayments } from "@/lib/paymentActions";
 import { formatDate } from "@/lib/utils";
 import React from "react";
 import { PiCheckBold, PiCreditCardBold } from "react-icons/pi";

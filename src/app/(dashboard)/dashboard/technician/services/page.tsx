@@ -2,7 +2,7 @@ import React from "react";
 import MyServicesTable from "./_components/MyServiceTable";
 import { PiPlusBold } from "react-icons/pi";
 import Link from "next/link";
-import { getMyServicesAction } from "@/lib/service/serviceActions";
+import { getMyServicesAction } from "@/lib/serviceActions";
 import Container from "@/components/ui/common/Container";
 import EmptyData from "@/components/ui/common/EmptyData";
 

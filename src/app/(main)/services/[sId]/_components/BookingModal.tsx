@@ -9,7 +9,7 @@ import { type AuthUser } from "@/lib/authClient";
 import LoadingSpinner from "@/components/ui/common/LoadingSpinner";
 import { TService } from "@/types";
 import { PiXBold } from "react-icons/pi";
-import { storeBookingAction } from "@/lib/booking/bookingActions";
+import { storeBookingAction } from "@/lib/bookingActions";
 
 type BookingModalProps = {
   user: AuthUser;

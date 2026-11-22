@@ -4,7 +4,7 @@ import React, { ComponentPropsWithoutRef, useState } from "react";
 import Container from "@/components/ui/common/Container";
 import { TBooking, TBookingStatus } from "@/types";
 import { getBookingStatusFromSlug } from "@/lib/utils";
-import { updateRequestStatusAction } from "@/lib/booking/bookingActions";
+import { updateRequestStatusAction } from "@/lib/bookingActions";
 import toast from "react-hot-toast";
 import { useRouter } from "next/navigation";
 import TechnicianMarkCompletedModal from "./TechnicianMarkCompletedModal";
@@ -145,8 +145,10 @@ function TechnicianRequestsTable(props: TechnicianRequestsTableProps) {
                   {item.status === "completed" && (
                     <div className="flex flex-col gap-2 justify-end">
                       <div className="mb-2">
-                        <p className="text-xl text-muted">${item.price}</p>to
-                        pay
+                        <p className="text-xl text-muted">
+                          ${item.finalAmount}
+                        </p>
+                        final
                       </div>
                       <p
                         className={`badge ${item.paymentId ? "badge-success" : "badge-info"} badge-outline ml-auto`}

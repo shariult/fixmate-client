@@ -1,7 +1,7 @@
 import Container from "@/components/ui/common/Container";
 import ServiceShowLeft from "./_components/ServiceShowLeft";
 import ServiceShowRight from "./_components/ServiceShowRight";
-import { showServiceAction } from "@/lib/service/serviceActions";
+import { showServiceAction } from "@/lib/serviceActions";
 import EmptyData from "@/components/ui/common/EmptyData";
 
 type ServiceDetailsPageProps = {

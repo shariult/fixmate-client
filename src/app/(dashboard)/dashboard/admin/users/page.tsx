@@ -1,7 +1,7 @@
 import Container from "@/components/ui/common/Container";
 import EmptyData from "@/components/ui/common/EmptyData";
 import { getCurrentUser } from "@/lib/authActions";
-import { getUsersAction } from "@/lib/user/userActions";
+import { getUsersAction } from "@/lib/userActions";
 import UsersTable from "./_components/UsersTable";
 
 async function AdminUsers() {

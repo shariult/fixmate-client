@@ -10,7 +10,7 @@ import React, {
 import Container from "@/components/ui/common/Container";
 import { useRouter } from "next/navigation";
 import { TBooking, TBookingStatus } from "@/types";
-import { updateRequestStatusAction } from "@/lib/booking/bookingActions";
+import { updateRequestStatusAction } from "@/lib/bookingActions";
 import toast from "react-hot-toast";
 
 type TechnicianMarkCompletedModalProps = {

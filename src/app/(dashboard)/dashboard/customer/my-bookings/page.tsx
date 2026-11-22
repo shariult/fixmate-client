@@ -1,7 +1,7 @@
 import React from "react";
 import CustomerBookingTable from "./_components/CustomerBookingTable";
 import CustomerCancelBookingModal from "./_components/CustomerCancelBookingModal";
-import { getMyBookingsAction } from "@/lib/booking/bookingActions";
+import { getMyBookingsAction } from "@/lib/bookingActions";
 import Container from "@/components/ui/common/Container";
 import EmptyData from "@/components/ui/common/EmptyData";
 import { PiMagnifyingGlass, PiMagnifyingGlassBold } from "react-icons/pi";

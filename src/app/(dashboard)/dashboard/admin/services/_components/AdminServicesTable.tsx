@@ -6,7 +6,7 @@ import { getCategoryFromSlug } from "@/lib/utils";
 import {
   updateServiceAction,
   updateServiceApprovalAction,
-} from "@/lib/service/serviceActions";
+} from "@/lib/serviceActions";
 import toast from "react-hot-toast";
 import { useRouter } from "next/navigation";
 

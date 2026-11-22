@@ -9,7 +9,7 @@ import {
   PiXBold,
 } from "react-icons/pi";
 import Link from "next/link";
-import { getServicesAction } from "@/lib/service/serviceActions";
+import { getServicesAction } from "@/lib/serviceActions";
 import EmptyData from "@/components/ui/common/EmptyData";
 import ServiceCard from "@/components/layout/service/ServiceCard";
 

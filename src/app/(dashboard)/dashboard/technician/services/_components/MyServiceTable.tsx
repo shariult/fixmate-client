@@ -7,7 +7,7 @@ import ServicesEditModal from "./ServicesEditModal";
 import EmptyData from "@/components/ui/common/EmptyData";
 import { getCategoryFromSlug, getServiceModeFromSlug } from "@/lib/utils";
 import ServiceDeleteModal from "./ServiceDeleteModal";
-import { changeServiceStatusAction } from "@/lib/service/serviceActions";
+import { changeServiceStatusAction } from "@/lib/serviceActions";
 import toast from "react-hot-toast";
 import { useRouter } from "next/navigation";
 

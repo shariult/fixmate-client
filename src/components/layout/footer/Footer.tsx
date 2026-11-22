@@ -7,10 +7,10 @@ import {
   PiPhone,
   PiMapPin,
 } from "react-icons/pi";
+import Link from "next/link";
 import CompanyLogo from "@/components/ui/common/CompanyLogo";
 import FooterItem from "./FooterItem";
 import FooterSocialLink from "./FooterSocialLink";
-import Link from "next/link";
 
 function Footer() {
   return (

@@ -1,5 +1,5 @@
 import EmptyData from "@/components/ui/common/EmptyData";
-import { getAllBookingsAdmin } from "@/lib/booking/bookingActions";
+import { getAllBookingsAdmin } from "@/lib/bookingActions";
 import { getBookingStatusFromSlug, getCategoryFromSlug } from "@/lib/utils";
 import Link from "next/link";
 import React from "react";

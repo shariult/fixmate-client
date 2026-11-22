@@ -1,7 +1,8 @@
-import { getTokenFromServer } from "../authActions";
-import { getTokenFromClient } from "../authActionsClient";
-import { AuthUser } from "../authClient";
-import { sendRequest } from "../utils";
+import { getTokenFromServer } from "./authActions";
+import { getTokenFromClient } from "./authActionsClient";
+import { AuthUser } from "./authClient";
+import { sendRequest } from "./utils";
+
 const API_URL = process.env.NEXT_PUBLIC_API_URL as string;
 
 async function getUsersAction() {

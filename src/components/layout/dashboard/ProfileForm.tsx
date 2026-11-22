@@ -9,8 +9,6 @@ import { PiUploadSimpleBold } from "react-icons/pi";
 import { TUserInput } from "@/types";
 import authClient from "@/lib/authClient";
 
-const MAX_IMAGE_SIZE = 5 * 1024 * 1024; // 5 MB
-
 type ProfileFormProps = {
   user: TUserInput;
   className?: string;

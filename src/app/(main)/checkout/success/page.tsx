@@ -2,11 +2,8 @@ import Link from "next/link";
 import React from "react";
 import { PiCheckBold, PiWarningBold } from "react-icons/pi";
 import { stripe } from "@/lib/stripe";
-import {
-  showBookingAction,
-  updateBookingAction,
-} from "@/lib/booking/bookingActions";
-import { storePaymentAction } from "@/lib/payment/paymentActions";
+import { showBookingAction, updateBookingAction } from "@/lib/bookingActions";
+import { storePaymentAction } from "@/lib/paymentActions";
 // import { markBookingPaidAction } from "@/lib/booking/bookingActions"; // see TODO below
 
 const BOOKINGS_URL = "/dashboard/customer/my-bookings"; // adjust to your route

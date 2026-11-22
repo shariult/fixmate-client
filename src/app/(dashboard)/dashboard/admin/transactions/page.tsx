@@ -1,6 +1,6 @@
 import Container from "@/components/ui/common/Container";
 import EmptyData from "@/components/ui/common/EmptyData";
-import { getPaymentIndexAction } from "@/lib/payment/paymentActions";
+import { getPaymentIndexAction } from "@/lib/paymentActions";
 import { PiCheckBold, PiCreditCardBold } from "react-icons/pi";
 
 async function AdminTransactions() {

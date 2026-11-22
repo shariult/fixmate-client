@@ -1,5 +1,5 @@
 "use client";
-import { cancelMyBookingAction } from "@/lib/booking/bookingActions";
+import { cancelMyBookingAction } from "@/lib/bookingActions";
 import { TBooking } from "@/types";
 import { useRouter } from "next/navigation";
 import React, { ComponentPropsWithoutRef, useEffect, useRef } from "react";

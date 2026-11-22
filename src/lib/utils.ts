@@ -1,5 +1,5 @@
 import { bookingStatusData, categories, serviceModes } from "@/data/appData";
-import { TImgbbImage, TImgbbResponse } from "@/types";
+import { TImgbbResponse } from "@/types";
 
 type TSendRequest<T> =
   | {

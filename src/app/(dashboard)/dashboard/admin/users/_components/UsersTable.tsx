@@ -4,7 +4,7 @@ import React, { ChangeEvent, ComponentPropsWithoutRef } from "react";
 import Image from "next/image";
 import { AuthUser } from "@/lib/authClient";
 import UserDemoImg from "@/components/ui/user/UserDemoImg";
-import { updateUserRoleAction } from "@/lib/user/userActions";
+import { updateUserRoleAction } from "@/lib/userActions";
 import toast from "react-hot-toast";
 import { useRouter } from "next/navigation";
 

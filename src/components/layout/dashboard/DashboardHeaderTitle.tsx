@@ -4,7 +4,6 @@ import {
   adminSidebarConfig,
   customerSidebarConfig,
   technicianSidebarConfig,
-  TSideLink,
 } from "@/data/dashboardSidebar";
 import authClient from "@/lib/authClient";
 import { usePathname } from "next/navigation";

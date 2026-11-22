@@ -12,10 +12,7 @@ import { categories, serviceModes } from "@/data/appData";
 import authClient from "@/lib/authClient";
 import Loading from "@/components/ui/common/Loading";
 import LoadingSpinner from "@/components/ui/common/LoadingSpinner";
-import {
-  storeServiceAction,
-  updateServiceAction,
-} from "@/lib/service/serviceActions";
+import { storeServiceAction, updateServiceAction } from "@/lib/serviceActions";
 import { TService } from "@/types";
 
 const MAX_IMAGE_SIZE = 5 * 1024 * 1024; // 5 MB

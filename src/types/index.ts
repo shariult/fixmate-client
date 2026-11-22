@@ -101,18 +101,18 @@ type TBookingStatus =
   | "rejected";
 type TBooking = {
   _id: string;
+  serviceId: string;
+  serviceDetails?: TService;
+  technicianId: string;
+  technicianDetails?: AuthUser;
+  customerId: string;
+  customerDetails?: AuthUser;
   price: number;
   finalAmount?: number;
   customerPhone: string;
   preferredDate: string;
   address: string;
   problemDescription: string;
-  customerId: string;
-  customerDetails?: AuthUser;
-  serviceId: string;
-  serviceDetails?: TService;
-  technicianId: string;
-  technicianDetails?: AuthUser;
   paymentId: string;
   paymentDate: string;
   status: TBookingStatus;
@@ -132,20 +132,20 @@ type TBookingInput = Omit<
 
 type TPayment = {
   _id?: string;
-  bookingId: string;
-  bookingDetails?: string;
-  customerId: string;
-  customerDetails?: AuthUser;
-  technicianId: string;
-  technicianDetails?: AuthUser;
   serviceId: string;
   serviceDetails?: TService;
+  bookingId: string;
+  bookingDetails?: string;
+  technicianId: string;
+  technicianDetails?: AuthUser;
+  customerId: string;
+  customerDetails?: AuthUser;
   amount: number;
   currency: string;
   transactionId: string;
   stripeSessionId: string;
   paymentStatus: string;
-  paidAt: string;
+  paidAt: "paid" | "unpaid";
 };
 
 export type {

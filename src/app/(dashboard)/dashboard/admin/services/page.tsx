@@ -1,6 +1,6 @@
 import React from "react";
 import AdminServicesTable from "./_components/AdminServicesTable";
-import { getServicesAdminAction } from "@/lib/service/serviceActions";
+import { getServicesAdminAction } from "@/lib/serviceActions";
 import Container from "@/components/ui/common/Container";
 import EmptyData from "@/components/ui/common/EmptyData";
 

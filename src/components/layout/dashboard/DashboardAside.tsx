@@ -1,6 +1,6 @@
 import React, { ComponentPropsWithoutRef } from "react";
 import Link from "next/link";
-import { PiHouseBold, PiSignOutBold, PiUserBold } from "react-icons/pi";
+import { PiHouseBold, PiUserBold } from "react-icons/pi";
 import CompanyLogo from "@/components/ui/common/CompanyLogo";
 import { TSidebar } from "@/data/dashboardSidebar";
 import DashboardAsideLink from "./DashboardAsideLink";

@@ -1,7 +1,7 @@
 import React from "react";
 import TechnicianRequestsTable from "./_components/TechnicianRequestsTable";
 import TechnicianRequestsFilter from "./_components/TechnicianRequestsFilter";
-import { getMyRequestsAction } from "@/lib/booking/bookingActions";
+import { getMyRequestsAction } from "@/lib/bookingActions";
 import Container from "@/components/ui/common/Container";
 import EmptyData from "@/components/ui/common/EmptyData";
 

@@ -13,7 +13,7 @@ import {
 } from "@/lib/utils";
 import authClient from "@/lib/authClient";
 import { PiDeviceMobileBold, PiWrenchBold } from "react-icons/pi";
-import { updateNewUserAction } from "@/lib/user/userActions";
+import { updateNewUserAction } from "@/lib/userActions";
 
 type UserFormProps = {
   type: "signin" | "signup";

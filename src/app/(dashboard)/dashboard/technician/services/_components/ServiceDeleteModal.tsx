@@ -3,7 +3,7 @@
 import React, { ComponentPropsWithoutRef, useEffect, useRef } from "react";
 import Container from "@/components/ui/common/Container";
 import { PiTrashBold } from "react-icons/pi";
-import { destroyServiceAction } from "@/lib/service/serviceActions";
+import { destroyServiceAction } from "@/lib/serviceActions";
 import toast from "react-hot-toast";
 import { useRouter } from "next/navigation";
 
