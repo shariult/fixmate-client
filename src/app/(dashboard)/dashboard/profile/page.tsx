@@ -1,7 +1,6 @@
 import React from "react";
 import ProfileForm from "@/components/layout/dashboard/ProfileForm";
 import { getCurrentUser } from "@/lib/authActions";
-import { AuthUser } from "@/lib/authClient";
 import EmptyData from "@/components/ui/common/EmptyData";
 import ProfileAside from "./_components/ProfileAside";
 

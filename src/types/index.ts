@@ -65,7 +65,7 @@ type TImgbbResponse = {
 
 type TCategorySlug = (typeof categories)[number]["slug"];
 type TServiceModeSlug = (typeof serviceModes)[number]["slug"];
-type TServiceStatus = "approved" | "pending" | "rejected";
+type TServiceStatus = "active" | "inactive";
 type TServiceApproval = "approved" | "pending" | "rejected";
 
 type TService = {

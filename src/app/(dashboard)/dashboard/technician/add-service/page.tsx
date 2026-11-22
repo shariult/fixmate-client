@@ -1,5 +1,4 @@
 import React from "react";
-import TechnicianAddService from "./_components/TechnicianAddService";
 import ServiceForm from "@/components/layout/service/ServiceForm";
 import AddServiceAside from "./_components/AddServiceAside";
 

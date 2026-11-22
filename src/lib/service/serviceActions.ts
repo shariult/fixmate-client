@@ -1,4 +1,4 @@
-import { TService, TServiceInput } from "@/types";
+import { TService, TServiceInput, TServiceStatus } from "@/types";
 import { sendRequest } from "../utils";
 import { getTokenFromClient } from "../authActionsClient";
 import { getTokenFromServer } from "../authActions";
@@ -62,7 +62,6 @@ async function destroyServiceAction(sId: string) {
 
 async function getMyServicesAction() {
   const token = await getTokenFromServer();
-  console.log(token);
   const res = await sendRequest<TService[]>(`${API_URL}/my-services`, {
     method: "GET",
     headers: {
@@ -75,7 +74,7 @@ async function getMyServicesAction() {
 
 async function changeServiceStatusAction(
   sId: string,
-  data: { status: "approved" | "rejected" },
+  data: { status: TServiceStatus },
 ) {
   const token = await getTokenFromClient();
   const res = await sendRequest(`${API_URL}/service/${sId}/status`, {

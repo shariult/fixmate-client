@@ -8,6 +8,7 @@ import { TService } from "@/types";
 import Image from "next/image";
 import UserDemoImg from "@/components/ui/user/UserDemoImg";
 import authClient from "@/lib/authClient";
+import BookingModalInfo from "./BookingModalInfo";
 
 type ServiceShowRightProps = {
   service: TService;
@@ -86,8 +87,15 @@ function ServiceShowRight(props: ServiceShowRightProps) {
           </div>
         </div>
       </aside>
-      {data?.user && (
+
+      {data?.user && data.user.role === "customer" && (
         <BookingModal modalRef={modalRef} service={service} user={data.user} />
+      )}
+      {data?.user && data.user.role !== "customer" && (
+        <BookingModalInfo
+          modalRef={modalRef}
+          message="Please sign up as a customer to book this service."
+        />
       )}
     </>
   );

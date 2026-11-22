@@ -32,7 +32,7 @@ function MyServicesTable(props: MyServicesTableProps) {
     sId: string,
   ) {
     const resData = await changeServiceStatusAction(sId, {
-      status: e.target.checked ? "approved" : "rejected",
+      status: e.target.checked ? "active" : "inactive",
     });
     if (!resData.isSuccess) {
       toast.error("Could not update service status!");
@@ -95,11 +95,11 @@ function MyServicesTable(props: MyServicesTableProps) {
                       type="checkbox"
                       className="toggle toggle-primary toggle-sm"
                       aria-label="Toggle availability"
-                      defaultChecked={item.status === "approved"}
+                      defaultChecked={item.status === "active"}
                       onChange={(e) => statusChangeHandler(e, item._id)}
                     />
                     <span className="text-muted">
-                      {item.status === "approved" ? "Available" : "Hidden"}
+                      {item.status === "active" ? "Available" : "Hidden"}
                     </span>
                   </label>
                 </td>
