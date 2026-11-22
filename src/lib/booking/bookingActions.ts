@@ -34,7 +34,7 @@ async function showBookingAction(bId: string) {
 
 async function updateBookingAction(
   bId: string,
-  data: { paymentId?: string | null },
+  data: { paymentId?: string | null; paymentDate?: Date | null },
 ) {
   const token = await getTokenFromServer();
 
@@ -108,6 +108,21 @@ async function updateRequestStatusAction(
   return res;
 }
 
+async function getUserPayments() {
+  const token = await getTokenFromServer();
+  const res = await sendRequest<TBooking[]>(
+    `${API_URL}/booking/payments?filter=paid`,
+    {
+      method: "GET",
+      headers: {
+        "Content-Type": "application/json",
+        authorization: `bearer ${token}`,
+      },
+    },
+  );
+  return res;
+}
+
 export {
   storeBookingAction,
   showBookingAction,
@@ -116,4 +131,5 @@ export {
   cancelMyBookingAction,
   getMyRequestsAction,
   updateRequestStatusAction,
+  getUserPayments,
 };

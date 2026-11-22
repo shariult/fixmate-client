@@ -113,6 +113,7 @@ type TBooking = {
   technicianId: string;
   technicianDetails?: AuthUser;
   paymentId: string;
+  paymentDate: string;
   status: TBookingStatus;
   createdAt: string;
   updatedAt: string;

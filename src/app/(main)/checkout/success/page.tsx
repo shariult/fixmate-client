@@ -25,7 +25,10 @@ async function verifyPayment(sessionId: string) {
       booking = res.isSuccess ? res.data : null;
 
       if (booking && !booking.paymentId) {
-        await updateBookingAction(bookingId, { paymentId: paymentIntentId });
+        await updateBookingAction(bookingId, {
+          paymentId: paymentIntentId,
+          paymentDate: new Date(),
+        });
       }
     }
 
