@@ -6,7 +6,7 @@ import { showBookingAction, updateBookingAction } from "@/lib/bookingActions";
 import { storePaymentAction } from "@/lib/paymentActions";
 // import { markBookingPaidAction } from "@/lib/booking/bookingActions"; // see TODO below
 
-const BOOKINGS_URL = "/dashboard/customer/my-bookings"; // adjust to your route
+const BOOKINGS_URL = "/dashboard/customer/bookings"; // adjust to your route
 const PAYMENTS_URL = "/dashboard/customer/payments"; // adjust to your route
 
 async function verifyPayment(sessionId: string) {

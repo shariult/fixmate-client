@@ -110,7 +110,7 @@ function BookingModal(props: BookingModalProps) {
     toast.success("Repair request sent!");
     resetForm();
     modalRef?.current?.close();
-    router.push("/dashboard/customer/my-bookings");
+    router.push("/dashboard/customer/bookings");
     router.refresh();
   }
 

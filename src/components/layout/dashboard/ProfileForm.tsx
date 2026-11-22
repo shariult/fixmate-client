@@ -85,7 +85,7 @@ function ProfileForm({ user, className, ...rest }: ProfileFormProps) {
         payload.phone === "" || isValidStr(payload.phone, 10)
           ? undefined
           : "Enter a valid phone number, e.g. 01XXXXXXXXX.",
-      image: fieldErrors.image, // set by handleImageChange
+      image: fieldErrors.image,
     };
 
     const hasValidationErrors = Object.values(validationErrors).some(Boolean);

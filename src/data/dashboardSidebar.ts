@@ -98,7 +98,7 @@ const customerSidebarConfig: TSidebar = {
     },
     {
       id: 2,
-      href: "/dashboard/customer/my-bookings",
+      href: "/dashboard/customer/bookings",
       label: "My Bookings",
       icon: PiClipboardTextBold,
     },
