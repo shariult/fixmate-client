@@ -1,13 +1,13 @@
 import { NextResponse } from "next/server";
 import { stripe } from "@/lib/stripe";
-import { showBookingAction } from "@/lib/bookingActions";
+import { getBookingAction } from "@/lib/bookingActions";
 
 export async function POST(req: Request) {
   try {
     const origin = req.headers.get("origin");
     const { bookingId } = await req.json();
 
-    const resData = await showBookingAction(bookingId);
+    const resData = await getBookingAction(bookingId);
     if (!resData.isSuccess || !resData.data) {
       return NextResponse.json({ error: "Booking not found" }, { status: 404 });
     }
@@ -16,7 +16,7 @@ export async function POST(req: Request) {
     if (!booking) {
       return NextResponse.json({ error: "Booking not found" }, { status: 404 });
     }
-    // TODO: make sure booking.customerId === logged-in user's id
+
     if (booking.status !== "completed") {
       return NextResponse.json(
         { error: "Service not completed yet" },

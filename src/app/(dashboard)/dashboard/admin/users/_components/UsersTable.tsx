@@ -2,14 +2,14 @@
 
 import React, { ChangeEvent, ComponentPropsWithoutRef } from "react";
 import Image from "next/image";
-import { AuthUser } from "@/lib/authClient";
-import UserDemoImg from "@/components/ui/user/UserDemoImg";
-import { updateUserRoleAction } from "@/lib/userActions";
-import toast from "react-hot-toast";
 import { useRouter } from "next/navigation";
+import toast from "react-hot-toast";
+import UserDemoImg from "@/components/ui/user/UserDemoImg";
+import { AuthUser } from "@/lib/authClient";
+import { updateUserRoleAction } from "@/lib/adminActions";
 
 type UsersTableProps = {
-  users: (AuthUser & { _id: string })[];
+  users: AuthUser[];
   usersCount: { customer: number; technician: number; admin: number };
   currentUser: AuthUser;
   className?: string;
@@ -25,7 +25,7 @@ function UsersTable(props: UsersTableProps) {
   ) {
     const resData = await updateUserRoleAction(uId, e.target.value);
     if (!resData.isSuccess) {
-      toast.error("Updating user role failed!");
+      toast.error(resData.error.message ?? "Updating user role failed!");
       return;
     }
 
@@ -74,7 +74,7 @@ function UsersTable(props: UsersTableProps) {
                 <select
                   className="select select-sm w-36"
                   defaultValue={item.role}
-                  onChange={(e) => changeUserRoleHandler(e, item._id)}
+                  onChange={(e) => changeUserRoleHandler(e, item.id)}
                   disabled={item.email === currentUser.email}
                 >
                   <option value="customer">Customer</option>

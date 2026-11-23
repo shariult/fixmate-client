@@ -1,8 +1,7 @@
 "use client";
 
 import React, { ComponentPropsWithoutRef, useState } from "react";
-import Container from "@/components/ui/common/Container";
-import { PiCheckBold, PiCreditCardBold } from "react-icons/pi";
+import { PiCheckBold } from "react-icons/pi";
 import { TBooking } from "@/types";
 import { getBookingStatusFromSlug, getCategoryFromSlug } from "@/lib/utils";
 import CustomerCancelBookingModal from "./CustomerCancelBookingModal";
@@ -85,7 +84,7 @@ function CustomerBookingTable(props: CustomerBookingTableProps) {
                 <td>{item.technicianDetails?.name}</td>
                 <td className="whitespace-nowrap">{item.preferredDate}</td>
                 <td className="whitespace-nowrap">
-                  <span className="font-medium">${item.price}</span>
+                  <span className="font-medium">${item.basePrice}</span>
                   <span className="block text-xs text-muted">Price to Pay</span>
                 </td>
                 <td>
@@ -134,7 +133,7 @@ function CustomerBookingTable(props: CustomerBookingTableProps) {
                   )}
 
                   {bookingStatus.slug !== "completed" &&
-                    bookingStatus.slug !== "requested" && <p>no action</p>}
+                    bookingStatus.slug !== "requested" && <p>-</p>}
                 </td>
               </tr>
             );

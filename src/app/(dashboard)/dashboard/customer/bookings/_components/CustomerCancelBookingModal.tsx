@@ -1,5 +1,5 @@
 "use client";
-import { cancelMyBookingAction } from "@/lib/bookingActions";
+import { cancelBookingAction } from "@/lib/bookingActions";
 import { TBooking } from "@/types";
 import { useRouter } from "next/navigation";
 import React, { ComponentPropsWithoutRef, useEffect, useRef } from "react";
@@ -23,7 +23,7 @@ function CustomerCancelBookingModal(props: CustomerCancelBookingModalProps) {
   }, []);
 
   async function cancelHandler() {
-    const res = await cancelMyBookingAction(bId);
+    const res = await cancelBookingAction(bId);
     if (!res.isSuccess) {
       toast.error("Could not cancel booking!");
       return;

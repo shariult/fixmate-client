@@ -1,12 +1,11 @@
-import Container from "@/components/ui/common/Container";
-import EmptyData from "@/components/ui/common/EmptyData";
-import { getUserPayments } from "@/lib/paymentActions";
-import { formatDate } from "@/lib/utils";
 import React from "react";
 import { PiCheckBold, PiCreditCardBold } from "react-icons/pi";
+import Container from "@/components/ui/common/Container";
+import EmptyData from "@/components/ui/common/EmptyData";
+import { listCustomerPaymentsAction } from "@/lib/paymentActions";
 
 async function CustomerPaymentsPage() {
-  const resData = await getUserPayments();
+  const resData = await listCustomerPaymentsAction();
   if (!resData.isSuccess) {
     return (
       <Container>
@@ -92,7 +91,7 @@ async function CustomerPaymentsPage() {
       </div>
 
       {/* <!-- EMPTY STATE: render when there are no payments --> */}
-      {payments.length === 0 && <EmptyData message="No payments made!" />}
+      {payments.length === 0 && <EmptyData message="No payments made yet!" />}
     </main>
   );
 }

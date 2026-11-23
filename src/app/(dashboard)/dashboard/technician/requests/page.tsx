@@ -1,12 +1,12 @@
 import React from "react";
 import TechnicianRequestsTable from "./_components/TechnicianRequestsTable";
 import TechnicianRequestsFilter from "./_components/TechnicianRequestsFilter";
-import { getMyRequestsAction } from "@/lib/bookingActions";
+import { listTechnicianBookingsAction } from "@/lib/bookingActions";
 import Container from "@/components/ui/common/Container";
 import EmptyData from "@/components/ui/common/EmptyData";
 
 async function TechnicianRequestsPage() {
-  const resData = await getMyRequestsAction();
+  const resData = await listTechnicianBookingsAction();
   if (!resData.isSuccess) {
     return (
       <Container>
@@ -26,7 +26,6 @@ async function TechnicianRequestsPage() {
         </p>
       </div>
 
-      {/* <!-- Status filter: <a href="?status=requested"> and filter on the server (technicianEmail + status) --> */}
       <TechnicianRequestsFilter />
 
       <div className="mt-4 overflow-x-auto rounded-2xl border border-base-300 bg-base-50">

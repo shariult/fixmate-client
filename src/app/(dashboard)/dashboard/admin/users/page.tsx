@@ -1,12 +1,12 @@
 import Container from "@/components/ui/common/Container";
 import EmptyData from "@/components/ui/common/EmptyData";
 import { getCurrentUser } from "@/lib/authActions";
-import { getUsersAction } from "@/lib/userActions";
 import UsersTable from "./_components/UsersTable";
+import { listUsersAction } from "@/lib/adminActions";
 
-async function AdminUsers() {
+async function AdminUsersList() {
   const userData = await getCurrentUser();
-  const resData = await getUsersAction();
+  const resData = await listUsersAction();
   if (!resData.isSuccess) {
     return (
       <Container>
@@ -15,7 +15,7 @@ async function AdminUsers() {
     );
   }
 
-  const currentUser = userData?.user;
+  const cUser = userData?.user;
   const users = resData.data;
   const usersCount = users.reduce(
     (acc, next) => {
@@ -53,16 +53,15 @@ async function AdminUsers() {
         </span>
       </div>
 
-      {/* <!-- Desktop / tablet: table --> */}
       <div className="mt-6 hidden overflow-x-auto rounded-2xl border border-base-300 bg-base-50 md:block">
         <UsersTable
           users={users}
           usersCount={usersCount}
-          currentUser={currentUser!}
+          currentUser={cUser!}
         />
       </div>
     </main>
   );
 }
 
-export default AdminUsers;
+export default AdminUsersList;

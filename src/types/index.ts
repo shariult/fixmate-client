@@ -112,14 +112,14 @@ type TBooking = {
   technicianDetails?: AuthUser;
   customerId: string;
   customerDetails?: AuthUser;
-  price: number;
+  basePrice: number;
   finalAmount?: number;
   customerPhone: string;
   preferredDate: string;
   address: string;
   problemDescription: string;
-  paymentId: string;
-  paymentDate: string;
+  paymentId?: string;
+  paymentDate?: string;
   status: TBookingStatus;
   createdAt: string;
   updatedAt: string;
@@ -149,8 +149,8 @@ type TPayment = {
   currency: string;
   transactionId: string;
   stripeSessionId: string;
-  paymentStatus: string;
-  paidAt: "paid" | "unpaid";
+  paymentStatus: "paid" | "unpaid";
+  paidAt: string;
 };
 
 export type {

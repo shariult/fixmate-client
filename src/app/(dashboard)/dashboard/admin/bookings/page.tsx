@@ -1,12 +1,13 @@
-import EmptyData from "@/components/ui/common/EmptyData";
-import { getAllBookingsAdmin } from "@/lib/bookingActions";
-import { getBookingStatusFromSlug, getCategoryFromSlug } from "@/lib/utils";
-import Link from "next/link";
 import React from "react";
-import { PiCheckBold, PiMagnifyingGlassBold } from "react-icons/pi";
+import Link from "next/link";
+import { PiMagnifyingGlassBold } from "react-icons/pi";
+import { getBookingStatusFromSlug, getCategoryFromSlug } from "@/lib/utils";
+import EmptyData from "@/components/ui/common/EmptyData";
+import { listBookingsAdminAction } from "@/lib/adminActions";
 
 async function AdminBookingsPage() {
-  const resData = await getAllBookingsAdmin();
+  const resData = await listBookingsAdminAction();
+
   if (!resData.isSuccess) {
     return <EmptyData message="Something went wrong!" />;
   }
@@ -74,7 +75,7 @@ async function AdminBookingsPage() {
                 <td>{item.technicianDetails?.name}</td>
                 <td className="whitespace-nowrap">{item.preferredDate}</td>
                 <td className="whitespace-nowrap">
-                  <span className="font-medium">${item.price}</span>
+                  <span className="font-medium">${item.basePrice}</span>
                   <span className="block text-xs text-muted">Base price</span>
                 </td>
                 <td>

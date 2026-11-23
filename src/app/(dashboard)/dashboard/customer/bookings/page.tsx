@@ -1,18 +1,18 @@
 import React from "react";
 import CustomerBookingTable from "./_components/CustomerBookingTable";
 import CustomerCancelBookingModal from "./_components/CustomerCancelBookingModal";
-import { getMyBookingsAction } from "@/lib/bookingActions";
+import { listCustomerBookingsAction } from "@/lib/bookingActions";
 import Container from "@/components/ui/common/Container";
 import EmptyData from "@/components/ui/common/EmptyData";
 import { PiMagnifyingGlass, PiMagnifyingGlassBold } from "react-icons/pi";
 import Link from "next/link";
 
 async function CustomerMyBookingsPage() {
-  const resData = await getMyBookingsAction();
+  const resData = await listCustomerBookingsAction();
   if (!resData.isSuccess) {
     return (
       <Container>
-        <EmptyData message="Something went wrong!" />
+        <EmptyData message="Something went wrong!" isError />
       </Container>
     );
   }

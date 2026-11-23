@@ -1,10 +1,11 @@
 import Container from "@/components/ui/common/Container";
 import EmptyData from "@/components/ui/common/EmptyData";
-import { getPaymentIndexAction } from "@/lib/paymentActions";
+import { listPaymentsAdminAction } from "@/lib/adminActions";
 import { PiCheckBold, PiCreditCardBold } from "react-icons/pi";
 
 async function AdminTransactions() {
-  const resData = await getPaymentIndexAction();
+  const resData = await listPaymentsAdminAction();
+
   if (!resData.isSuccess) {
     return (
       <Container>

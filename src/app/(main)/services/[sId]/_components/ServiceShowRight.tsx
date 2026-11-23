@@ -2,13 +2,13 @@
 
 import React, { ComponentPropsWithoutRef } from "react";
 import { useRef } from "react";
-import BookingModal from "./BookingModal";
-import { PiMapPinBold, PiShieldCheckBold } from "react-icons/pi";
-import { TService } from "@/types";
 import Image from "next/image";
+import { PiMapPinBold, PiShieldCheckBold } from "react-icons/pi";
 import UserDemoImg from "@/components/ui/user/UserDemoImg";
 import authClient from "@/lib/authClient";
+import BookingModal from "./BookingModal";
 import BookingModalInfo from "./BookingModalInfo";
+import { TService } from "@/types";
 
 type ServiceShowRightProps = {
   service: TService;

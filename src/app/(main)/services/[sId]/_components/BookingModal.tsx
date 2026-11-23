@@ -9,7 +9,7 @@ import { type AuthUser } from "@/lib/authClient";
 import LoadingSpinner from "@/components/ui/common/LoadingSpinner";
 import { TService } from "@/types";
 import { PiXBold } from "react-icons/pi";
-import { storeBookingAction } from "@/lib/bookingActions";
+import { createBookingAction } from "@/lib/bookingActions";
 
 type BookingModalProps = {
   user: AuthUser;
@@ -70,7 +70,7 @@ function BookingModal(props: BookingModalProps) {
       address: formValues.address.trim(),
       problemDescription: formValues.problemDescription.trim(),
       serviceId: service._id,
-      price: service.basePrice,
+      basePrice: service.basePrice,
     };
 
     const validationErrors: BookingFormFieldErrors = {
@@ -99,7 +99,7 @@ function BookingModal(props: BookingModalProps) {
       return;
     }
 
-    const resData = await storeBookingAction(payload);
+    const resData = await createBookingAction(payload);
     if (!resData.isSuccess) {
       setIsLoading(false);
       toast.error(resData.error.message || "Could not book Service!");

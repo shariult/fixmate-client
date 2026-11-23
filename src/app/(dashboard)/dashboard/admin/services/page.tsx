@@ -1,11 +1,12 @@
 import React from "react";
 import AdminServicesTable from "./_components/AdminServicesTable";
-import { getServicesAdminAction } from "@/lib/serviceActions";
 import Container from "@/components/ui/common/Container";
 import EmptyData from "@/components/ui/common/EmptyData";
+import { listServicesAdminAction } from "@/lib/adminActions";
 
 async function AdminServices() {
-  const resData = await getServicesAdminAction();
+  const resData = await listServicesAdminAction();
+
   if (!resData.isSuccess) {
     return (
       <Container>

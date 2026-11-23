@@ -10,21 +10,19 @@ import React, {
 import Container from "@/components/ui/common/Container";
 import { useRouter } from "next/navigation";
 import { TBooking, TBookingStatus } from "@/types";
-import { updateRequestStatusAction } from "@/lib/bookingActions";
+import { updateBookingStatusAction } from "@/lib/bookingActions";
 import toast from "react-hot-toast";
 
-type TechnicianMarkCompletedModalProps = {
+type BookingFinalPriceModalProps = {
   booking: TBooking;
   onClose: () => void;
   className?: string;
 } & ComponentPropsWithoutRef<"dialog">;
 
-function TechnicianMarkCompletedModal(
-  props: TechnicianMarkCompletedModalProps,
-) {
+function BookingFinalPriceModal(props: BookingFinalPriceModalProps) {
   const { booking, onClose, className, ...rest } = props;
   const dialogRef = useRef<HTMLDialogElement>(null);
-  const [newPrice, setNewPrice] = useState(booking.price);
+  const [newPrice, setNewPrice] = useState(booking.basePrice);
   const router = useRouter();
 
   function inputChangeHandler(e: ChangeEvent<HTMLInputElement>) {
@@ -37,7 +35,7 @@ function TechnicianMarkCompletedModal(
   }, []);
 
   async function changeRequestStatusHandler() {
-    const resData = await updateRequestStatusAction(booking._id, {
+    const resData = await updateBookingStatusAction(booking._id, {
       status: "completed",
       finalAmount: newPrice,
     });
@@ -105,4 +103,4 @@ function TechnicianMarkCompletedModal(
   );
 }
 
-export default TechnicianMarkCompletedModal;
+export default BookingFinalPriceModal;

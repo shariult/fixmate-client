@@ -5,10 +5,10 @@ import { getTokenFromServer } from "./authActions";
 
 const API_URL = process.env.NEXT_PUBLIC_API_URL as string;
 
-async function storeBookingAction(data: TBookingInput) {
+async function createBookingAction(data: TBookingInput) {
   const token = await getTokenFromClient();
 
-  const res = await sendRequest(`${API_URL}/booking/`, {
+  const res = await sendRequest<TBooking>(`${API_URL}/bookings/`, {
     method: "POST",
     headers: {
       "Content-Type": "application/json",
@@ -20,10 +20,68 @@ async function storeBookingAction(data: TBookingInput) {
   return res;
 }
 
-async function showBookingAction(bId: string) {
+async function listCustomerBookingsAction() {
+  const token = await getTokenFromServer();
+  const res = await sendRequest<TBooking[]>(`${API_URL}/bookings/my`, {
+    method: "GET",
+    headers: {
+      "Content-Type": "application/json",
+      authorization: `bearer ${token}`,
+    },
+  });
+  return res;
+}
+
+async function listTechnicianBookingsAction() {
+  const token = await getTokenFromServer();
+  const res = await sendRequest<TBooking[]>(`${API_URL}/bookings/technician`, {
+    method: "GET",
+    headers: {
+      "Content-Type": "application/json",
+      authorization: `bearer ${token}`,
+    },
+  });
+  return res;
+}
+
+async function cancelBookingAction(bId: string) {
+  const token = await getTokenFromClient();
+  const res = await sendRequest<TBooking[]>(
+    `${API_URL}/bookings/${bId}/cancel`,
+    {
+      method: "PUT",
+      headers: {
+        "Content-Type": "application/json",
+        authorization: `bearer ${token}`,
+      },
+    },
+  );
+  return res;
+}
+
+async function updateBookingStatusAction(
+  bId: string,
+  data: { status: TBookingStatus; finalAmount?: number },
+) {
+  const token = await getTokenFromClient();
+  const res = await sendRequest<TBooking[]>(
+    `${API_URL}/bookings/${bId}/status`,
+    {
+      method: "PUT",
+      headers: {
+        "Content-Type": "application/json",
+        authorization: `bearer ${token}`,
+      },
+      body: JSON.stringify(data),
+    },
+  );
+  return res;
+}
+
+async function getBookingAction(bId: string) {
   const token = await getTokenFromServer();
 
-  const res = await sendRequest<TBooking>(`${API_URL}/booking/${bId}`, {
+  const res = await sendRequest<TBooking>(`${API_URL}/bookings/${bId}`, {
     method: "GET",
     headers: {
       "Content-Type": "application/json",
@@ -39,7 +97,7 @@ async function updateBookingAction(
 ) {
   const token = await getTokenFromServer();
 
-  const res = await sendRequest(`${API_URL}/booking/${bId}`, {
+  const res = await sendRequest(`${API_URL}/bookings/${bId}`, {
     method: "PUT",
     headers: {
       "Content-Type": "application/json",
@@ -51,83 +109,12 @@ async function updateBookingAction(
   return res;
 }
 
-async function getMyBookingsAction() {
-  const token = await getTokenFromServer();
-  const res = await sendRequest<TBooking[]>(`${API_URL}/my-bookings`, {
-    method: "GET",
-    headers: {
-      "Content-Type": "application/json",
-      authorization: `bearer ${token}`,
-    },
-  });
-  return res;
-}
-
-async function cancelMyBookingAction(bId: string) {
-  const token = await getTokenFromClient();
-  const res = await sendRequest<TBooking[]>(
-    `${API_URL}/booking/${bId}/cancel`,
-    {
-      method: "GET",
-      headers: {
-        "Content-Type": "application/json",
-        authorization: `bearer ${token}`,
-      },
-    },
-  );
-  return res;
-}
-
-async function getMyRequestsAction() {
-  const token = await getTokenFromServer();
-  const res = await sendRequest<TBooking[]>(`${API_URL}/my-requests`, {
-    method: "GET",
-    headers: {
-      "Content-Type": "application/json",
-      authorization: `bearer ${token}`,
-    },
-  });
-  return res;
-}
-
-async function updateRequestStatusAction(
-  bId: string,
-  data: { status: TBookingStatus; finalAmount?: number },
-) {
-  const token = await getTokenFromClient();
-  const res = await sendRequest<TBooking[]>(
-    `${API_URL}/booking/${bId}/status`,
-    {
-      method: "PUT",
-      headers: {
-        "Content-Type": "application/json",
-        authorization: `bearer ${token}`,
-      },
-      body: JSON.stringify(data),
-    },
-  );
-  return res;
-}
-
-async function getAllBookingsAdmin() {
-  const token = await getTokenFromServer();
-  const res = await sendRequest<TBooking[]>(`${API_URL}/booking/admin`, {
-    method: "GET",
-    headers: {
-      "Content-Type": "application/json",
-      authorization: `bearer ${token}`,
-    },
-  });
-  return res;
-}
-
 export {
-  storeBookingAction,
-  showBookingAction,
+  createBookingAction,
+  listCustomerBookingsAction,
+  cancelBookingAction,
+  listTechnicianBookingsAction,
+  updateBookingStatusAction,
+  getBookingAction,
   updateBookingAction,
-  getMyBookingsAction,
-  cancelMyBookingAction,
-  getMyRequestsAction,
-  updateRequestStatusAction,
-  getAllBookingsAdmin,
 };

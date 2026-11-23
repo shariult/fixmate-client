@@ -95,46 +95,13 @@ async function updateServiceAvailabilityAction(
   return res;
 }
 
-async function getServicesAdminAction() {
-  const token = await getTokenFromServer();
-
-  const res = await sendRequest<TService[]>(`${API_URL}/service/admin`, {
-    method: "GET",
-    headers: {
-      "Content-Type": "application/json",
-      authorization: `bearer ${token}`,
-    },
-  });
-  return res;
-}
-
-async function updateServiceApprovalAction(
-  sId: string,
-  data: TServiceApproval,
-) {
-  const token = await getTokenFromClient();
-
-  const res = await sendRequest(`${API_URL}/service/${sId}`, {
-    method: "PUT",
-    headers: {
-      "Content-Type": "application/json",
-      authorization: `bearer ${token}`,
-    },
-    body: JSON.stringify({ approval: data }),
-  });
-
-  return res;
-}
-
 export {
   listServicesAction,
   listFeaturedServicesAction,
   listTechnicianServicesAction,
   getServiceAction,
   createServiceAction,
-  getServicesAdminAction,
   updateServiceAction,
-  destroyServiceAction,
   updateServiceAvailabilityAction,
-  updateServiceApprovalAction,
+  destroyServiceAction,
 };

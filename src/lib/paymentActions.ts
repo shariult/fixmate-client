@@ -4,22 +4,9 @@ import { getTokenFromServer } from "./authActions";
 
 const API_URL = process.env.NEXT_PUBLIC_API_URL as string;
 
-async function getPaymentIndexAction() {
+async function createPaymentAction(data: TPayment) {
   const token = await getTokenFromServer();
-
-  const res = await sendRequest<TPayment[]>(`${API_URL}/payment/`, {
-    method: "GET",
-    headers: {
-      "Content-Type": "application/json",
-      authorization: `bearer ${token}`,
-    },
-  });
-  return res;
-}
-
-async function storePaymentAction(data: TPayment) {
-  const token = await getTokenFromServer();
-  const resData = await sendRequest<TPayment>(`${API_URL}/payment`, {
+  const resData = await sendRequest<TPayment>(`${API_URL}/payments`, {
     method: "POST",
     headers: {
       "Content-Type": "application/json",
@@ -30,10 +17,10 @@ async function storePaymentAction(data: TPayment) {
   return resData;
 }
 
-async function getUserPayments() {
+async function listCustomerPaymentsAction() {
   const token = await getTokenFromServer();
 
-  const res = await sendRequest<TPayment[]>(`${API_URL}/payment/user`, {
+  const res = await sendRequest<TPayment[]>(`${API_URL}/payments/customer`, {
     method: "GET",
     headers: {
       "Content-Type": "application/json",
@@ -42,4 +29,4 @@ async function getUserPayments() {
   });
   return res;
 }
-export { getPaymentIndexAction, storePaymentAction, getUserPayments };
+export { createPaymentAction, listCustomerPaymentsAction };

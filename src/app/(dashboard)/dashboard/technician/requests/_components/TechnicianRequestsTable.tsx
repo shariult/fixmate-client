@@ -4,10 +4,10 @@ import React, { ComponentPropsWithoutRef, useState } from "react";
 import Container from "@/components/ui/common/Container";
 import { TBooking, TBookingStatus } from "@/types";
 import { getBookingStatusFromSlug } from "@/lib/utils";
-import { updateRequestStatusAction } from "@/lib/bookingActions";
+import { updateBookingStatusAction } from "@/lib/bookingActions";
 import toast from "react-hot-toast";
 import { useRouter } from "next/navigation";
-import TechnicianMarkCompletedModal from "./TechnicianMarkCompletedModal";
+import BookingFinalPriceModal from "./BookingFinalPriceModal";
 
 type TechnicianRequestsTableProps = {
   requests: TBooking[];
@@ -23,7 +23,7 @@ function TechnicianRequestsTable(props: TechnicianRequestsTableProps) {
     bId: string,
     data: { status: TBookingStatus },
   ) {
-    const resData = await updateRequestStatusAction(bId, data);
+    const resData = await updateBookingStatusAction(bId, data);
     if (!resData.isSuccess) {
       toast.error("Could not update request!");
       return;
@@ -34,7 +34,7 @@ function TechnicianRequestsTable(props: TechnicianRequestsTableProps) {
 
   return (
     <>
-      <table className="table min-w-[64rem]" {...rest}>
+      <table className="table min-w-5xl" {...rest}>
         <thead>
           <tr className="text-muted">
             <th>Customer</th>
@@ -68,9 +68,7 @@ function TechnicianRequestsTable(props: TechnicianRequestsTableProps) {
                   </p>
                 </td>
                 <td className="whitespace-nowrap">{item.preferredDate}</td>
-                <td className="max-w-[12rem] text-sm text-muted">
-                  {item.address}
-                </td>
+                <td className="max-w-48 text-sm text-muted">{item.address}</td>
                 <td className="max-w-[16rem]">
                   <p
                     className="line-clamp-2 text-sm text-muted"
@@ -165,7 +163,7 @@ function TechnicianRequestsTable(props: TechnicianRequestsTableProps) {
       </table>
 
       {bookingToComp && (
-        <TechnicianMarkCompletedModal
+        <BookingFinalPriceModal
           booking={bookingToComp}
           onClose={() => setBookingToComp(null)}
         />

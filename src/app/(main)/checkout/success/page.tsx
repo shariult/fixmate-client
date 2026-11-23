@@ -2,12 +2,11 @@ import Link from "next/link";
 import React from "react";
 import { PiCheckBold, PiWarningBold } from "react-icons/pi";
 import { stripe } from "@/lib/stripe";
-import { showBookingAction, updateBookingAction } from "@/lib/bookingActions";
-import { storePaymentAction } from "@/lib/paymentActions";
-// import { markBookingPaidAction } from "@/lib/booking/bookingActions"; // see TODO below
+import { getBookingAction, updateBookingAction } from "@/lib/bookingActions";
+import { createPaymentAction } from "@/lib/paymentActions";
 
-const BOOKINGS_URL = "/dashboard/customer/bookings"; // adjust to your route
-const PAYMENTS_URL = "/dashboard/customer/payments"; // adjust to your route
+const BOOKINGS_URL = "/dashboard/customer/bookings";
+const PAYMENTS_URL = "/dashboard/customer/payments";
 
 async function verifyPayment(sessionId: string) {
   try {
@@ -20,7 +19,7 @@ async function verifyPayment(sessionId: string) {
     let booking = null;
     let paymentData = null;
     if (bookingId) {
-      const res = await showBookingAction(bookingId);
+      const res = await getBookingAction(bookingId);
       booking = res.isSuccess ? res.data : null;
 
       paymentData = {
@@ -44,7 +43,7 @@ async function verifyPayment(sessionId: string) {
           paymentDate: new Date(),
         });
 
-        await storePaymentAction({
+        await createPaymentAction({
           bookingId: bookingId,
           customerId: booking.customerId,
           technicianId: booking.technicianId,

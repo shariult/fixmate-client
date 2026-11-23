@@ -1,12 +1,8 @@
 "use client";
 import React, { ComponentPropsWithoutRef } from "react";
-import Container from "@/components/ui/common/Container";
-import { TService, TServiceApproval, TServiceInput } from "@/types";
+import { TService, TServiceApproval } from "@/types";
 import { getCategoryFromSlug } from "@/lib/utils";
-import {
-  updateServiceAction,
-  updateServiceApprovalAction,
-} from "@/lib/serviceActions";
+import { updateServiceApprovalAction } from "@/lib/adminActions";
 import toast from "react-hot-toast";
 import { useRouter } from "next/navigation";
 
@@ -30,7 +26,10 @@ function AdminServicesTable(props: AdminServicesTableProps) {
     router.refresh();
   }
   return (
-    <table className="table min-w-[56rem]">
+    <table
+      className={`table min-w-4xl ${className ? className : ""}`}
+      {...rest}
+    >
       <thead>
         <tr className="text-muted">
           <th>Service</th>
@@ -63,18 +62,18 @@ function AdminServicesTable(props: AdminServicesTableProps) {
               <td>{item.userDetails?.name}</td>
               <td className="font-medium">${item.basePrice}</td>
               <td className="text-sm text-muted">
-                {item.status === "active" ? "Available" : "hidden"}
+                {item.isAvailable ? "Available" : "hidden"}
               </td>
               <td>
                 <span
-                  className={`badge badge-soft ${item.approval === "approved" ? "badge-success" : item.approval === "pending" ? "badge-warning" : "badge-error"}`}
+                  className={`badge badge-soft ${item.approvalStatus === "approved" ? "badge-success" : item.approvalStatus === "pending" ? "badge-warning" : "badge-error"}`}
                 >
-                  {item.approval}
+                  {item.approvalStatus}
                 </span>
               </td>
               <td>
                 <div className="flex gap-2 justify-end">
-                  {item.approval !== "approved" && (
+                  {item.approvalStatus !== "approved" && (
                     <button
                       type="button"
                       className="btn btn-sm btn-primary"
@@ -83,7 +82,7 @@ function AdminServicesTable(props: AdminServicesTableProps) {
                       Approve
                     </button>
                   )}
-                  {item.approval !== "rejected" && (
+                  {item.approvalStatus !== "rejected" && (
                     <button
                       type="button"
                       className="btn btn-sm btn-outline btn-error"
