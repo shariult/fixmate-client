@@ -43,7 +43,7 @@ function Footer() {
             <FooterItem href="/">Home</FooterItem>
             <FooterItem href="/services">Services</FooterItem>
             <FooterItem href="/about">About</FooterItem>
-            <FooterItem href="/sign-up">Become a Technician</FooterItem>
+            <FooterItem href="/signup">Become a Technician</FooterItem>
           </ul>
         </div>
 

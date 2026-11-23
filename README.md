@@ -8,7 +8,7 @@ Admins approve service listings, manage users, monitor all repair jobs, and trac
 
 ## Live Site & Repositories
 
-- **Live Site:** [your-live-site-url](https://fixmate-shariul.vercel.app)
+- **Live Site:** [Fixmate by Shariul](https://fixmate-shariul.vercel.app)
 - **Client Repository:** [shariult/fixmate-client](https://github.com/shariult/fixmate-client)
 - **Server Repository:** [shariult/fixmate-server](https://github.com/shariult/fixmate-server)
 

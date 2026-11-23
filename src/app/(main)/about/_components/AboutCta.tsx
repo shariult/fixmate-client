@@ -24,7 +24,7 @@ function AboutCta(props: AboutCtaProps) {
         <Link href="/services" className="btn btn-primary btn-lg">
           Browse services
         </Link>
-        <Link href="/sign-up" className="btn btn-outline btn-lg">
+        <Link href="/signup" className="btn btn-outline btn-lg">
           Create account
         </Link>
       </div>
