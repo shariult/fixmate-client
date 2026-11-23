@@ -1,22 +1,18 @@
-"use server";
-
+import "server-only";
+import { cache } from "react";
 import { headers } from "next/headers";
 import auth from "@/lib/auth";
-import { cache } from "react";
 
-const getCurrentUser = cache(async () => {
+export const getCurrentUser = cache(async () => {
   const session = await auth.api.getSession({
     headers: await headers(),
   });
-  return session; // { user, session } or null
+  return session;
 });
 
-async function getTokenFromServer() {
+export async function getTokenFromServer() {
   const jwtToken = await auth.api.getToken({
     headers: await headers(),
   });
-  const token = jwtToken?.token;
-  return token;
+  return jwtToken?.token;
 }
-
-export { getCurrentUser, getTokenFromServer };

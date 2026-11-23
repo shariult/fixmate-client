@@ -208,6 +208,9 @@ importers:
       react-icons:
         specifier: ^5.7.0
         version: 5.7.0(react@19.3.0)
+      server-only:
+        specifier: ^0.0.1
+        version: 0.0.1
       slugify:
         specifier: ^1.6.9
         version: 1.6.9
@@ -2264,6 +2267,9 @@ packages:
     resolution: {integrity: sha512-9lpSSU4Mly3mrtruwLs1eLK6+gzbzqeBFwRNjIjE+9LuDpWdYctrQlQ3ej1Ilgi7gknpsTRnPoLP8DpCHqHIJw==}
     engines: {node: '>=10'}
     hasBin: true
+
+  server-only@0.0.1:
+    resolution: {integrity: sha512-qepMx2JxAa5jjfzxG79yPPq+8BuFToHd1hm7kI+Z4zAq1ftQiP7HcxMhDDItrbtwVeLg/cY2JnKnrcFkmiswNA==}
 
   set-cookie-parser@3.2.3:
     resolution: {integrity: sha512-bDO7NdAkLprNt3BNl3LAh0oVnOS5+WspzxOxiboo7vRIyTqj2pvFmNWYEFynSGQgpJ+7yG/9nc/aSG20UDBUpg==}
@@ -4514,6 +4520,8 @@ snapshots:
   semver@6.3.2: {}
 
   semver@7.8.6: {}
+
+  server-only@0.0.1: {}
 
   set-cookie-parser@3.2.3: {}
 
