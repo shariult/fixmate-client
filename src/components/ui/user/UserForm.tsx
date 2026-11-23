@@ -1,8 +1,8 @@
 "use client";
 
-import React, { ComponentPropsWithoutRef, useState } from "react";
+import React, { ComponentPropsWithoutRef, useEffect, useState } from "react";
 import Link from "next/link";
-import { useRouter } from "next/navigation";
+import { useRouter, useSearchParams } from "next/navigation";
 import toast from "react-hot-toast";
 import FormGroup from "@/components/ui/form/FormGroup";
 import {
@@ -53,6 +53,15 @@ function UserForm({ type, className, ...rest }: UserFormProps) {
   const [formValues, setFormValues] = useState(INITIAL_FORM_VALUES);
   const [isLoading, setIsLoading] = useState(false);
   const [fieldErrors, setFieldErrors] = useState<UserFormFieldErrors>({});
+
+  const qString = useSearchParams();
+  const toastType = qString.get("toast");
+  useEffect(() => {
+    if (toastType === "auth") {
+      toast.error("Please sign in first!");
+      router.replace("/signin");
+    }
+  }, [toastType, router]);
 
   function handleInputChange(
     e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>,

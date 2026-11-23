@@ -26,7 +26,7 @@ function ServiceShowRight(props: ServiceShowRightProps) {
     if (data) {
       modalRef.current?.showModal();
     } else {
-      router.push("/signin");
+      router.push("/signin?toast=auth");
     }
   }
 

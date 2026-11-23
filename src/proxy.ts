@@ -6,7 +6,7 @@ export async function proxy(req: NextRequest) {
   const session = await getCurrentUser();
 
   if (!session) {
-    return NextResponse.redirect(new URL("/signin", req.url));
+    return NextResponse.redirect(new URL("/signin?toast=auth", req.url));
   }
 
   return NextResponse.next();
