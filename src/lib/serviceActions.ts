@@ -11,7 +11,9 @@ import { getTokenFromServer } from "./authActions";
 const API_URL = process.env.NEXT_PUBLIC_API_URL as string;
 
 async function listFeaturedServicesAction() {
-  const res = await sendRequest<TService[]>(`${API_URL}/services/featured`);
+  const res = await sendRequest<TService[]>(`${API_URL}/services/featured`, {
+    cache: "no-store",
+  });
   return res;
 }
 

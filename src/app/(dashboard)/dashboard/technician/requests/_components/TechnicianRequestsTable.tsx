@@ -153,7 +153,7 @@ function TechnicianRequestsTable(props: TechnicianRequestsTableProps) {
                         <p className="text-xl text-muted">
                           ${item.finalAmount}
                         </p>
-                        final
+                        final price
                       </div>
                       <p
                         className={`badge ${item.paymentStatus === "paid" ? "badge-success" : "badge-info"} badge-outline ml-auto`}
