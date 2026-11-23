@@ -12,7 +12,6 @@ import {
 } from "react-icons/pi";
 
 async function AdminIndexPage() {
-  const userData = await getCurrentUser();
   const resData = await getAdminDashAction();
 
   if (!resData.isSuccess) {
@@ -22,8 +21,6 @@ async function AdminIndexPage() {
       </Container>
     );
   }
-
-  const cUser = userData?.user;
   const data = resData.data;
 
   return (

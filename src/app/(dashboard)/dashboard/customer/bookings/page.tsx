@@ -1,10 +1,9 @@
 import React from "react";
 import CustomerBookingTable from "./_components/CustomerBookingTable";
-import CustomerCancelBookingModal from "./_components/CustomerCancelBookingModal";
 import { listCustomerBookingsAction } from "@/lib/bookingActions";
 import Container from "@/components/ui/common/Container";
 import EmptyData from "@/components/ui/common/EmptyData";
-import { PiMagnifyingGlass, PiMagnifyingGlassBold } from "react-icons/pi";
+import { PiMagnifyingGlassBold } from "react-icons/pi";
 import Link from "next/link";
 
 async function CustomerMyBookingsPage() {

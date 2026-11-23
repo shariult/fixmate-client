@@ -116,10 +116,10 @@ async function AdminBookingsPage(props: AdminBookingsPageProps) {
                         {item.serviceDetails?.title}
                       </p>
                       <p className="text-xs text-muted">
-                        {
-                          getCategoryFromSlug(item.serviceDetails!.category)
-                            .title
-                        }
+                        {item.serviceDetails
+                          ? getCategoryFromSlug(item.serviceDetails.category)
+                              .title
+                          : "Category"}
                       </p>
                     </div>
                   </div>
