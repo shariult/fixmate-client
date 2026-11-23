@@ -5,10 +5,22 @@ import SectionHow from "./_components/SectionHow";
 import SectionAudience from "./_components/SectionAudience";
 import AboutCta from "./_components/AboutCta";
 import SectionQuestions from "./_components/SectionQuestions";
+import Container from "@/components/ui/common/Container";
+import Breadcrumbs from "@/components/ui/common/Breadcrumbs";
 
 function AboutPage() {
+  const crumbs = [
+    {
+      id: 1,
+      label: "About",
+    },
+  ];
   return (
     <>
+      <Container spaceY="pt-6">
+        <Breadcrumbs data={crumbs} />
+      </Container>
+
       <AboutHero />
       <SectionSolution elClassName="bg-base-200" />
       <SectionHow />

@@ -86,9 +86,7 @@ async function CustomerIndexPage() {
               <PiCheckBold className="text-2xl" />
             </span>
           </div>
-          <p className="mt-3 text-xs text-muted">
-            Includes 1 waiting for payment
-          </p>
+          <p className="mt-3 text-xs text-muted">Amount of completed jobs</p>
         </div>
       </div>
     </main>

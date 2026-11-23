@@ -9,6 +9,7 @@ import authClient from "@/lib/authClient";
 import BookingModal from "./BookingModal";
 import BookingModalInfo from "./BookingModalInfo";
 import { TService } from "@/types";
+import { useRouter } from "next/navigation";
 
 type ServiceShowRightProps = {
   service: TService;
@@ -17,8 +18,17 @@ type ServiceShowRightProps = {
 
 function ServiceShowRight(props: ServiceShowRightProps) {
   const { data } = authClient.useSession();
+  const router = useRouter();
   const { service, className, ...rest } = props;
   const modalRef = useRef<HTMLDialogElement>(null);
+
+  function requestRepairHandler() {
+    if (data) {
+      modalRef.current?.showModal();
+    } else {
+      router.push("/signin");
+    }
+  }
 
   return (
     <>
@@ -40,7 +50,7 @@ function ServiceShowRight(props: ServiceShowRightProps) {
             <button
               type="button"
               className="btn btn-primary btn-block mt-6"
-              onClick={() => modalRef.current?.showModal()}
+              onClick={requestRepairHandler}
             >
               Request Repair
             </button>

@@ -14,6 +14,7 @@ function AboutHero(props: AboutHeroProps) {
       el={"header"}
       className={className}
       elClassName={elClassName}
+      spaceY="pt-12 pb-20"
       {...rest}
     >
       <p className="heading-sub">About FixMate</p>
