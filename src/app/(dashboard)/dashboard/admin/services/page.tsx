@@ -5,9 +5,14 @@ import Container from "@/components/ui/common/Container";
 import EmptyData from "@/components/ui/common/EmptyData";
 import { listServicesAdminAction } from "@/lib/adminActions";
 
-async function AdminServices() {
-  const resData = await listServicesAdminAction();
+type AdminServicesProps = {
+  searchParams: Promise<{ status: string }>;
+};
 
+async function AdminServices(props: AdminServicesProps) {
+  const { status } = await props.searchParams;
+
+  const resData = await listServicesAdminAction(status);
   if (!resData.isSuccess) {
     return (
       <Container>
@@ -27,23 +32,34 @@ async function AdminServices() {
         </p>
       </div>
 
-      {/* <!-- In Next.js default this list to ?status=pending (or sort pending first, as shown here) --> */}
-      {/* <div className="mt-8 overflow-x-auto">
+      <div className="mt-8 overflow-x-auto">
         <div role="tablist" className="tabs tabs-box w-fit bg-base-50">
-          <Link href="?status=" className="tab h-10 gap-2 tab-active">
-            All<span className="badge badge-sm badge-soft">16</span>
+          <Link
+            href="?status="
+            className={`tab h-10 gap-2 ${!status && "tab-active"}`}
+          >
+            All
           </Link>
-          <Link href="?status=pending" className="tab h-10 gap-2">
-            Pending<span className="badge badge-sm badge-soft">3</span>
+          <Link
+            href="?status=pending"
+            className={`tab h-10 gap-2 ${status === "pending" && "tab-active"}`}
+          >
+            Pending
           </Link>
-          <Link href="?status=approved" className="tab h-10 gap-2">
-            Approved<span className="badge badge-sm badge-soft">12</span>
+          <Link
+            href="?status=approved"
+            className={`tab h-10 gap-2 ${status === "approved" && "tab-active"}`}
+          >
+            Approved
           </Link>
-          <Link href="?status=rejected" className="tab h-10 gap-2">
-            Rejected<span className="badge badge-sm badge-soft">1</span>
+          <Link
+            href="?status=rejected"
+            className={`tab h-10 gap-2 ${status === "rejected" && "tab-active"}`}
+          >
+            Rejected
           </Link>
         </div>
-      </div> */}
+      </div>
 
       {/* <!-- Desktop / tablet: table (pending rows are tinted and listed first) --> */}
       <div className="mt-4 hidden overflow-x-auto rounded-2xl border border-base-300 bg-base-50 md:block">

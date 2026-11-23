@@ -17,16 +17,19 @@ async function listUsersAction() {
   return resData;
 }
 
-async function listServicesAdminAction() {
+async function listServicesAdminAction(status?: string) {
   const token = await getTokenFromServer();
 
-  const res = await sendRequest<TService[]>(`${API_URL}/admin/services`, {
-    method: "GET",
-    headers: {
-      "Content-Type": "application/json",
-      authorization: `bearer ${token}`,
+  const res = await sendRequest<TService[]>(
+    `${API_URL}/admin/services${status ? "?status=" + status : ""}`,
+    {
+      method: "GET",
+      headers: {
+        "Content-Type": "application/json",
+        authorization: `bearer ${token}`,
+      },
     },
-  });
+  );
   return res;
 }
 

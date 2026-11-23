@@ -36,7 +36,7 @@ function BookingRejectModal(props: BookingRejectModalProps) {
       <span className="grid size-12 place-items-center rounded-full bg-error/15 text-error">
         <PiWarningBold />
       </span>
-      <h3 className="heading-3 mt-4">Reject this service?</h3>
+      <h3 className="heading-3 mt-4">Reject this Booking Request?</h3>
       <p className="mt-2 text-sm/6 text-muted">
         It will reject the request and you will not be able to work.
       </p>
@@ -45,7 +45,7 @@ function BookingRejectModal(props: BookingRejectModalProps) {
           <button className="btn btn-ghost">Go Back</button>
         </form>
         <button className="btn btn-error" onClick={rejectHandler}>
-          Reject service
+          Reject Request
         </button>
       </div>
     </Modal>
