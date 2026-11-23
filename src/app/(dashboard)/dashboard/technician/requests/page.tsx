@@ -5,8 +5,14 @@ import { listTechnicianBookingsAction } from "@/lib/bookingActions";
 import Container from "@/components/ui/common/Container";
 import EmptyData from "@/components/ui/common/EmptyData";
 
-async function TechnicianRequestsPage() {
-  const resData = await listTechnicianBookingsAction();
+type TechnicianRequestsPageProps = {
+  searchParams: Promise<{ status: string }>;
+};
+
+async function TechnicianRequestsPage(props: TechnicianRequestsPageProps) {
+  const { status } = await props.searchParams;
+
+  const resData = await listTechnicianBookingsAction(status);
   if (!resData.isSuccess) {
     return (
       <Container>
@@ -26,7 +32,7 @@ async function TechnicianRequestsPage() {
         </p>
       </div>
 
-      <TechnicianRequestsFilter />
+      <TechnicianRequestsFilter status={status} />
 
       <div className="mt-4 overflow-x-auto rounded-2xl border border-base-300 bg-base-50">
         <TechnicianRequestsTable requests={requests} />

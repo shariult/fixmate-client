@@ -1,6 +1,6 @@
 "use client";
 
-import React, { ComponentPropsWithoutRef, useState } from "react";
+import React, { ComponentPropsWithoutRef, use, useState } from "react";
 import Container from "@/components/ui/common/Container";
 import { TBooking, TBookingStatus } from "@/types";
 import { getBookingStatusFromSlug } from "@/lib/utils";
@@ -8,6 +8,7 @@ import { updateBookingStatusAction } from "@/lib/bookingActions";
 import toast from "react-hot-toast";
 import { useRouter } from "next/navigation";
 import BookingFinalPriceModal from "./BookingFinalPriceModal";
+import BookingRejectModal from "./BookingRejectModal";
 
 type TechnicianRequestsTableProps = {
   requests: TBooking[];
@@ -17,6 +18,7 @@ type TechnicianRequestsTableProps = {
 function TechnicianRequestsTable(props: TechnicianRequestsTableProps) {
   const { requests, className, ...rest } = props;
   const [bookingToComp, setBookingToComp] = useState<null | TBooking>(null);
+  const [bookingRejectId, setBookingRejectId] = useState<string | null>(null);
   const router = useRouter();
 
   async function changeRequestStatusHandler(
@@ -30,6 +32,10 @@ function TechnicianRequestsTable(props: TechnicianRequestsTableProps) {
     }
     toast.success("Request updated successfully!");
     router.refresh();
+  }
+
+  function bookingRejectHandler(bId: string) {
+    setBookingRejectId(bId);
   }
 
   return (
@@ -101,11 +107,12 @@ function TechnicianRequestsTable(props: TechnicianRequestsTableProps) {
                       <button
                         type="button"
                         className="btn btn-sm btn-outline btn-error"
-                        onClick={() =>
-                          changeRequestStatusHandler(item._id, {
-                            status: "rejected",
-                          })
-                        }
+                        // onClick={() =>
+                        //   changeRequestStatusHandler(item._id, {
+                        //     status: "rejected",
+                        //   })
+                        // }
+                        onClick={() => bookingRejectHandler(item._id)}
                       >
                         Reject
                       </button>
@@ -161,6 +168,13 @@ function TechnicianRequestsTable(props: TechnicianRequestsTableProps) {
           })}
         </tbody>
       </table>
+
+      {bookingRejectId && (
+        <BookingRejectModal
+          onClose={() => setBookingRejectId(null)}
+          bId={bookingRejectId}
+        />
+      )}
 
       {bookingToComp && (
         <BookingFinalPriceModal

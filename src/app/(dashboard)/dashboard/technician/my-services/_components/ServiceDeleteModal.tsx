@@ -49,7 +49,6 @@ function ServiceDeleteModal(props: ServiceDeleteModalProps) {
         <h3 className="heading-3 mt-4">Delete this service?</h3>
         <p className="mt-2 text-sm/6 text-muted">
           It will disappear from the Services page.
-          {/* Existing bookings keep their copied details, so past jobs still display correctly. */}
         </p>
         <div className="modal-action">
           <form method="dialog" className="flex gap-2">

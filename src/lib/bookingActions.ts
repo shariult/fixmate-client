@@ -32,15 +32,18 @@ async function listCustomerBookingsAction() {
   return res;
 }
 
-async function listTechnicianBookingsAction() {
+async function listTechnicianBookingsAction(status?: string) {
   const token = await getTokenFromServer();
-  const res = await sendRequest<TBooking[]>(`${API_URL}/bookings/technician`, {
-    method: "GET",
-    headers: {
-      "Content-Type": "application/json",
-      authorization: `bearer ${token}`,
+  const res = await sendRequest<TBooking[]>(
+    `${API_URL}/bookings/technician${status ? "?status=" + status : ""}`,
+    {
+      method: "GET",
+      headers: {
+        "Content-Type": "application/json",
+        authorization: `bearer ${token}`,
+      },
     },
-  });
+  );
   return res;
 }
 
