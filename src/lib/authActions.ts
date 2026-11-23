@@ -1,17 +1,21 @@
 "use server";
+
 import { headers } from "next/headers";
 import auth from "@/lib/auth";
 
-export const getCurrentUser = async () => {
+async function getCurrentUser() {
   const session = await auth.api.getSession({
     headers: await headers(),
   });
   return session;
-};
+}
 
-export async function getTokenFromServer() {
+async function getTokenFromServer() {
   const jwtToken = await auth.api.getToken({
     headers: await headers(),
   });
-  return jwtToken?.token;
+  const token = jwtToken?.token;
+  return token;
 }
+
+export { getCurrentUser, getTokenFromServer };
