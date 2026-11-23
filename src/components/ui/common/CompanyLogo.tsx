@@ -12,12 +12,12 @@ function CompanyLogo(props: CompanyLogoProps) {
   return (
     <Link
       href={href}
-      className={`flex items-center gap-2 text-sm md:text-md font-title ${className ? className : ""}`}
+      className={`flex items-center gap-2 font-title ${className ? className : ""}`}
     >
-      <PiWrenchBold className="text-3xl text-primary" />
+      <PiWrenchBold className="text-lg md:text-2xl text-primary" />
       <p className="flex font-extrabold uppercase text-2xl">
-        <span className="">Fix</span>
-        <span className="text-primary">Mate</span>
+        <span className="text-lg md:text-2xl ">Fix</span>
+        <span className="text-lg md:text-2xl text-primary">Mate</span>
       </p>
     </Link>
   );

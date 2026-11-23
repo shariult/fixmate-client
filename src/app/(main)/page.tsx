@@ -15,7 +15,7 @@ async function Homepage() {
       <SectionCategories elClassName="bg-base-200" />
       <SectionWhy />
       <SectionCta elClassName="bg-base-200" />
-      <div className="px-6 py-4 bg-base-300 z-50 text-base-content text-center fixed bottom-0 w-full">
+      <div className="px-4 py-2 md:px-3 text-xs md:text-sm bg-base-300 z-50 text-base-content text-center fixed bottom-0 w-full">
         If you would like to reset the Services, Bookings data you can{" "}
         <SeedBtn />
       </div>
