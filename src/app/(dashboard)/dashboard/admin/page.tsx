@@ -2,6 +2,7 @@ import Container from "@/components/ui/common/Container";
 import EmptyData from "@/components/ui/common/EmptyData";
 import { getCurrentUser } from "@/lib/authActions";
 import { getAdminDashAction } from "@/lib/dashboardActions";
+import { delay } from "@/lib/utils";
 import Link from "next/link";
 import React from "react";
 import {
@@ -12,6 +13,7 @@ import {
 } from "react-icons/pi";
 
 async function AdminIndexPage() {
+  await delay(3000);
   const resData = await getAdminDashAction();
 
   if (!resData.isSuccess) {

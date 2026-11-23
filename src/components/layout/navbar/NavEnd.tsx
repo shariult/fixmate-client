@@ -80,7 +80,10 @@ function NavEnd(props: NavEndProps) {
               </li>
 
               <li>
-                <Link href="/dashboard" className="text-base">
+                <Link
+                  href={`/dashboard/${data.user.role}`}
+                  className="text-base"
+                >
                   <PiChartBar /> Dashboard
                 </Link>
               </li>

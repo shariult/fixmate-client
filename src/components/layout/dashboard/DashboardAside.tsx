@@ -2,19 +2,34 @@ import React, { ComponentPropsWithoutRef } from "react";
 import Link from "next/link";
 import { PiHouseBold, PiUserBold } from "react-icons/pi";
 import CompanyLogo from "@/components/ui/common/CompanyLogo";
-import { TSidebar } from "@/data/dashboardSidebar";
+import {
+  adminSidebarConfig,
+  customerSidebarConfig,
+  technicianSidebarConfig,
+  TSidebar,
+} from "@/data/dashboardSidebar";
 import DashboardAsideLink from "./DashboardAsideLink";
 import UserSignOut from "@/components/ui/user/UserSignOut";
+import { getCurrentUser } from "@/lib/authActions";
 
 type DashboardAsideProps = {
-  sidebarConfig: TSidebar;
   className?: string;
   children?: React.ReactNode;
 } & ComponentPropsWithoutRef<"div">;
 
-function DashboardAside(props: DashboardAsideProps) {
-  const { sidebarConfig, className, children, ...rest } = props;
+async function DashboardAside(props: DashboardAsideProps) {
+  const { className, children, ...rest } = props;
 
+  const session = await getCurrentUser();
+  let sidebarConfig = customerSidebarConfig;
+
+  if (session?.user.role === "technician") {
+    sidebarConfig = technicianSidebarConfig;
+  }
+
+  if (session?.user.role === "admin") {
+    sidebarConfig = adminSidebarConfig;
+  }
   return (
     <div className={`drawer-side z-40 ${className ? className : ""}`} {...rest}>
       <label

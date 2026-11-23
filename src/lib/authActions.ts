@@ -2,13 +2,14 @@
 
 import { headers } from "next/headers";
 import auth from "@/lib/auth";
+import { cache } from "react";
 
-async function getCurrentUser() {
+const getCurrentUser = cache(async () => {
   const session = await auth.api.getSession({
     headers: await headers(),
   });
-  return session;
-}
+  return session; // { user, session } or null
+});
 
 async function getTokenFromServer() {
   const jwtToken = await auth.api.getToken({
