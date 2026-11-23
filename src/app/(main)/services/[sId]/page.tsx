@@ -16,7 +16,7 @@ async function ServiceDetailsPage(props: ServiceDetailsPageProps) {
   if (!resData.isSuccess) {
     return (
       <Container>
-        <EmptyData message="Something went wrong!" isError />
+        <EmptyData message="Service not found!" isError />
       </Container>
     );
   }

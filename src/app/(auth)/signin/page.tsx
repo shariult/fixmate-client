@@ -1,17 +1,19 @@
+import React from "react";
 import CompanyLogo from "@/components/ui/common/CompanyLogo";
 import SocialSignIn from "@/components/ui/user/SocialSignIn";
 import UserForm from "@/components/ui/user/UserForm";
 import Link from "next/link";
-import React from "react";
-import {
-  PiCheckBold,
-  PiEyeBold,
-  PiWarningBold,
-  PiWrenchBold,
-} from "react-icons/pi";
+import { PiWarningBold, PiWrenchBold } from "react-icons/pi";
 import SignInAside from "./_components/SignInAside";
+import { getCurrentUser } from "@/lib/authActions";
+import { redirect } from "next/navigation";
 
-function SignInPage() {
+async function SignInPage() {
+  const session = await getCurrentUser();
+  if (session) {
+    redirect("/");
+  }
+
   return (
     <div className="grid min-h-screen lg:grid-cols-2">
       <SignInAside />

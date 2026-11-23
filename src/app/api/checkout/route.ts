@@ -23,7 +23,7 @@ export async function POST(req: Request) {
         { status: 400 },
       );
     }
-    if (booking.paymentId) {
+    if (booking.paymentStatus === "paid") {
       return NextResponse.json({ error: "Already paid" }, { status: 400 });
     }
 

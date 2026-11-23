@@ -37,10 +37,9 @@ async function verifyPayment(sessionId: string) {
         }),
       };
 
-      if (booking && !booking.paymentId) {
+      if (booking && !(booking.paymentStatus === "paid")) {
         await updateBookingAction(bookingId, {
-          paymentId: paymentIntentId,
-          paymentDate: new Date(),
+          paymentStatus: "paid",
         });
 
         await createPaymentAction({

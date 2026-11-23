@@ -96,9 +96,9 @@ function CustomerBookingTable(props: CustomerBookingTableProps) {
                 </td>
                 <td>
                   <span
-                    className={`badge ${item.paymentId ? "btn-success" : "badge-outline"}`}
+                    className={`badge ${item.paymentStatus === "paid" ? "btn-success" : "badge-outline"}`}
                   >
-                    {item.paymentId ? "paid" : "unpaid"}
+                    {item.paymentStatus}
                   </span>
                 </td>
                 <td className="text-right">
@@ -112,25 +112,25 @@ function CustomerBookingTable(props: CustomerBookingTableProps) {
                     </button>
                   )}
 
-                  {bookingStatus.slug === "completed" && !item.paymentId && (
-                    <button
-                      type="button"
-                      className="btn btn-sm btn-success"
-                      disabled={payingId === item._id}
-                      onClick={() => handlePay(item._id)}
-                    >
-                      {payingId === item._id ? (
-                        <span className="loading loading-spinner loading-xs" />
-                      ) : (
-                        <PiCheckBold />
-                      )}
-                      Pay Now
-                    </button>
-                  )}
+                  {bookingStatus.slug === "completed" &&
+                    item.paymentStatus === "unpaid" && (
+                      <button
+                        type="button"
+                        className="btn btn-sm btn-success"
+                        disabled={payingId === item._id}
+                        onClick={() => handlePay(item._id)}
+                      >
+                        {payingId === item._id ? (
+                          <span className="loading loading-spinner loading-xs" />
+                        ) : (
+                          <PiCheckBold />
+                        )}
+                        Pay Now
+                      </button>
+                    )}
 
-                  {bookingStatus.slug === "completed" && item.paymentId && (
-                    <p>—</p>
-                  )}
+                  {bookingStatus.slug === "completed" &&
+                    item.paymentStatus === "paid" && <p>—</p>}
 
                   {bookingStatus.slug !== "completed" &&
                     bookingStatus.slug !== "requested" && <p>—</p>}

@@ -93,7 +93,7 @@ async function getBookingAction(bId: string) {
 
 async function updateBookingAction(
   bId: string,
-  data: { paymentId?: string | null; paymentDate?: Date | null },
+  data: { paymentStatus?: "paid" | "unpaid" } | TBooking,
 ) {
   const token = await getTokenFromServer();
 

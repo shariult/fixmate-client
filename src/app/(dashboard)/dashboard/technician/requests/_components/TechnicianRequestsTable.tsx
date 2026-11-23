@@ -149,9 +149,9 @@ function TechnicianRequestsTable(props: TechnicianRequestsTableProps) {
                         final
                       </div>
                       <p
-                        className={`badge ${item.paymentId ? "badge-success" : "badge-info"} badge-outline ml-auto`}
+                        className={`badge ${item.paymentStatus === "paid" ? "badge-success" : "badge-info"} badge-outline ml-auto`}
                       >
-                        {item.paymentId ? "paid" : "unpaid"}
+                        {item.paymentStatus}
                       </p>
                     </div>
                   )}

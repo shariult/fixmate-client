@@ -87,7 +87,7 @@ async function AdminBookingsPage() {
                 </td>
                 <td>
                   <span className="badge badge-outline">
-                    {item.paymentId ? "paid" : "unpaid"}
+                    {item.paymentStatus}
                   </span>
                 </td>
                 {/*<td className="text-right">

@@ -127,8 +127,7 @@ type TBooking = {
   preferredDate: string;
   address: string;
   problemDescription: string;
-  paymentId?: string;
-  paymentDate?: string;
+  paymentStatus?: "paid" | "unpaid";
   status: TBookingStatus;
   createdAt: string;
   updatedAt: string;
@@ -138,7 +137,7 @@ type TBookingInput = Omit<
   | "_id"
   | "customerId"
   | "technicianId"
-  | "paymentId"
+  | "paymentStatus"
   | "status"
   | "createdAt"
   | "updatedAt"

@@ -4,8 +4,15 @@ import { PiWrenchBold } from "react-icons/pi";
 import UserForm from "@/components/ui/user/UserForm";
 import SocialSignIn from "@/components/ui/user/SocialSignIn";
 import SignUpAside from "./_components/SignUpAside";
+import { getCurrentUser } from "@/lib/authActions";
+import { redirect } from "next/navigation";
 
-function SignUpPage() {
+async function SignUpPage() {
+  const session = await getCurrentUser();
+  if (session) {
+    redirect("/");
+  }
+
   return (
     <div className="grid min-h-screen lg:grid-cols-2">
       <SignUpAside />
