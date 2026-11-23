@@ -97,7 +97,7 @@ async function AdminBookingsPage(props: AdminBookingsPageProps) {
           <tbody>
             {bookings.length === 0 && (
               <tr>
-                <td colSpan={7} className="text-xl py-6">
+                <td colSpan={7} className="text-xl py-6 text-center">
                   No bookings found!
                 </td>
               </tr>
@@ -142,14 +142,6 @@ async function AdminBookingsPage(props: AdminBookingsPageProps) {
                     {item.paymentStatus}
                   </span>
                 </td>
-                {/*<td className="text-right">
-                  <button
-                    type="button"
-                    className="btn btn-sm btn-outline btn-error"
-                  >
-                    Cancel
-                  </button>
-                </td> */}
               </tr>
             ))}
           </tbody>

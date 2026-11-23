@@ -12,6 +12,7 @@ import { useRouter } from "next/navigation";
 import { TBooking, TBookingStatus } from "@/types";
 import { updateBookingStatusAction } from "@/lib/bookingActions";
 import toast from "react-hot-toast";
+import LoadingSpinner from "@/components/ui/common/LoadingSpinner";
 
 type BookingFinalPriceModalProps = {
   booking: TBooking;
@@ -22,11 +23,12 @@ type BookingFinalPriceModalProps = {
 function BookingFinalPriceModal(props: BookingFinalPriceModalProps) {
   const { booking, onClose, className, ...rest } = props;
   const dialogRef = useRef<HTMLDialogElement>(null);
-  const [newPrice, setNewPrice] = useState(booking.basePrice);
+  const [finalAmount, setFinalAmount] = useState(booking.basePrice);
+  const [isLoading, setIsLoading] = useState(false);
   const router = useRouter();
 
   function inputChangeHandler(e: ChangeEvent<HTMLInputElement>) {
-    setNewPrice(Number(e.target.value));
+    setFinalAmount(Number(e.target.value));
   }
 
   useEffect(() => {
@@ -35,14 +37,17 @@ function BookingFinalPriceModal(props: BookingFinalPriceModalProps) {
   }, []);
 
   async function changeRequestStatusHandler() {
+    setIsLoading(true);
     const resData = await updateBookingStatusAction(booking._id, {
       status: "completed",
-      finalAmount: newPrice,
+      finalAmount: finalAmount,
     });
     if (!resData.isSuccess) {
       toast.error("Could not update request!");
+      setIsLoading(false);
       return;
     }
+    setIsLoading(false);
     toast.success("Request updated successfully!");
     router.refresh();
   }
@@ -58,9 +63,9 @@ function BookingFinalPriceModal(props: BookingFinalPriceModalProps) {
       <div className="modal-box">
         <h3 className="heading-3">Mark job as completed</h3>
         <p className="mt-1 text-sm text-muted">
-          Phone Water Damage Cleaning · Farhana Akter
+          {booking.serviceDetails?.title} · {booking.customerDetails?.name}
         </p>
-        <form className="mt-6" action="#" method="post">
+        <form className="mt-6" method="post">
           <fieldset className="fieldset">
             <legend className="fieldset-legend">Final amount (USD)</legend>
             <label className="input w-full">
@@ -70,8 +75,9 @@ function BookingFinalPriceModal(props: BookingFinalPriceModalProps) {
                 name="finalAmount"
                 min="0.01"
                 step="0.01"
-                value={newPrice}
+                value={finalAmount}
                 onChange={inputChangeHandler}
+                disabled={isLoading}
               />
             </label>
             <p className="label">
@@ -91,6 +97,7 @@ function BookingFinalPriceModal(props: BookingFinalPriceModalProps) {
               className="btn btn-primary"
               onClick={changeRequestStatusHandler}
             >
+              {isLoading && <LoadingSpinner />}
               Mark completed
             </button>
           </div>

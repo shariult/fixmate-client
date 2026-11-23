@@ -37,7 +37,7 @@ function AdminServiceRejectModal(props: AdminServiceRejectModalProps) {
       </span>
       <h3 className="heading-3 mt-4">Reject this service?</h3>
       <p className="mt-2 text-sm/6 text-muted">
-        It will reject the service and you will not be viewed to public.
+        It will reject the service and it will not be viewed to public.
       </p>
       <div className="modal-action">
         <form method="dialog" className="flex gap-2">
