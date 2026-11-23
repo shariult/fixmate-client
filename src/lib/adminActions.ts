@@ -81,15 +81,18 @@ async function updateServiceApprovalAction(
   return res;
 }
 
-async function listBookingsAdminAction() {
+async function listBookingsAdminAction(status?: string | undefined) {
   const token = await getTokenFromServer();
-  const res = await sendRequest<TBooking[]>(`${API_URL}/admin/bookings`, {
-    method: "GET",
-    headers: {
-      "Content-Type": "application/json",
-      authorization: `bearer ${token}`,
+  const res = await sendRequest<TBooking[]>(
+    `${API_URL}/admin/bookings${status ? "?status=" + status : ""}`,
+    {
+      method: "GET",
+      headers: {
+        "Content-Type": "application/json",
+        authorization: `bearer ${token}`,
+      },
     },
-  });
+  );
   return res;
 }
 

@@ -5,13 +5,17 @@ import { getBookingStatusFromSlug, getCategoryFromSlug } from "@/lib/utils";
 import EmptyData from "@/components/ui/common/EmptyData";
 import { listBookingsAdminAction } from "@/lib/adminActions";
 
-async function AdminBookingsPage() {
-  const resData = await listBookingsAdminAction();
+type AdminBookingsPageProps = {
+  searchParams: Promise<{ status: string }>;
+};
 
+async function AdminBookingsPage(props: AdminBookingsPageProps) {
+  const { status } = await props.searchParams;
+
+  const resData = await listBookingsAdminAction(status);
   if (!resData.isSuccess) {
     return <EmptyData message="Something went wrong!" />;
   }
-
   const bookings = resData.data;
 
   return (
@@ -20,13 +24,61 @@ async function AdminBookingsPage() {
         <div>
           <h1 className="heading-2">My Bookings</h1>
           <p className="mt-1 text-muted">
-            9 repair requests. Pay Now appears once a job is completed.
+            {bookings.length} repair requests. Pay Now appears once a job is
+            completed.
           </p>
         </div>
         <Link href="/services" className="btn btn-primary">
           <PiMagnifyingGlassBold />
           Find a service
         </Link>
+      </div>
+
+      <div className="mt-8 overflow-x-auto">
+        <div role="tablist" className="tabs tabs-box w-fit bg-base-50">
+          <Link
+            href="?status="
+            className={`tab h-10 gap-2 ${!status && "tab-active"}`}
+          >
+            All
+          </Link>
+          <Link
+            href="?status=requested"
+            className={`tab h-10 gap-2 ${status === "requested" && "tab-active"}`}
+          >
+            Requested
+          </Link>
+          <Link
+            href="?status=accepted"
+            className={`tab h-10 gap-2 ${status === "accepted" && "tab-active"}`}
+          >
+            Accepted
+          </Link>
+          <Link
+            href="?status=in-progress"
+            className={`tab h-10 gap-2 ${status === "in-progress" && "tab-active"}`}
+          >
+            In Progress
+          </Link>
+          <Link
+            href="?status=completed"
+            className={`tab h-10 gap-2 ${status === "completed" && "tab-active"}`}
+          >
+            Completed
+          </Link>
+          <Link
+            href="?status=rejected"
+            className={`tab h-10 gap-2 ${status === "rejected" && "tab-active"}`}
+          >
+            Rejected
+          </Link>
+          <Link
+            href="?status=cancelled"
+            className={`tab h-10 gap-2 ${status === "cancelled" && "tab-active"}`}
+          >
+            Cancelled
+          </Link>
+        </div>
       </div>
 
       <div className="mt-8  overflow-x-auto rounded-2xl border border-base-300 bg-base-50">
