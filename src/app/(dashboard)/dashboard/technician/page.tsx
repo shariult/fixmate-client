@@ -25,7 +25,6 @@ async function TechnicianIndexPage() {
 
   const cUser = userData?.user;
   const data = resData.data;
-  console.log(data);
   return (
     <main className={`flex-1 p-4 md:p-8`}>
       <div className="flex flex-wrap items-end justify-between gap-3">
