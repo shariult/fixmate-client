@@ -6,6 +6,7 @@ import {
   PiShieldCheckBold,
   PiStarFill,
 } from "react-icons/pi";
+import Form from "next/form";
 
 type HeroProps = {
   className?: string;
@@ -34,9 +35,9 @@ function Hero(props: HeroProps) {
         </p>
 
         {/* <!-- Search → GET /services?search=... --> */}
-        <form
+        <Form
           action="/services"
-          method="get"
+          role="search"
           className="mt-8 flex max-w-xl flex-col gap-3 sm:flex-row"
         >
           <label className="input input-lg w-full">
@@ -50,7 +51,7 @@ function Hero(props: HeroProps) {
           <button type="submit" className="btn btn-primary btn-lg">
             Find a service
           </button>
-        </form>
+        </Form>
 
         <dl className="mt-10 grid max-w-xl grid-cols-3 gap-6 border-t border-base-300 pt-6">
           <div>

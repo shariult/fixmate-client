@@ -21,7 +21,7 @@ function EmptyData(props: EmptyDataProps) {
 
   return (
     <div
-      className={`flex flex-col justify-center items-center ${spaceY ?? "py-20"} text-center text-xl rounded-xl  border border-dashed ${isError ? "border-red-500 text-red-500" : "border-gray-500"} ${className ? className : ""}`}
+      className={`flex flex-col justify-center items-center ${spaceY ?? "py-20"} text-center text-xl rounded-xl  border border-dashed ${isError ? "border-red-500 " : "border-gray-500"} ${className ? className : ""}`}
       {...rest}
     >
       <p className="mb-6">{message ?? "No Data Found!"}</p>

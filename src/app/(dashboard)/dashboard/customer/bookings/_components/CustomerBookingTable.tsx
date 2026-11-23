@@ -129,11 +129,11 @@ function CustomerBookingTable(props: CustomerBookingTableProps) {
                   )}
 
                   {bookingStatus.slug === "completed" && item.paymentId && (
-                    <p>Paid</p>
+                    <p>—</p>
                   )}
 
                   {bookingStatus.slug !== "completed" &&
-                    bookingStatus.slug !== "requested" && <p>-</p>}
+                    bookingStatus.slug !== "requested" && <p>—</p>}
                 </td>
               </tr>
             );
