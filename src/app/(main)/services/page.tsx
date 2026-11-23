@@ -3,6 +3,7 @@ import ServiceHero from "./_components/ServiceHero";
 import SectionServices from "./_components/SectionServices";
 type ServicesPageProps = {
   searchParams: Promise<{
+    page?: string;
     search?: string;
     category?: string;
     mode?: string;
@@ -12,12 +13,13 @@ type ServicesPageProps = {
 
 async function ServicesPage(props: ServicesPageProps) {
   const {
+    page = "1",
     search = "",
     category = "",
     mode = "",
     sort = "newest",
   } = await props.searchParams;
-  const urlQuery = new URLSearchParams({ search, category, mode, sort });
+  const urlQuery = new URLSearchParams({ page, search, category, mode, sort });
 
   return (
     <>

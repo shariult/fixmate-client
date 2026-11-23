@@ -8,6 +8,15 @@ type TBreadCrumbs = {
   slug?: string;
 };
 
+type TPagination = {
+  page: number;
+  limit: number;
+  total: number;
+  totalPages: number;
+  hasNextPage: boolean;
+  hasPrevPage: boolean;
+};
+
 type TCategory = {
   id: number;
   title: string;
@@ -155,6 +164,7 @@ type TPayment = {
 
 export type {
   TBreadCrumbs,
+  TPagination,
   TCategory,
   TServiceMode,
   TUserInput,

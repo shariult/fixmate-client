@@ -5,6 +5,7 @@ import { listServicesAction } from "@/lib/serviceActions";
 import Container from "@/components/ui/common/Container";
 import EmptyData from "@/components/ui/common/EmptyData";
 import ServiceCard from "@/components/layout/service/ServiceCard";
+import Pagination from "@/components/ui/common/Pagination";
 
 type SectionServicesProps = {
   urlQuery: URLSearchParams;
@@ -24,7 +25,8 @@ async function SectionServices(props: SectionServicesProps) {
     );
   }
 
-  const services = resData.data;
+  const services = resData.data.items;
+  const pagination = resData.data.pagination;
 
   return (
     <Container
@@ -33,7 +35,6 @@ async function SectionServices(props: SectionServicesProps) {
       {...rest}
       spaceY="pt-6 pb-40"
     >
-      {/* <!-- 1 col mobile · 2 tablet · 3 desktop (use lg:grid-cols-4 if you prefer 4 per row) --> */}
       {services.length === 0 && (
         <Container elClassName="bg-base-200">
           <EmptyData message="No services found!" />
@@ -47,33 +48,12 @@ async function SectionServices(props: SectionServicesProps) {
               <ServiceCard key={item._id} service={item} />
             ))}
           </div>
-          {/* <!-- ===== Pagination (optional requirement: server-side .skip()/.limit()) ===== --> */}
-          <div className="mt-12 flex justify-center">
-            <div className="join">
-              <a
-                href="?page=1"
-                className="join-item btn btn-sm"
-                aria-disabled="true"
-              >
-                Previous
-              </a>
-              <a
-                href="?page=1"
-                className="join-item btn btn-sm btn-active btn-primary"
-              >
-                1
-              </a>
-              <Link href="?page=2" className="join-item btn btn-sm">
-                2
-              </Link>
-              <Link href="?page=3" className="join-item btn btn-sm">
-                3
-              </Link>
-              <Link href="?page=2" className="join-item btn btn-sm">
-                Next
-              </Link>
-            </div>
-          </div>
+
+          <Pagination
+            page={pagination.page}
+            totalPages={pagination.totalPages}
+            urlQuery={urlQuery}
+          />
         </>
       )}
     </Container>

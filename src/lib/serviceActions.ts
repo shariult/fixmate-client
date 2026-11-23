@@ -1,4 +1,9 @@
-import { TService, TServiceApproval, TServiceInput } from "@/types";
+import {
+  TPagination,
+  TService,
+  TServiceApproval,
+  TServiceInput,
+} from "@/types";
 import { sendRequest } from "./utils";
 import { getTokenFromClient } from "./authActionsClient";
 import { getTokenFromServer } from "./authActions";
@@ -11,7 +16,7 @@ async function listFeaturedServicesAction() {
 }
 
 async function listServicesAction(urlQuery?: string) {
-  const res = await sendRequest<TService[]>(
+  const res = await sendRequest<{ items: TService[]; pagination: TPagination }>(
     `${API_URL}/services?${urlQuery ?? ""}`,
   );
   return res;
