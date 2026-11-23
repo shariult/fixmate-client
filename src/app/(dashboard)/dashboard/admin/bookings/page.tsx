@@ -138,7 +138,9 @@ async function AdminBookingsPage(props: AdminBookingsPageProps) {
                   </span>
                 </td>
                 <td>
-                  <span className="badge badge-outline">
+                  <span
+                    className={`badge ${item.paymentStatus === "paid" ? "badge-success" : "badge-outline"}`}
+                  >
                     {item.paymentStatus}
                   </span>
                 </td>

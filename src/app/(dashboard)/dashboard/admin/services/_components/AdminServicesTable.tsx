@@ -46,7 +46,7 @@ function AdminServicesTable(props: AdminServicesTableProps) {
         <tbody>
           {services.map((item) => {
             return (
-              <tr className="bg-warning/5" key={item._id}>
+              <tr className="" key={item._id}>
                 <td>
                   <div className="flex items-center gap-3">
                     <img
