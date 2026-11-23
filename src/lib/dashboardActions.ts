@@ -1,4 +1,5 @@
 import { getTokenFromServer } from "./authActions";
+import { getTokenFromClient } from "./authActionsClient";
 import { sendRequest } from "./utils";
 
 const API_URL = process.env.NEXT_PUBLIC_API_URL as string;
@@ -53,4 +54,22 @@ async function getAdminDashAction() {
   return res;
 }
 
-export { getCustomerDashAction, getTechnicianDashAction, getAdminDashAction };
+async function createDemoData() {
+  const token = await getTokenFromClient();
+
+  const res = await sendRequest(`${API_URL}/seed`, {
+    method: "GET",
+    headers: {
+      "Content-Type": "application/json",
+      authorization: `bearer ${token}`,
+    },
+  });
+  return res;
+}
+
+export {
+  getCustomerDashAction,
+  getTechnicianDashAction,
+  getAdminDashAction,
+  createDemoData,
+};
